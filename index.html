@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKIPPWORLD — 김영훈 콘텐츠 디렉터 포트폴리오</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#0d0d0d; --ink-2:#141416;
+    --line:#282828; --line-soft:#1e1e20;
+    --paper:#f3f1ec; --paper-dim:#a6a6ac; --paper-mute:#6f6f76;
+    --accent:#3A86FF; --accent-soft:#79a6ff;
+    --radius:14px; --maxw:1280px; --navh:64px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; overflow-y:scroll; scrollbar-gutter:stable; }
+  body{ background:var(--ink); color:var(--paper);
+    font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  em{ font-style:normal; color:var(--accent); }
+
+  .site-nav{ position:sticky; top:0; z-index:100; height:var(--navh); background:rgba(13,13,13,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--line-soft); }
+  .nav-inner{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .brand{ font-size:16px; font-weight:800; letter-spacing:.02em; white-space:nowrap; }
+  .brand em{ color:var(--accent); }
+  .nav-links{ display:flex; align-items:center; gap:26px; overflow-x:auto; scrollbar-width:none; }
+  .nav-links::-webkit-scrollbar{ display:none; }
+  .nav-btn{ font-size:13px; font-weight:700; letter-spacing:.1em; white-space:nowrap; color:var(--paper-mute); transition:color .25s; }
+  .nav-btn span{ font-weight:600; letter-spacing:.04em; opacity:.8; }
+  .nav-btn:hover{ color:var(--paper-dim); }
+  .nav-btn.is-active{ color:var(--accent); }
+
+  .view{ display:none; }
+  .view.is-active{ display:block; animation:slideLeft .5s cubic-bezier(.22,.61,.36,1) both; }
+  @keyframes slideLeft{ from{opacity:0; transform:translateX(48px);} to{opacity:1; transform:translateX(0);} }
+
+  .sec-hero{ text-align:center; padding:44px 0 40px; }
+  .s-eyebrow{ display:inline-block; margin-bottom:18px; font-size:12px; font-weight:700; letter-spacing:.24em; color:var(--accent-soft); }
+  .sec-hero h1{ font-size:clamp(28px,5vw,52px); font-weight:800; line-height:1.15; letter-spacing:-.025em; }
+  .sec-hero h1.big{ font-size:clamp(40px,8vw,84px); letter-spacing:-.03em; }
+  .sec-hero p{ margin:18px auto 0; max-width:54ch; font-size:clamp(14px,1.6vw,16px); color:var(--paper-dim); line-height:1.7; }
+  .sec-hero p.roles{ color:var(--paper); font-weight:600; letter-spacing:.01em; margin-top:16px; }
+  .stats{ display:flex; justify-content:center; flex-wrap:wrap; margin-top:32px; }
+  .stat{ display:flex; align-items:baseline; gap:8px; padding:6px 24px; }
+  .stat + .stat{ border-left:1px solid var(--line); }
+  .stat b{ font-size:18px; font-weight:800; letter-spacing:-.01em; }
+  .stat span{ font-size:12.5px; color:var(--paper-mute); }
+
+  /* rounded overlapping folder tabs (macOS/browser style), left-aligned */
+  .client-nav{ display:flex; justify-content:flex-start; align-items:flex-end; padding:30px 0 0; overflow-x:auto; scrollbar-width:none; border-bottom:2px solid var(--accent); }
+  .client-nav::-webkit-scrollbar{ display:none; }
+  .client-btn{ position:relative; min-width:140px; text-align:center; padding:11px 22px; margin-left:-10px; white-space:nowrap; font-size:12.5px; font-weight:700; letter-spacing:.01em; color:#93a9cd; background:#1b2c4e; border-radius:12px 12px 0 0; box-shadow:-3px 0 8px rgba(0,0,0,.35); transition:background .25s,color .25s; }
+  .client-btn:first-child{ margin-left:0; }
+  .client-btn:hover{ background:#24396c; color:#d6e0f2; z-index:4; }
+  .client-btn.is-active{ color:#fff; background:linear-gradient(180deg,#57a0ff,var(--accent)); z-index:6; box-shadow:0 -2px 14px rgba(58,134,255,.45); }
+
+  .client{ display:none; }
+  .client.is-active{ display:block; animation:fadeUp .45s ease both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+
+  /* persistent client meta (stays above toggles) */
+  .client-head{ text-align:center; padding:30px 0 2px; }
+  .client-head .ch-main{ display:block; font-size:14px; font-weight:700; color:var(--paper); letter-spacing:.01em; }
+  .client-head .ch-period{ display:block; margin-top:5px; font-size:12.5px; font-weight:500; color:var(--paper-mute); letter-spacing:.02em; }
+
+  .wtoggle-row{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; padding:22px 0 4px; }
+  .wtoggle{ display:inline-flex; align-items:center; gap:9px; padding:12px 22px; background:var(--ink-2); border:1px solid var(--line-soft); border-radius:12px; color:var(--paper-dim); font-size:13.5px; font-weight:700; letter-spacing:.05em; transition:color .25s,border-color .25s,background .25s,transform .25s; }
+  .wtoggle svg{ width:16px; height:16px; opacity:.85; }
+  .wtoggle:hover{ color:var(--paper); border-color:var(--line); transform:translateY(-1px); }
+  .wtoggle.is-active{ color:#fff; background:var(--accent); border-color:var(--accent); }
+  .wtoggle.is-active svg{ opacity:1; }
+  .wpanel{ display:none; padding-bottom:56px; } .wpanel.is-active{ display:block; animation:fadeUp .4s ease both; }
+
+  .subtab-row{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:6px 0 12px; }
+  .subtab{ padding:8px 16px; border-radius:20px; font-size:12.5px; font-weight:700; color:var(--paper-mute); border:1px solid var(--line-soft); transition:color .2s,border-color .2s; }
+  .subtab:hover{ color:var(--paper-dim); }
+  .subtab.is-active{ color:var(--accent); border-color:rgba(58,134,255,.5); }
+  .subpanel{ display:none; } .subpanel.is-active{ display:block; }
+
+  /* unified 16:9 card grid */
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; padding-bottom:8px; }
+  @media (max-width:980px){ .grid{ grid-template-columns:repeat(2,1fr); gap:18px; } }
+  @media (max-width:600px){ .grid{ grid-template-columns:1fr; gap:20px; } }
+  .grid.single{ display:flex; justify-content:center; }
+  .grid.single .card{ width:100%; max-width:440px; }
+
+  .card{ display:block; position:relative; border-radius:var(--radius); background:var(--ink-2); border:1px solid var(--line-soft); overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; opacity:0; transform:translateY(18px); }
+  .card.reveal{ opacity:1; transform:translateY(0); }
+  .card:hover{ border-color:rgba(58,134,255,.55); transform:translateY(-3px); box-shadow:0 16px 40px -18px rgba(0,0,0,.8); }
+  .card.nolink{ cursor:default; }
+  .card:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .card__media{ position:relative; aspect-ratio:16/9; overflow:hidden; background:#000; }
+  .card__media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s,filter .4s; }
+  .card:hover .card__media img{ transform:scale(1.04); filter:brightness(.9); }
+  .card__ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#17171a,#0f0f11); color:var(--paper-mute); font-size:12px; font-weight:700; letter-spacing:.06em; }
+  .card__media iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; transform:scale(1.36); transform-origin:center; opacity:0; transition:opacity .45s; }
+  .card__media iframe.on{ opacity:1; }
+  .card__shade{ position:absolute; inset:0; pointer-events:none; background:linear-gradient(to top,rgba(6,6,8,.92) 0%,rgba(6,6,8,.55) 34%,rgba(6,6,8,0) 62%); }
+  .card__body{ position:absolute; left:0; right:0; bottom:0; padding:18px 18px 16px; pointer-events:none; }
+  .card__title{ font-size:clamp(17px,2vw,20px); font-weight:800; letter-spacing:-.01em; line-height:1.25; text-shadow:0 1px 8px rgba(0,0,0,.5); }
+  .card__sub{ margin-top:7px; font-size:12.5px; line-height:1.5; color:rgba(243,241,236,.72); text-shadow:0 1px 6px rgba(0,0,0,.5); }
+  .badge{ position:absolute; top:12px; right:12px; z-index:3; display:inline-flex; align-items:center; gap:6px; padding:5px 9px 5px 8px; font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--paper); background:rgba(12,12,14,.72); border:1px solid rgba(255,255,255,.12); border-radius:7px; backdrop-filter:blur(6px); }
+  .badge svg{ width:13px; height:13px; stroke:var(--accent-soft); }
+  .hint{ position:absolute; top:12px; left:12px; z-index:3; display:inline-flex; align-items:center; gap:6px; padding:5px 10px; font-size:11px; font-weight:700; letter-spacing:.04em; color:#fff; background:var(--accent); border-radius:7px; opacity:0; transform:translateY(-4px); transition:opacity .3s,transform .3s; }
+  .card:hover .hint{ opacity:1; transform:translateY(0); }
+  @media (hover:none){ .hint{ display:none; } }
+
+  .note{ padding:24px 26px; background:var(--ink-2); border:1px solid var(--line-soft); border-radius:var(--radius); color:var(--paper-dim); line-height:1.75; font-size:14px; margin-bottom:12px; }
+  .note b{ color:var(--paper); font-weight:700; }
+
+  .album-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; padding-top:6px; }
+  @media (max-width:1100px){ .album-grid{ grid-template-columns:repeat(4,1fr); } }
+  @media (max-width:820px){ .album-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:520px){ .album-grid{ grid-template-columns:repeat(2,1fr); gap:12px; } }
+  .album{ position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:10px; background:var(--ink-2); border:1px solid var(--line-soft); opacity:0; transform:translateY(14px); transition:opacity .5s,transform .5s,border-color .3s; }
+  .album.reveal{ opacity:1; transform:none; }
+  .album:hover{ border-color:rgba(58,134,255,.5); }
+  .album__ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; letter-spacing:.1em; color:var(--paper-mute); }
+  .album img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+
+  .more-wrap{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; padding:32px 0 4px; }
+  .more-btn{ display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border:1px solid rgba(58,134,255,.5); border-radius:30px; color:var(--accent-soft); font-size:13.5px; font-weight:700; letter-spacing:.03em; transition:background .25s,color .25s,transform .25s; }
+  .more-btn:hover{ background:var(--accent); color:#fff; transform:translateY(-2px); }
+
+  .empty{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; min-height:240px; margin-bottom:8px; border:1px dashed var(--line); border-radius:var(--radius); color:var(--paper-mute); }
+  .empty svg{ width:30px; height:30px; stroke:var(--paper-mute); opacity:.7; }
+  .empty b{ font-size:14.5px; font-weight:700; color:var(--paper-dim); }
+  .empty span{ font-size:12.5px; }
+
+  .contact-links{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:28px; }
+  .contact-links a{ font-size:14.5px; color:var(--paper-dim); padding:10px 4px; letter-spacing:.01em; border-bottom:1px solid transparent; transition:color .2s,border-color .2s; }
+  .contact-links a:hover{ color:var(--accent-soft); border-color:rgba(58,134,255,.4); }
+  .profile-cta{ margin-top:34px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+
+  /* main page (PROFILE): white immersive hero + light ABOUT */
+  .view[data-view="profile"].is-active{ display:block; background:#fff; color:#0d0d0d; }
+  .profile-hero{ position:relative; min-height:calc(100vh - var(--navh)); display:flex; align-items:center; text-align:center; overflow:hidden; }
+  .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .profile-hero-inner{ position:relative; z-index:2; width:100%; }
+  .profile-hero .s-eyebrow{ color:var(--accent); }
+  .profile-hero h1{ color:#0d0d0d; font-size:clamp(32px,6.2vw,66px); font-weight:800; line-height:1.16; letter-spacing:-.03em; }
+  .profile-hero h1 em{ color:var(--accent); }
+  .profile-hero .roles{ margin-top:20px; color:#3a3a40; font-size:clamp(14px,1.7vw,17px); font-weight:500; }
+  .profile-cta{ margin-top:36px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .profile-hero .more-btn{ border-color:var(--accent); color:var(--accent); }
+  .profile-hero .more-btn:hover{ background:var(--accent); color:#fff; }
+  .profile-hero .more-btn.ghost{ border-color:#0d0d0d; color:#0d0d0d; }
+  .profile-hero .more-btn.ghost:hover{ background:#0d0d0d; color:#fff; }
+  body.profile-active .foot{ display:none; }
+
+  .profile-about{ background:#f4f6f9; color:#16171a; padding:74px 0 96px; border-top:1px solid #e6e9ee; }
+  .pa-label{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:.2em; color:var(--accent); margin-bottom:16px; }
+  .pa-head h2{ font-size:clamp(22px,3.4vw,36px); font-weight:800; line-height:1.3; letter-spacing:-.02em; color:#101114; }
+  .pa-head h2 em{ color:var(--accent); }
+  .pa-metrics{ display:flex; flex-wrap:wrap; gap:14px 44px; margin:30px 0 4px; }
+  .pa-metrics div{ display:flex; flex-direction:column; }
+  .pa-metrics b{ font-size:28px; font-weight:800; color:#101114; letter-spacing:-.02em; }
+  .pa-metrics span{ font-size:12.5px; color:#6a6f78; margin-top:2px; }
+  .pa-grid{ display:grid; grid-template-columns:0.92fr 1.16fr 1fr; gap:24px; margin-top:44px; align-items:start; }
+  @media (max-width:900px){ .pa-grid{ grid-template-columns:1fr; gap:18px; } }
+  .pa-card{ background:#fff; border:1px solid #e6e9ee; border-radius:16px; padding:26px 26px 28px; }
+  .pa-card h3{ font-size:13px; font-weight:800; letter-spacing:.12em; color:var(--accent); margin-bottom:14px; }
+  .pa-card h3.mt{ margin-top:26px; }
+  .pa-id{ text-align:center; }
+  .pa-photo{ position:relative; width:100%; max-width:210px; aspect-ratio:4/5; margin:0 auto 18px; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#e9edf3,#dde3ec); border:1px solid #e2e6ec; }
+  .pa-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .pa-photo-ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; letter-spacing:.12em; color:#9aa1ac; }
+  .pa-name{ font-size:20px; font-weight:800; color:#101114; }
+  .pa-name small{ display:block; font-size:12.5px; font-weight:500; color:#6a6f78; margin-top:4px; }
+  .pa-contact{ list-style:none; margin-top:18px; display:inline-block; text-align:left; }
+  .pa-contact li{ font-size:13.5px; color:#2b2d31; padding:5px 0; }
+  .pa-contact li span{ display:inline-block; width:64px; font-weight:800; font-size:11.5px; letter-spacing:.06em; color:var(--accent); }
+  .pa-list{ list-style:none; }
+  .pa-list li{ padding:9px 0; border-bottom:1px solid #eef1f5; font-size:13.5px; color:#2b2d31; line-height:1.5; }
+  .pa-list li:last-child{ border-bottom:none; }
+  .pa-list li em{ display:block; font-size:11.5px; font-weight:700; color:#8a909a; margin-bottom:2px; }
+  .pa-list li b{ color:#101114; font-weight:800; }
+  .pa-plain{ list-style:none; }
+  .pa-plain li{ font-size:13.5px; color:#2b2d31; line-height:1.65; padding:2px 0; }
+
+  /* performer detail */
+  .perf-photo{ position:relative; aspect-ratio:16/9; width:100%; border-radius:16px; overflow:hidden; margin:4px 0 32px; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
+  .perf-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .perf-photo-ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; letter-spacing:.14em; color:var(--paper-mute); }
+  .perf-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; padding-bottom:80px; }
+  @media (max-width:700px){ .perf-grid{ grid-template-columns:1fr; } }
+  .perf-card{ background:var(--ink-2); border:1px solid var(--line-soft); border-radius:14px; padding:24px 26px; }
+  .perf-card h3{ font-size:13px; font-weight:800; letter-spacing:.06em; color:var(--accent-soft); margin-bottom:14px; }
+  .perf-card ul{ list-style:none; }
+  .perf-card li{ position:relative; padding:5px 0 5px 15px; font-size:13.5px; color:var(--paper-dim); line-height:1.6; }
+  .perf-card li::before{ content:"—"; position:absolute; left:0; color:var(--paper-mute); }
+  .perf-wide{ grid-column:1 / -1; }
+  .perf-awards{ columns:2; }
+  @media (max-width:700px){ .perf-awards{ columns:1; } }
+  .perf-more{ margin-top:14px; color:var(--accent-soft); font-weight:700; font-size:13.5px; }
+
+  .foot{ border-top:1px solid var(--line-soft); padding:30px 28px 60px; margin-top:20px; color:var(--paper-mute); font-size:12.5px; display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; justify-content:space-between; }
+  .foot b{ color:var(--paper-dim); font-weight:700; }
+
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } .card,.album{ opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="nav-inner wrap">
+      <button class="brand js-view" data-view="profile">SKIPP<em>WORLD</em></button>
+      <nav class="nav-links">
+        <button class="nav-btn is-active js-view" data-view="profile">PROFILE</button>
+        <button class="nav-btn js-view" data-view="works">WORKS <span>(PD · Designer)</span></button>
+        <button class="nav-btn js-view" data-view="performer">PERFORMER</button>
+        <button class="nav-btn js-view" data-view="contact">CONTACT</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="view is-active" data-view="profile">
+      <div class="profile-hero">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+          <source src="video/hero.mp4" type="video/mp4">
+        </video>
+        <div class="wrap profile-hero-inner">
+          <span class="s-eyebrow">SKIPPWORLD · CONTENT PD &amp; BRAND DESIGNER</span>
+          <h1 class="big">브랜드의 성장을 위한<br><em>영상 · 디자인</em>을 만듭니다.</h1>
+          <p class="roles">영상 기획 · 촬영 · 편집 · 디자인을 직접 다루는 콘텐츠 PD, 김영훈입니다.</p>
+          <div class="profile-cta">
+            <button class="more-btn js-view" data-view="works">WORKS 보러가기 →</button>
+            <a class="more-btn ghost" href="https://basic-skipp-portfolio2026.vercel.app/SkippCV.pdf" target="_blank" rel="noopener">이력서 PDF ↓</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-about">
+        <div class="wrap">
+          <div class="pa-head">
+            <span class="pa-label">ABOUT · WHO I AM</span>
+            <h2>18년간 무대에서 쌓은 <em>감각</em>을<br>영상 · 디자인 · 기획으로 <em>콘텐츠</em>에 담습니다.</h2>
+            <div class="pa-metrics">
+              <div><b>1000%</b><span>유튜브 성장</span></div>
+              <div><b>700편+</b><span>누적 콘텐츠</span></div>
+              <div><b>18년</b><span>감각 기반</span></div>
+            </div>
+          </div>
+
+          <div class="pa-grid">
+            <div class="pa-card pa-id">
+              <div class="pa-photo"><span class="pa-photo-ph">PROFILE</span><img src="image/profile.jpg" alt="김영훈 프로필" onerror="this.style.display='none'"></div>
+              <div class="pa-name">김영훈 <small>Kim Younghoon · SKIPP</small></div>
+              <ul class="pa-contact">
+                <li><span>BIRTH</span>1992. 07. 16</li>
+                <li><span>PHONE</span>010-3929-7375</li>
+                <li><span>E-MAIL</span>skippkim@naver.com</li>
+              </ul>
+            </div>
+
+            <div class="pa-card">
+              <h3>EXPERIENCE</h3>
+              <ul class="pa-list">
+                <li><em>2023.10 – 현재</em><b>마이옥션</b> · 미디어콘텐츠 기획·제작 팀장</li>
+                <li><em>2022.08 – 2023.05</em><b>원더윈드코리아</b> · 브랜드 디자이너</li>
+                <li><em>2019.09 – 2022.01</em><b>체대친구들</b> · 온·오프라인 기획·총괄 PD</li>
+                <li><em>2019.06 – 2019.09</em><b>배턴터치</b> · 영상 PD</li>
+                <li><em>2019.02 – 2019.06</em><b>동대문모자 (밀리티지)</b> · 디자이너</li>
+              </ul>
+              <h3 class="mt">FREELANCE</h3>
+              <ul class="pa-list">
+                <li><em>2022.08 – 현재</em><b>크몽 (SKWS)</b> · 앨범아트 디자이너</li>
+                <li><em>2022.05 – 2025.03</em><b>에이런컴퍼니</b> · 행사 기획·콘텐츠 제작</li>
+              </ul>
+              <h3 class="mt">EDUCATION</h3>
+              <ul class="pa-plain">
+                <li>동아방송예술대학교 (방송연예과) 휴학</li>
+                <li>서울경신고등학교 졸업</li>
+                <li>서울아현산업정보학교 (실용음악과) 수료</li>
+              </ul>
+            </div>
+
+            <div class="pa-card">
+              <h3>LICENSE</h3>
+              <ul class="pa-plain"><li>영상제작전문가 1급 · 드론조종 4종 · 운전면허 1종</li></ul>
+              <h3 class="mt">B-BOY CREW</h3>
+              <ul class="pa-plain"><li>맨오브펑키즈 · 창단 / 리더</li><li>클라이맥스 크루 · 멤버</li></ul>
+              <h3 class="mt">EDIT TOOL</h3>
+              <ul class="pa-plain"><li>Premiere Pro · Photoshop · Illustrator</li><li>Claude · ChatGPT · Gemini · SUNO</li></ul>
+              <h3 class="mt">GEAR</h3>
+              <ul class="pa-plain"><li>Action Cam · Drone · DSLR · iPhone</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="works">
+      <div class="wrap"><nav class="client-nav" id="clientNav"></nav></div>
+      <div class="wrap" id="clients"></div>
+    </section>
+
+    <section class="view" data-view="performer">
+      <div class="wrap sec-hero">
+        <span class="s-eyebrow">B-BOY · PERFORMER · 18Y</span>
+        <h1>크루 창단, 해외 공연, 방송<br>그리고 <em>다수의 수상</em>까지.</h1>
+        <p>무대 위 18년은 지금의 콘텐츠를 보는 눈이 되었습니다.<br>
+           비보이로 쌓은 리듬과 타이밍이 기획 · 편집 감각의 기반입니다.</p>
+      </div>
+      <div class="wrap">
+        <div class="perf-photo">
+          <span class="perf-photo-ph">PERFORMER</span>
+          <img src="image/performer.jpg" alt="비보이 퍼포먼스" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="wrap perf-grid">
+        <div class="perf-card">
+          <h3>크루 활동</h3>
+          <ul><li>맨오브펑키즈 · 창단 / 리더</li><li>클라이맥스 크루 · 멤버 (강원도 대표팀)</li></ul>
+        </div>
+        <div class="perf-card">
+          <h3>주요 해외 공연</h3>
+          <ul><li>스위스 취리히 '서커스 코넬리' 쇼댄서</li><li>중국 광저우 '댄스뮤지컬 브레이크아웃' 배우</li></ul>
+        </div>
+        <div class="perf-card">
+          <h3>주요 방송 출연</h3>
+          <ul><li>tvN 코미디빅리그 '가족오락가락관'</li><li>KBS 런던올림픽특집 '올림픽사이언스'</li></ul>
+        </div>
+        <div class="perf-card">
+          <h3>주요 국내 공연</h3>
+          <ul><li>동대문 페스티벌 '브레이킹박스'</li><li>부산 '코미디페스티벌'</li></ul>
+        </div>
+        <div class="perf-card perf-wide">
+          <h3>주요 수상 이력</h3>
+          <ul class="perf-awards">
+            <li>타이완 8tempo 1:1 Battle — 우승</li>
+            <li>Hi Seoul Festival Bboy Battle — 우승</li>
+            <li>원주 다이내믹 댄싱카니발 — 우승</li>
+            <li>ON DA FLOOR Vol.6 — 우승 · MVP</li>
+          </ul>
+          <p class="perf-more">— 이 외 다수 공연 및 수상</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="contact">
+      <div class="wrap sec-hero">
+        <span class="s-eyebrow">CONTACT</span>
+        <h1>18년의 감각은 여전히 —<br><em>"현재진행형"</em>입니다.</h1>
+        <p>지금까지 콘텐츠 PD 김영훈이었습니다.<br>함께 만들 이야기를 기다립니다.</p>
+        <div class="contact-links">
+          <a href="mailto:skippkim@naver.com">EMAIL — skippkim@naver.com</a>
+          <a href="tel:+821039297375">TEL — 010-3929-7375</a>
+          <a href="https://visual-skipp-portfolio2026.vercel.app/" target="_blank" rel="noopener">WEB PORTFOLIO #1 — VISUAL ↗</a>
+          <a href="https://basic-skipp-portfolio2026.vercel.app/" target="_blank" rel="noopener">WEB PORTFOLIO #2 — BASIC ↗</a>
+          <a href="https://instagram.com/skippworld" target="_blank" rel="noopener">INSTAGRAM — @skippworld</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <span>© 2026 Kim Younghoon · SKIPPWORLD</span>
+    <span><b>SKIPP</b> · Content Director · Designer</span>
+  </footer>
+
+<script>
+  const I = {
+    play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+    web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>',
+    disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>',
+    star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 17l-5.6 3 1.6-6.3-5-4.2 6.5-.5z"/></svg>',
+    shirt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 3-2 4-2-1v12H8V9L6 10 4 6l4-3 2 2h4z"/></svg>',
+    layers:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13M3 12h13M16 12l5 3-5 3v-6zM3 17h7"/></svg>',
+    play12:'<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+  };
+
+  const plu = id => "https://www.youtube.com/playlist?list=" + id;
+
+  /* 마이옥션 재생목록 (호버 재생 영상 ID 보유) */
+  const MYA = [
+    { title:"이진영의 핫초이스", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"n7oe8HwXLpA", listId:"PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk" },
+    { title:"안중현의 키포인트", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"RuoOPgJsgjI", listId:"PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig" },
+    { title:"문지성의 토킹투더문", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"POEzKz_Dp6Y", listId:"PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8" },
+    { title:"왕초보 경매강의", sub:"부동산 경매 강의 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"MiJYm5g2HaY", listId:"PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c" },
+    { title:"제주도 경매특집", sub:"제주도 경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"6O_sobj1HNc", listId:"PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA" },
+    { title:"김PD의 듣고보자GO", sub:"경매사건 소개 콘텐츠 / 기획·대본·촬영·편집 기여도 100%", videoId:"6rCalbp-NMw", listId:"PLeDgow7nj3iL7s74A949g6hsez00vqfV8" },
+  ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
+
+  /* 체대친구들 재생목록 (제목=시리즈명, 호버영상은 추후 videoId 입력) */
+  const CDF = [
+    { title:'체터뷰',     sub:'', listId:'PLxytJQTYF-QVttLq5q3dWb0lYI29LZvYX' },
+    { title:'체대파일러', sub:'', listId:'PLxytJQTYF-QU9sKyzLaSxkVyd6_m4Lwna' },
+    { title:'제이슨로그', sub:'', listId:'PLxytJQTYF-QUaLupi6-87PydkUhpyJ46E' },
+    { title:'운동강의',   sub:'', listId:'PLxytJQTYF-QX5-oW51xByVBf9gVSh9yLZ' },
+    { title:'꿀팁정보통', sub:'', listId:'PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv' },
+    { title:'탐구생활',   sub:'', listId:'PLxytJQTYF-QXSDu1jxJK3OnmQei2mZeVL' },
+    { title:'운동리액션', sub:'', listId:'PLxytJQTYF-QVPDoCyx-JQS8nghia18eKg' },
+  ].map(p=>({ title:p.title, sub:p.sub, videoId:'', url:plu(p.listId), badge:'재생목록', ph:'HOVER 영상 연결 예정' }));
+
+  /* 크몽 앨범 이미지 경로 (image 폴더에 album1.jpg ~ album20.jpg) */
+  const KMONG_BASE = "image/";
+  const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
+
+  const CLIENTS = [
+    { id:'myauction', name:'마이옥션', meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재', toggles:[
+      { id:'youtube', label:'YOUTUBE', icon:I.play,
+        hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
+          desc:'부동산경매라는 어려운 정보 영역을 대중이 찾아보고 싶어지는 콘텐츠로 재설계했습니다. 단일 출연진의 딱딱한 기업 유튜브를 출연진 다양화로 생동감 있는 채널로 전환했습니다.',
+          stats:[['1,800 → 23,000+','구독자 성장'],['400편+','콘텐츠 누계'],['80%','콘텐츠 기획']] },
+        block:{ type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} } },
+      { id:'web', label:'WEB', icon:I.web,
+        hero:{ title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
+        block:{ type:'cards', items:[{ title:'마이옥션 홈페이지', sub:'홈·상품·상세페이지 UI/UX 리뉴얼 · 자동결제 동선', url:'https://my-auction.co.kr', badge:'WEB', ph:'WEB 미리보기' }] } },
+      { id:'document', label:'DOCUMENT', icon:I.doc,
+        hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'보고서 표준 틀 부재로 직원마다 제각각이던 양식을 정리했습니다.' },
+        block:{ type:'note', text:'<b>표준 디자인 틀과 자동화 서식</b>을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다. 사내 운영 자료로, 공개 링크 대신 요청 시 포트폴리오로 공유합니다.' } },
+    ]},
+
+    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD · 2019.09 – 2022.01', toggles:[
+      { id:'youtube', label:'YOUTUBE', icon:I.play,
+        hero:{ title:'제이슨의V트레이닝 · <em>YOUTUBE</em>',
+          desc:'타이틀 · 서브타이틀 작성 예정 (추후 업데이트)',
+          stats:[['17,000 → 33,000','구독자 (온→오프 확장)'],['7종','시리즈 포맷'],['100%','콘텐츠 기획']] },
+        block:{ type:'cards', items:CDF, more:{label:'체대친구들 유튜브 채널 →', url:'https://youtube.com/@cdf_jason'} } },
+      { id:'web', label:'WEB', icon:I.web,
+        hero:{ title:'체대친구들 · <em>WEB</em>' }, block:{ type:'empty', text:'유튜브 IP · 오프라인 학원 중심 프로젝트입니다' } },
+      { id:'document', label:'DOCUMENT', icon:I.doc,
+        hero:{ title:'체대친구들 · <em>DOCUMENT</em>' }, block:{ type:'empty', text:'입시 커리큘럼 자료는 사내 운영 자료입니다' } },
+    ]},
+
+    { id:'wonderwind', name:'원더윈드코리아', meta:'㈜원더윈드코리아 · 비주얼 디렉터 / 디자이너 · 2022.08 – 2023.05', toggles:[
+      { id:'williwo', label:'윌리워스튜디오', icon:I.shirt, type:'subtabs',
+        hero:{ title:'윌리워<em>스튜디오</em>', desc:'스트릿 애슬레저 톤으로 재구성. 무신사 아울렛 제품군 구성·룩북 제작·SNS 마케팅으로 완판을 견인했습니다.' },
+        subtabs:[
+          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
+            { title:'무신사 룩북 #1', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'룩북 보기' },
+            { title:'무신사 룩북 #2', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'룩북 보기' },
+          ]}},
+          { id:'detail', label:'상세페이지', block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
+          { id:'video', label:'영상', block:{ type:'cards', items:[
+            { title:'윌리워 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+          ]}},
+        ]},
+      { id:'blackbeast', label:'블랙비스트', icon:I.star, type:'subtabs',
+        hero:{ title:'블랙<em>비스트</em>', desc:'프리미엄 데님 컬렉션 브랜드로 BI/BX를 구성. 패션코드 정식 런칭·트렌드페어·독일 K-전시회 선정·무신사 입점까지 이어졌습니다.' },
+        subtabs:[
+          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
+            { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
+          ]}},
+          { id:'detail', label:'상세페이지', block:{ type:'note', text:'<b>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.</b> 두 브랜드의 결을 살리되 하나의 비주얼 시스템으로 정렬했습니다.' }},
+          { id:'video', label:'영상', block:{ type:'cards', items:[
+            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+          ]}},
+        ]},
+    ]},
+
+    { id:'kmong', name:'크몽', meta:'크몽 · 프리랜서 @SKIPPWORKS · 2022.08 – 2026.07', toggles:[
+      { id:'album', label:'앨범커버 아트워크', icon:I.disc,
+        hero:{ title:'들리는 음악을,<br><em>보이는 커버</em>로.',
+          desc:'아티스트명 SKIPPWORKS로 진행하는 앨범 아트워크 작업입니다. 음악 톤·가사·아티스트 정체성을 해석해 시각화하며, 트로트·락·발라드·캐롤 등 다양한 장르를 다룹니다.',
+          stats:[['★ 4.9','크몽 평균 평점'],['다양한 장르','트로트·락·발라드·캐롤'],['100%','컨셉·타이포·아트워크']] },
+        block:{ type:'album' } },
+    ]},
+
+    { id:'aruncompany', name:'에이런컴퍼니', meta:'프리랜서 · 콘텐츠 디렉터 · 2022.05 – 2026.03', toggles:[
+      { id:'youtube', label:'YOUTUBE', icon:I.play,
+        hero:{ title:'브레이킹 씬을,<br><em>브랜딩</em>하다.',
+          desc:'브레이킹(B-boy) 문화 기반 컴퍼니. WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고, B-ON TOP 메인 영상 및 백월 영상을 디자인했습니다.' },
+        block:{ type:'cards', items:[
+          { title:'에이런컴퍼니 영상 작업', sub:'WBC 선발전 · B-ON TOP 등 영상 재생목록', url:plu('PLxytJQTYF-QXssEpcK6V-ncxsGfNmdlJy'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+        ]} },
+    ]},
+
+    { id:'batontouch', name:'배턴터치', meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09', toggles:[
+      { id:'youtube', label:'YOUTUBE', icon:I.play,
+        hero:{ title:'대본부터 음원까지,<br><em>직접 설계한</em> 시리즈.',
+          desc:'맥스체대입시(MAX Inc)의 외주 의뢰 작업. 드림한양·슈퍼맥스 시리즈의 촬영·편집을 진행하며 대본·구성·톤은 물론 영상 내 음원까지 직접 제작했습니다. (Keepit 1:1 PT 매칭 앱 콘텐츠 편집 — 런칭 전 참여, 서비스 종료)' },
+        block:{ type:'cards', items:[
+          { title:'배턴터치 영상 작업', sub:'드림한양 · 슈퍼맥스 시리즈 재생목록', url:plu('PLxytJQTYF-QUpvPpislNriB4tKBVV2O4N'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+        ]} },
+    ]},
+  ];
+
+  /* builders */
+  const hero = h => `<div class="sec-hero">${h.eyebrow?`<span class="s-eyebrow">${h.eyebrow}</span>`:''}<h1>${h.title}</h1>${h.desc?`<p>${h.desc}</p>`:''}${h.stats?`<div class="stats">${h.stats.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`:''}</div>`;
+  const emptyBox = m => `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><b>${m}</b><span>콘텐츠를 추가하면 이 섹션에 표시됩니다.</span></div>`;
+  const moreBtn = m => m?`<div class="more-wrap"><a class="more-btn" href="${m.url}" target="_blank" rel="noopener">${m.label}</a></div>`:'';
+
+  function cardHTML(it){
+    const media = it.videoId
+      ? `<img src="https://i.ytimg.com/vi/${it.videoId}/maxresdefault.jpg" alt="${it.title||''}" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';">`
+      : it.thumb
+        ? `<img src="${it.thumb}" alt="${it.title||''}" loading="lazy">`
+        : `<div class="card__ph">${it.ph||'영상 연결 예정'}</div>`;
+    const tag = it.url ? 'a' : 'div';
+    const attrs = it.url ? `href="${it.url}" target="_blank" rel="noopener"` : '';
+    return `<${tag} class="card${it.url?'':' nolink'}" ${attrs} ${it.videoId?`data-video="${it.videoId}"`:''} aria-label="${it.title||''}">
+      <div class="badge">${I.layers}<span>${it.badge||'재생목록'}</span></div>
+      ${it.videoId?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
+      <div class="card__media">${media}<div class="card__shade"></div></div>
+      <div class="card__body"><div class="card__title">${it.title||''}</div>${it.sub?`<div class="card__sub">${it.sub}</div>`:''}</div>
+    </${tag}>`;
+  }
+
+  function block(b){
+    if(!b) return '';
+    if(b.type==='cards'){ const single=b.items.length===1?' single':''; return `<div class="grid${single}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
+    if(b.type==='note')  return `<div class="note">${b.text}</div>`;
+    if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
+    if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
+    return '';
+  }
+
+  function toggleContent(t){
+    if(t.type==='subtabs'){
+      const row = `<div class="subtab-row">${t.subtabs.map((s,i)=>`<button class="subtab${i?'':' is-active'}" data-sub="${s.id}">${s.label}</button>`).join('')}</div>`;
+      const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${block(s.block)}</div>`).join('');
+      return hero(t.hero) + row + panels;
+    }
+    return hero(t.hero) + block(t.block);
+  }
+
+  const clientNav = document.getElementById('clientNav');
+  const clients   = document.getElementById('clients');
+  clientNav.innerHTML = CLIENTS.map((c,i)=>`<button class="client-btn${i?'':' is-active'}" data-client="${c.id}">${c.name}</button>`).join('');
+  clients.innerHTML = CLIENTS.map((c,i)=>`
+    <div class="client${i?'':' is-active'}" data-client="${c.id}">
+      ${c.meta?`<div class="client-head">${(()=>{const p=c.meta.split(' · ');const per=p.pop();return `<span class="ch-main">${p.join(' · ')}</span><span class="ch-period">${per}</span>`;})()}</div>`:''}
+      <div class="wtoggle-row">${c.toggles.map((t,j)=>`<button class="wtoggle${j?'':' is-active'}" data-toggle="${t.id}">${t.icon}${t.label}</button>`).join('')}</div>
+      ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t)}</div>`).join('')}
+    </div>`).join('');
+
+  /* hover play */
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  function attachHover(a){
+    const vid=a.dataset.video; if(!vid) return;
+    const media=a.querySelector('.card__media'); let timer=null;
+    a.addEventListener('mouseenter',()=>{ timer=setTimeout(()=>{
+      if(media.querySelector('iframe'))return;
+      const f=document.createElement('iframe'); f.allow='autoplay; encrypted-media';
+      f.src=`https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=1&controls=0&loop=1&playlist=${vid}&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0`;
+      media.appendChild(f); requestAnimationFrame(()=>setTimeout(()=>f.classList.add('on'),420));
+    },180); });
+    a.addEventListener('mouseleave',()=>{ clearTimeout(timer); const f=media.querySelector('iframe'); if(f)f.remove(); });
+  }
+  if(canHover) document.querySelectorAll('.card[data-video]').forEach(attachHover);
+
+  /* reveal */
+  const io=new IntersectionObserver((es)=>{es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('reveal'),(i%5)*55); io.unobserve(e.target);} });},{threshold:.1});
+  document.querySelectorAll('.card,.album').forEach(el=>io.observe(el));
+
+  /* wiring */
+  function wire(btns, panels, key){
+    btns.forEach(b=>b.addEventListener('click',()=>{
+      btns.forEach(x=>x.classList.remove('is-active')); b.classList.add('is-active');
+      panels.forEach(p=>p.classList.toggle('is-active', p.dataset[key]===b.dataset[key]));
+    }));
+  }
+  document.querySelectorAll('.js-view').forEach(el=>el.addEventListener('click',()=>{
+    const v=el.dataset.view;
+    document.querySelectorAll('.view').forEach(x=>x.classList.toggle('is-active',x.dataset.view===v));
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('is-active',b.dataset.view===v));
+    document.body.classList.toggle('profile-active', v==='profile');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+  document.body.classList.add('profile-active');
+
+  wire(clientNav.querySelectorAll('.client-btn'), clients.querySelectorAll('.client'), 'client');
+  document.querySelectorAll('.client').forEach(cl=>{
+    wire(cl.querySelectorAll('.wtoggle'), cl.querySelectorAll('.wpanel'), 'toggle');
+    cl.querySelectorAll('.wpanel').forEach(wp=>{ const sb=wp.querySelectorAll('.subtab'), sp=wp.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
+  });
+</script>
+</body>
+</html>
