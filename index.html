@@ -454,7 +454,7 @@
           stats:[['대치동','오프라인 학원 확장'],['20회차','원데이클래스 완판'],['150명+','참가 · 기록 향상']] },
         block:{ type:'cards', items:[
           { title:'대치동 오프라인센터', sub:'센터 홍보영상', badge:'OFFLINE', ph:'영상 추가 예정' },
-          { title:'원데이클래스 (소방 제자리멀리뛰기)', sub:'클래스 홍보영상', badge:'OFFLINE', ph:'영상 추가 예정' },
+          { title:'원데이클래스 (소방 제자리멀리뛰기)', sub:'클래스 홍보영상', videoId:'SYU61ezqz4c', url:vurl('SYU61ezqz4c'), badge:'OFFLINE' },
           { title:'체대입시 최종 합격자 리스트', sub:'개인정보 일부 블러 처리', badge:'자료', ph:'이미지 추가 예정' },
         ]} },
     ]},
@@ -468,7 +468,7 @@
           ]}},
           { id:'detail', label:'상세페이지', block:{ type:'note', text:'<b>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.</b> 두 브랜드의 결을 살리되 하나의 비주얼 시스템으로 정렬했습니다.' }},
           { id:'video', label:'영상', block:{ type:'cards', items:[
-            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록' },
           ]}},
         ]},
       { id:'williwo', label:'윌리워스튜디오', icon:I.shirt, type:'subtabs',
@@ -479,9 +479,18 @@
             { title:'무신사 룩북 #2', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'룩북 보기' },
           ]}},
           { id:'detail', label:'상세페이지', block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
-          { id:'video', label:'영상', block:{ type:'cards', items:[
-            { title:'윌리워 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
-          ]}},
+          { id:'video', label:'영상', blocks:[
+            { type:'cards', center:true, items:[
+              { title:'윌리워 브랜드 영상 #1', videoId:'M5L5DEMer4Q', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+              { title:'윌리워 브랜드 영상 #2', videoId:'WS5khR9Iwvg', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+            ]},
+            { type:'divider' },
+            { type:'cards', vertical:true, items:[
+              { title:'윌리워 숏폼 #1', videoId:'Dj-i6g6YhP4', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+              { title:'윌리워 숏폼 #2', videoId:'BzzfsMkMOPs', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+              { title:'윌리워 숏폼 #3', videoId:'d8LpIM-pRwo', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+            ]},
+          ]},
         ]},
     ]},
 
@@ -573,7 +582,7 @@
   function toggleContent(t){
     if(t.type==='subtabs'){
       const row = `<div class="subtab-row">${t.subtabs.map((s,i)=>`<button class="subtab${i?'':' is-active'}" data-sub="${s.id}">${s.label}</button>`).join('')}</div>`;
-      const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${block(s.block)}</div>`).join('');
+      const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${s.blocks ? s.blocks.map(block).join('') : block(s.block)}</div>`).join('');
       return hero(t.hero) + row + panels;
     }
     return hero(t.hero) + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
