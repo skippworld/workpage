@@ -86,8 +86,12 @@
   .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; padding-bottom:8px; }
   @media (max-width:980px){ .grid{ grid-template-columns:repeat(2,1fr); gap:18px; } }
   @media (max-width:600px){ .grid{ grid-template-columns:1fr; gap:20px; } }
-  .grid.single{ display:flex; justify-content:center; }
-  .grid.single .card{ width:100%; max-width:440px; }
+  .grid.single, .grid.center{ display:flex; justify-content:center; flex-wrap:wrap; gap:22px; }
+  .grid.single .card, .grid.center .card{ width:100%; max-width:440px; }
+  .block-head{ text-align:center; padding:10px 0 22px; }
+  .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
+  .block-head p{ margin:12px auto 0; max-width:60ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
+  .block-div{ height:1px; background:var(--line); margin:22px 0 34px; }
 
   .card{ display:block; position:relative; border-radius:var(--radius); background:var(--ink-2); border:1px solid var(--line-soft); overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; opacity:0; transform:translateY(18px); }
   .card.reveal{ opacity:1; transform:translateY(0); }
@@ -380,13 +384,23 @@
   const plu = id => "https://www.youtube.com/playlist?list=" + id;
 
   /* 마이옥션 재생목록 (호버 재생 영상 ID 보유) */
+  /* 마이옥션 - 김피디 실험형 콘텐츠 (1인 단독 제작) */
+  const MYA_EXP = [
+    { title:'듣고보자 GO',      sub:'1인 단독 콘텐츠 · 기획·촬영·편집·더빙 (기여도 100%)', videoId:'6rCalbp-NMw', url:plu('PLeDgow7nj3iL7s74A949g6hsez00vqfV8'), badge:'실험형' },
+    { title:'꼬꼬무 경매이야기', sub:'1인 단독 콘텐츠 · 기획·촬영·편집·더빙 (기여도 100%)', videoId:'rSgZmH7VVZg', url:plu('PLeDgow7nj3iI7kYVsNWuaKzoeYgWToGw5'), badge:'실험형' },
+  ];
+
+  /* 마이옥션 - 대표 재생목록 (hover = 각 재생목록의 첫 영상) */
   const MYA = [
     { title:"이진영의 핫초이스", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"n7oe8HwXLpA", listId:"PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk" },
     { title:"안중현의 키포인트", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"RuoOPgJsgjI", listId:"PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig" },
     { title:"문지성의 토킹투더문", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"POEzKz_Dp6Y", listId:"PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8" },
     { title:"왕초보 경매강의", sub:"부동산 경매 강의 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"MiJYm5g2HaY", listId:"PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c" },
     { title:"제주도 경매특집", sub:"제주도 경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"6O_sobj1HNc", listId:"PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA" },
-    { title:"김PD의 듣고보자GO", sub:"경매사건 소개 콘텐츠 / 기획·대본·촬영·편집 기여도 100%", videoId:"6rCalbp-NMw", listId:"PLeDgow7nj3iL7s74A949g6hsez00vqfV8" },
+    { title:"경매의품격", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 90%", videoId:"ZNoeu5VYxa8", listId:"PLeDgow7nj3iJi2_7FcCqGiRCGO79LS83i" },
+    { title:"육형경매", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"-OGXEeE135k", listId:"PLeDgow7nj3iJls8BEkhJpRUtW8mP-A5m7" },
+    { title:"찐의시선", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"zqa3h1hON8k", listId:"PLeDgow7nj3iI38THA9SxScQ2OH0S_F7Tz" },
+    { title:"푸근한경매", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"N7FXl0y9xEk", listId:"PLeDgow7nj3iJ8O2gUNE0PbTIA8ISVWf5F" },
   ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
 
   /* 체대친구들 재생목록 (hover = 각 재생목록의 첫 영상) */
@@ -411,7 +425,14 @@
         hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
           desc:'부동산경매라는 어려운 정보 영역을 대중이 찾아보고 싶어지는 콘텐츠로 재설계했습니다. 단일 출연진의 딱딱한 기업 유튜브를 출연진 다양화로 생동감 있는 채널로 전환했습니다.',
           stats:[['1,800 → 23,000+','구독자 성장'],['400편+','콘텐츠 누계'],['80%','콘텐츠 기획']] },
-        block:{ type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} } },
+        blocks:[
+          { type:'heading', title:'김피디의 실험형 콘텐츠',
+            desc:'경매 사건 소개를 AI까지 활용해 노래로도 만든, 실험적인 1인 단독 콘텐츠입니다.<br>경매물건 선정·분석 → 콘텐츠 기획 → 촬영 → 편집 → 더빙 → 완성까지 직접 진행했습니다. (기여도 100%)' },
+          { type:'cards', center:true, items:MYA_EXP },
+          { type:'divider' },
+          { type:'heading', title:'대표 재생목록' },
+          { type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} },
+        ] },
       { id:'web', label:'WEB', icon:I.web,
         hero:{ title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
         block:{ type:'cards', items:[{ title:'마이옥션 홈페이지', sub:'홈·상품·상세페이지 UI/UX 리뉴얼 · 자동결제 동선', url:'https://my-auction.co.kr', badge:'WEB', ph:'WEB 미리보기' }] } },
@@ -509,7 +530,9 @@
 
   function block(b){
     if(!b) return '';
-    if(b.type==='cards'){ const single=b.items.length===1?' single':''; return `<div class="grid${single}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
+    if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':''); return `<div class="grid${cls}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
+    if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
+    if(b.type==='divider') return `<div class="block-div"></div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
     if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
@@ -522,7 +545,7 @@
       const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${block(s.block)}</div>`).join('');
       return hero(t.hero) + row + panels;
     }
-    return hero(t.hero) + block(t.block);
+    return hero(t.hero) + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
   }
 
   const clientNav = document.getElementById('clientNav');
