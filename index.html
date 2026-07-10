@@ -43,7 +43,7 @@
   .s-eyebrow{ display:inline-block; margin-bottom:18px; font-size:12px; font-weight:700; letter-spacing:.24em; color:var(--accent-soft); }
   .sec-hero h1{ font-size:clamp(28px,5vw,52px); font-weight:800; line-height:1.15; letter-spacing:-.025em; }
   .sec-hero h1.big{ font-size:clamp(40px,8vw,84px); letter-spacing:-.03em; }
-  .sec-hero p{ margin:18px auto 0; max-width:54ch; font-size:clamp(14px,1.6vw,16px); color:var(--paper-dim); line-height:1.7; }
+  .sec-hero p{ margin:18px auto 0; max-width:62ch; font-size:clamp(14px,1.6vw,16px); color:var(--paper-dim); line-height:1.7; }
   .sec-hero p.roles{ color:var(--paper); font-weight:600; letter-spacing:.01em; margin-top:16px; }
   .stats{ display:flex; justify-content:center; flex-wrap:wrap; margin-top:32px; }
   .stat{ display:flex; align-items:baseline; gap:8px; padding:6px 24px; }
@@ -90,7 +90,7 @@
   .grid.single .card, .grid.center .card{ width:100%; max-width:440px; }
   .block-head{ text-align:center; padding:10px 0 22px; }
   .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
-  .block-head p{ margin:12px auto 0; max-width:60ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
+  .block-head p{ margin:12px auto 0; max-width:66ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
   .block-div{ height:1px; background:var(--line); margin:22px 0 34px; }
 
   .card{ display:block; position:relative; border-radius:var(--radius); background:var(--ink-2); border:1px solid var(--line-soft); overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; opacity:0; transform:translateY(18px); }
@@ -430,14 +430,15 @@
     { id:'myauction', name:'마이옥션', meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
-          desc:'부동산경매라는 어려운 정보 영역을 대중이 찾아보고 싶어지는 콘텐츠로 재설계했습니다. 단일 출연진의 딱딱한 기업 유튜브를 출연진 다양화로 생동감 있는 채널로 전환했습니다.',
+          desc:'단일 출연진의 딱딱한 기업 채널을, 다양한 <em>출연자 기반 IP</em>로 재설계했습니다.<br>개인의 스타일에 맞춘 콘텐츠로 전문성과 개성을 함께 살려,<br>회사와 컨설턴트 개개인의 인지도를 동시에 끌어올렸습니다.<br><br>그리고 지금도, 끊임없이 새로운 콘텐츠를 기획하고 실험하고 있습니다.',
           stats:[['1,800 → 23,000+','구독자 성장'],['400편+','콘텐츠 누계'],['80%','콘텐츠 기획']] },
         blocks:[
           { type:'heading', title:'김피디의 실험형 콘텐츠',
-            desc:'경매 사건 소개를 AI까지 활용해 노래로도 만든, 실험적인 1인 단독 콘텐츠입니다.<br>경매물건 선정·분석 → 콘텐츠 기획 → 촬영 → 편집 → 더빙 → 완성까지 직접 진행했습니다. (기여도 100%)' },
+            desc:'경매사건 현장 임장과 분석부터, AI를 활용한 경매 RAP 브리핑,<br>경매의 역사를 다루는 콘텐츠, 컨설턴트들의 물건 추천 배틀까지 —<br>포맷의 틀을 깬, 실험적인 1인 단독 콘텐츠입니다.<br><br>경매물건 선정·분석 → 콘텐츠 기획 → 촬영 →<br>편집 → 더빙 → 완성까지 직접 진행했습니다. (기여도 100%)' },
           { type:'cards', items:MYA_EXP },
           { type:'divider' },
-          { type:'heading', title:'주요 콘텐츠 작업 재생목록' },
+          { type:'heading', title:'주요 콘텐츠 작업 재생목록',
+            desc:'각 컨설턴트의 성격과 스타일에 맞춰 기획한, 출연자 기반 IP 콘텐츠들입니다.<br>인물마다 다른 콘셉트와 이름으로 채널의 전문성과 개성을 함께 담았습니다.' },
           { type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} },
         ] },
       { id:'web', label:'WEB', icon:I.web,
