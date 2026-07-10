@@ -142,8 +142,8 @@
   .profile-cta{ margin-top:34px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
 
   /* main page (PROFILE): white immersive hero + light ABOUT */
-  .view[data-view="profile"].is-active{ display:block; background:#fff; color:#0d0d0d; }
-  .profile-hero{ position:relative; min-height:calc(100vh - var(--navh)); display:flex; align-items:center; text-align:center; overflow:hidden; }
+  .view[data-view="profile"].is-active{ display:flex; flex-direction:column; min-height:calc(100vh - var(--navh)); background:#fff; color:#0d0d0d; }
+  .profile-hero{ position:relative; flex:1 1 auto; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:40px 0; }
   .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
   .profile-hero-inner{ position:relative; z-index:2; width:100%; }
   .profile-hero .s-eyebrow{ color:var(--accent); }
@@ -157,6 +157,14 @@
   .profile-hero .more-btn.ghost:hover{ background:#0d0d0d; color:#fff; }
   body.profile-active .foot{ display:none; }
 
+  .profile-info{ background:#fff; border-top:1px solid #e9ecf1; padding:24px 0 30px; }
+  .pinfo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
+  @media (max-width:760px){ .pinfo-grid{ grid-template-columns:repeat(2,1fr); gap:22px 26px; } }
+  @media (max-width:420px){ .pinfo-grid{ grid-template-columns:1fr; } }
+  .pinfo-col h4{ font-size:12px; font-weight:800; letter-spacing:.12em; color:var(--accent); margin-bottom:10px; }
+  .pinfo-col ul{ list-style:none; }
+  .pinfo-col li{ font-size:12.5px; line-height:1.6; color:#3a3a40; padding:1px 0; }
+
   .profile-about{ background:#f4f6f9; color:#16171a; padding:74px 0 96px; border-top:1px solid #e6e9ee; }
   .pa-label{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:.2em; color:var(--accent); margin-bottom:16px; }
   .pa-head h2{ font-size:clamp(22px,3.4vw,36px); font-weight:800; line-height:1.3; letter-spacing:-.02em; color:#101114; }
@@ -165,7 +173,7 @@
   .pa-metrics div{ display:flex; flex-direction:column; }
   .pa-metrics b{ font-size:28px; font-weight:800; color:#101114; letter-spacing:-.02em; }
   .pa-metrics span{ font-size:12.5px; color:#6a6f78; margin-top:2px; }
-  .pa-grid{ display:grid; grid-template-columns:0.92fr 1.16fr 1fr; gap:24px; margin-top:44px; align-items:start; }
+  .pa-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:24px; margin-top:22px; align-items:start; }
   @media (max-width:900px){ .pa-grid{ grid-template-columns:1fr; gap:18px; } }
   .pa-card{ background:#fff; border:1px solid #e6e9ee; border-radius:16px; padding:26px 26px 28px; }
   .pa-card h3{ font-size:13px; font-weight:800; letter-spacing:.12em; color:var(--accent); margin-bottom:14px; }
@@ -240,60 +248,36 @@
         </div>
       </div>
 
-      <div class="profile-about">
+      <div class="profile-info">
         <div class="wrap">
-          <div class="pa-head">
-            <span class="pa-label">ABOUT · WHO I AM</span>
-            <h2>18년간 무대에서 쌓은 <em>감각</em>을<br>영상 · 디자인 · 기획으로 <em>콘텐츠</em>에 담습니다.</h2>
-            <div class="pa-metrics">
-              <div><b>1000%</b><span>유튜브 성장</span></div>
-              <div><b>700편+</b><span>누적 콘텐츠</span></div>
-              <div><b>18년</b><span>감각 기반</span></div>
-            </div>
-          </div>
-
-          <div class="pa-grid">
-            <div class="pa-card pa-id">
-              <div class="pa-photo"><span class="pa-photo-ph">PROFILE</span><img src="image/profile.jpg" alt="김영훈 프로필" onerror="this.style.display='none'"></div>
-              <div class="pa-name">김영훈 <small>Kim Younghoon · SKIPP</small></div>
-              <ul class="pa-contact">
-                <li><span>BIRTH</span>1992. 07. 16</li>
-                <li><span>PHONE</span>010-3929-7375</li>
-                <li><span>E-MAIL</span>skippkim@naver.com</li>
-              </ul>
-            </div>
-
-            <div class="pa-card">
-              <h3>EXPERIENCE</h3>
-              <ul class="pa-list">
-                <li><em>2023.10 – 현재</em><b>마이옥션</b> · 미디어콘텐츠 기획·제작 팀장</li>
-                <li><em>2022.08 – 2023.05</em><b>원더윈드코리아</b> · 브랜드 디자이너</li>
-                <li><em>2019.09 – 2022.01</em><b>체대친구들</b> · 온·오프라인 기획·총괄 PD</li>
-                <li><em>2019.06 – 2019.09</em><b>배턴터치</b> · 영상 PD</li>
-                <li><em>2019.02 – 2019.06</em><b>동대문모자 (밀리티지)</b> · 디자이너</li>
-              </ul>
-              <h3 class="mt">FREELANCE</h3>
-              <ul class="pa-list">
-                <li><em>2022.08 – 현재</em><b>크몽 (SKWS)</b> · 앨범아트 디자이너</li>
-                <li><em>2022.05 – 2025.03</em><b>에이런컴퍼니</b> · 행사 기획·콘텐츠 제작</li>
-              </ul>
-              <h3 class="mt">EDUCATION</h3>
-              <ul class="pa-plain">
+          <div class="pinfo-grid">
+            <div class="pinfo-col">
+              <h4>EDUCATION</h4>
+              <ul>
                 <li>동아방송예술대학교 (방송연예과) 휴학</li>
                 <li>서울경신고등학교 졸업</li>
                 <li>서울아현산업정보학교 (실용음악과) 수료</li>
               </ul>
             </div>
-
-            <div class="pa-card">
-              <h3>LICENSE</h3>
-              <ul class="pa-plain"><li>영상제작전문가 1급 · 드론조종 4종 · 운전면허 1종</li></ul>
-              <h3 class="mt">B-BOY CREW</h3>
-              <ul class="pa-plain"><li>맨오브펑키즈 · 창단 / 리더</li><li>클라이맥스 크루 · 멤버</li></ul>
-              <h3 class="mt">EDIT TOOL</h3>
-              <ul class="pa-plain"><li>Premiere Pro · Photoshop · Illustrator</li><li>Claude · ChatGPT · Gemini · SUNO</li></ul>
-              <h3 class="mt">GEAR</h3>
-              <ul class="pa-plain"><li>Action Cam · Drone · DSLR · iPhone</li></ul>
+            <div class="pinfo-col">
+              <h4>LICENSE</h4>
+              <ul>
+                <li>영상제작전문가 1급 · 드론조종 4종</li>
+                <li>운전면허 1종 (자차보유)</li>
+              </ul>
+            </div>
+            <div class="pinfo-col">
+              <h4>EDIT TOOL</h4>
+              <ul>
+                <li>Premiere Pro · Photoshop · Illustrator</li>
+                <li>Claude · ChatGPT · Gemini · SUNO</li>
+              </ul>
+            </div>
+            <div class="pinfo-col">
+              <h4>GEAR</h4>
+              <ul>
+                <li>Action Cam · Drone · DSLR · iPhone</li>
+              </ul>
             </div>
           </div>
         </div>
