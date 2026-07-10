@@ -403,17 +403,17 @@
     { title:"NPL특전사", sub:"경매 NPL 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"8_6PrQG6EZU", listId:"PLeDgow7nj3iIdNUS2WxBv_hCDef2hxeLi" },
   ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
 
-  /* 체대친구들 재생목록 (hover = 각 재생목록의 첫 영상) */
+  /* 체대친구들 (hover = 첫 영상, 클릭 = 재생목록) */
   const CDF = [
     { title:'체터뷰',         sub:'당신의 궁금한 체대생과의 인터뷰 (기여도 90%)',  videoId:'9m2aFWBfEMw', listId:'PLxytJQTYF-QVttLq5q3dWb0lYI29LZvYX' },
     { title:'체대파일러',     sub:'체대입시의 모든 질문을 분석한다 (기여도 100%)', videoId:'tvw-8xtJ1ME', listId:'PLxytJQTYF-QU9sKyzLaSxkVyd6_m4Lwna' },
     { title:'제이슨로그',     sub:'제이슨의 운동 브이로그 (기여도 80%)',           videoId:'tcVeKEPXrtk', listId:'PLxytJQTYF-QUaLupi6-87PydkUhpyJ46E' },
     { title:'공무원체력 강의', sub:'이것만 알면 됩니다 (기여도 100%)',              videoId:'QWNB-H4euhA', listId:'PLxytJQTYF-QX5-oW51xByVBf9gVSh9yLZ' },
-    { title:'꿀팁정보통',     sub:'당신만 몰랐던 운동 꿀팁정보 (기여도 90%)',      videoId:'8id6GT7CrZQ', listId:'PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv' },
+    { title:'꿀팁정보통',     sub:'당신만 몰랐던 운동 꿀팁정보 (기여도 90%)',      videoId:'-N8OhkDXvQM', start:7, listId:'PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv' },
     { title:'김피디 탐구생활', sub:'김피디의 운동 탐구생활 (기여도 100%)',          videoId:'oBKIJuey7ck', listId:'PLxytJQTYF-QXSDu1jxJK3OnmQei2mZeVL' },
     { title:'운동리액션',     sub:'피지컬 괴물들의 운동은 어떨까 (기여도 100%)',   videoId:'NnCPtlnREXM', listId:'PLxytJQTYF-QVPDoCyx-JQS8nghia18eKg' },
     { title:'에어클래스',     sub:'온라인 실기강의 플랫폼 (기여도 100%)',          videoId:'KvQqDUUnbso', listId:'PLxytJQTYF-QVFmmnipmsYIYQTB8sNmaA5' },
-  ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
+  ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, start:p.start, url:plu(p.listId), badge:'재생목록' }));
 
   /* 크몽 앨범 이미지 경로 (image 폴더에 album1.jpg ~ album20.jpg) */
   const KMONG_BASE = "image/";
@@ -498,7 +498,7 @@
         hero:{ title:'브레이킹 씬을,<br><em>브랜딩</em>하다.',
           desc:'브레이킹(B-boy) 문화 기반 컴퍼니.<br>WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고,<br>행사 백월 미디어아트와 메인 영상을 디자인했습니다.' },
         blocks:[
-          { type:'heading', title:'대표 영상' },
+          { type:'heading', title:'길거리예술작 WA:ZAK 홍보영상 제작' },
           { type:'cards', center:true, items:[
             { title:'WA:ZAK 거리예술작품 홍보영상', sub:'1인 3Cam 촬영·편집·보정 (기여도 100%)', videoId:'8fNJkbhj0B0', url:vurl('8fNJkbhj0B0'), badge:'홍보영상' },
           ]},
@@ -506,10 +506,10 @@
           { type:'cards', items:[
             { title:'2023 WBC · BACK WALL', videoId:'D6qjgbx7-UI', url:vurl('D6qjgbx7-UI'), badge:'영상' },
             { title:'2022 B-ON TOP · BACK WALL', videoId:'J_ahQDayVVU', url:vurl('J_ahQDayVVU'), badge:'영상' },
-            { title:'2022 WB · BACK WALL', videoId:'7RBo7CIo9vA', url:vurl('7RBo7CIo9vA'), badge:'영상' },
+            { title:'2022 WBC · BACK WALL', videoId:'7RBo7CIo9vA', url:vurl('7RBo7CIo9vA'), badge:'영상' },
           ]},
           { type:'divider' },
-          { type:'heading', title:'2022~2024 홍보 영상 디렉팅 총괄 및 운영', desc:'WBC (World Breaking Classic) 국가대표 선발전' },
+          { type:'heading', title:'2022~2024 홍보 영상 디렉팅 총괄 및 운영', desc:'WBC (World Breaking Classic) 국가대표 선발전<br>숏폼 마케팅 · 기여도 100%' },
           { type:'cards', vertical:true, more:{label:'에이런컴퍼니 영상 전체보기 →', url:plu('PLxytJQTYF-QXssEpcK6V-ncxsGfNmdlJy')}, items:[
             ['2023 WBC JUDGE 5','0tTuod982EA'],['2023 WBC JUDGE 4','02EBC3NK_l8'],['2023 WBC JUDGE 3','2ZOKnq49IlQ'],
             ['2023 WBC JUDGE 2','umsh3M_1_1g'],['2023 WBC JUDGE 1','VIDS_OATNlA'],['2023 WBC MUSIC','cuTNOXbyfoc'],
@@ -533,7 +533,7 @@
           ['체대입시생의 꿈 [울산]','WUALzMa3ZZ8'],
           ['체대입시생의 꿈 [종합본]','IVnsAM8fyoc'],
           ['전국체육대학 실기능력평가 현장스케치','R-TXIL2F4FA'],
-        ].map(v=>({ title:v[0], videoId:v[1], url:vurl(v[1]), badge:'영상' })) } },
+        ].map(v=>({ title:v[0], videoId:v[1], url:plu('PLxytJQTYF-QUpvPpislNriB4tKBVV2O4N'), badge:'재생목록' })) } },
     ]},
   ];
 
@@ -544,13 +544,13 @@
 
   function cardHTML(it){
     const media = it.videoId
-      ? `<img src="https://i.ytimg.com/vi/${it.videoId}/maxresdefault.jpg" alt="${it.title||''}" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';">`
+      ? `<img src="https://i.ytimg.com/vi/${it.videoId}/maxresdefault.jpg" alt="${it.title||''}" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';" onload="if(this.naturalWidth<=120&&this.src.indexOf('hqdefault')<0)this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';">`
       : it.thumb
         ? `<img src="${it.thumb}" alt="${it.title||''}" loading="lazy">`
         : `<div class="card__ph">${it.ph||'영상 연결 예정'}</div>`;
     const tag = it.url ? 'a' : 'div';
     const attrs = it.url ? `href="${it.url}" target="_blank" rel="noopener"` : '';
-    const hover = it.videoId ? `data-video="${it.videoId}"` : (it.plist ? `data-plist="${it.plist}"` : '');
+    const hover = it.videoId ? `data-video="${it.videoId}"${it.start?` data-start="${it.start}"`:''}` : (it.plist ? `data-plist="${it.plist}"` : '');
     return `<${tag} class="card${it.url?'':' nolink'}" ${attrs} ${hover} aria-label="${it.title||''}">
       <div class="badge">${I.layers}<span>${it.badge||'재생목록'}</span></div>
       ${(it.videoId||it.plist)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
@@ -599,7 +599,8 @@
     function src(){
       const base='https://www.youtube-nocookie.com/embed/';
       const common='autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&fs=0&enablejsapi=1';
-      return vid ? `${base}${vid}?${common}&loop=1&playlist=${vid}`
+      const st=a.dataset.start?`&start=${a.dataset.start}`:'';
+      return vid ? `${base}${vid}?${common}&loop=1&playlist=${vid}${st}`
                  : `${base}videoseries?list=${plist}&${common}&loop=1`;
     }
     a.addEventListener('mouseenter',()=>{ timer=setTimeout(()=>{
