@@ -88,6 +88,13 @@
   @media (max-width:600px){ .grid{ grid-template-columns:1fr; gap:20px; } }
   .grid.single, .grid.center{ display:flex; justify-content:center; flex-wrap:wrap; gap:22px; }
   .grid.single .card, .grid.center .card{ width:100%; max-width:440px; }
+  .grid.vertical{ grid-template-columns:repeat(5,1fr); gap:16px; }
+  @media (max-width:1100px){ .grid.vertical{ grid-template-columns:repeat(4,1fr); } }
+  @media (max-width:820px){ .grid.vertical{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:560px){ .grid.vertical{ grid-template-columns:repeat(2,1fr); } }
+  .grid.vertical .card__media{ aspect-ratio:9/16; }
+  .grid.vertical .card__title{ font-size:14px; }
+  .grid.vertical .card__body{ padding:12px; }
   .block-head{ text-align:center; padding:10px 0 22px; }
   .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
   .block-head p{ margin:12px auto 0; max-width:66ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
@@ -362,10 +369,12 @@
     star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 17l-5.6 3 1.6-6.3-5-4.2 6.5-.5z"/></svg>',
     shirt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 3-2 4-2-1v12H8V9L6 10 4 6l4-3 2 2h4z"/></svg>',
     layers:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13M3 12h13M16 12l5 3-5 3v-6zM3 17h7"/></svg>',
-    play12:'<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+    play12:'<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+    pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>'
   };
 
   const plu = id => "https://www.youtube.com/playlist?list=" + id;
+  const vurl = id => "https://www.youtube.com/watch?v=" + id;
 
   /* 마이옥션 재생목록 (호버 재생 영상 ID 보유) */
   /* 마이옥션 - 김피디 실험형 콘텐츠 (1인 단독 제작) */
@@ -433,19 +442,35 @@
         block:{ type:'note', text:'<b>표준 디자인 틀과 자동화 서식</b>을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다. 사내 운영 자료로, 공개 링크 대신 요청 시 포트폴리오로 공유합니다.' } },
     ]},
 
-    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD · 2019.09 – 2022.01', toggles:[
+    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'제이슨의V트레이닝 · <em>YOUTUBE</em>',
-          desc:'타이틀 · 서브타이틀 작성 예정 (추후 업데이트)',
-          stats:[['17,000 → 33,000','구독자 (온→오프 확장)'],['7종','시리즈 포맷'],['100%','콘텐츠 기획']] },
+        hero:{ title:'단일 캐릭터의 채널을,<br>7개의 시리즈 <em>IP</em>로.',
+          desc:'단일 강사 중심이던 채널을 7종의 IP 콘텐츠 시리즈로 확장하며,<br>포맷 다각화로 채널에 생동감을 더했습니다.<br>— 기획부터 편집까지 직접 책임진 메인 PD 프로젝트입니다.',
+          stats:[['17,000 → 33,000+','구독자 성장'],['7종','시리즈 IP 포맷'],['100%','콘텐츠 기획']] },
         block:{ type:'cards', items:CDF, more:{label:'체대친구들 유튜브 채널 →', url:'https://youtube.com/@cdf_jason'} } },
-      { id:'web', label:'WEB', icon:I.web,
-        hero:{ title:'체대친구들 · <em>WEB</em>' }, block:{ type:'empty', text:'유튜브 IP · 오프라인 학원 중심 프로젝트입니다' } },
-      { id:'document', label:'DOCUMENT', icon:I.doc,
-        hero:{ title:'체대친구들 · <em>DOCUMENT</em>' }, block:{ type:'empty', text:'입시 커리큘럼 자료는 사내 운영 자료입니다' } },
+      { id:'offline', label:'OFFLINE', icon:I.pin,
+        hero:{ title:'콘텐츠의 신뢰를,<br><em>오프라인의 성과</em>로.',
+          desc:'채널이 쌓은 신뢰를 대치동 학원 오픈 · 원데이클래스 · 입시 합격까지<br>실질적인 오프라인 성과로 연결했습니다.<br>— 소방공무원 체력시험(제자리멀리뛰기) 원데이클래스는<br>20회차 완판, 약 150명이 참가해 기록 향상을 이끌었습니다.',
+          stats:[['대치동','오프라인 학원 확장'],['20회차','원데이클래스 완판'],['150명+','참가 · 기록 향상']] },
+        block:{ type:'cards', items:[
+          { title:'대치동 오프라인센터', sub:'센터 홍보영상', badge:'OFFLINE', ph:'영상 추가 예정' },
+          { title:'원데이클래스 (소방 제자리멀리뛰기)', sub:'클래스 홍보영상', badge:'OFFLINE', ph:'영상 추가 예정' },
+          { title:'체대입시 최종 합격자 리스트', sub:'개인정보 일부 블러 처리', badge:'자료', ph:'이미지 추가 예정' },
+        ]} },
     ]},
 
     { id:'wonderwind', name:'원더윈드코리아', meta:'㈜원더윈드코리아 · 비주얼 디렉터 / 디자이너 · 2022.08 – 2023.05', toggles:[
+      { id:'blackbeast', label:'블랙비스트', icon:I.star, type:'subtabs',
+        hero:{ title:'블랙<em>비스트</em>', desc:'프리미엄 데님 컬렉션 브랜드로 BI/BX를 구성. 패션코드 정식 런칭·트렌드페어·독일 K-전시회 선정·무신사 입점까지 이어졌습니다.' },
+        subtabs:[
+          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
+            { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
+          ]}},
+          { id:'detail', label:'상세페이지', block:{ type:'note', text:'<b>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.</b> 두 브랜드의 결을 살리되 하나의 비주얼 시스템으로 정렬했습니다.' }},
+          { id:'video', label:'영상', block:{ type:'cards', items:[
+            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
+          ]}},
+        ]},
       { id:'williwo', label:'윌리워스튜디오', icon:I.shirt, type:'subtabs',
         hero:{ title:'윌리워<em>스튜디오</em>', desc:'스트릿 애슬레저 톤으로 재구성. 무신사 아울렛 제품군 구성·룩북 제작·SNS 마케팅으로 완판을 견인했습니다.' },
         subtabs:[
@@ -456,17 +481,6 @@
           { id:'detail', label:'상세페이지', block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
           { id:'video', label:'영상', block:{ type:'cards', items:[
             { title:'윌리워 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
-          ]}},
-        ]},
-      { id:'blackbeast', label:'블랙비스트', icon:I.star, type:'subtabs',
-        hero:{ title:'블랙<em>비스트</em>', desc:'프리미엄 데님 컬렉션 브랜드로 BI/BX를 구성. 패션코드 정식 런칭·트렌드페어·독일 K-전시회 선정·무신사 입점까지 이어졌습니다.' },
-        subtabs:[
-          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
-            { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
-          ]}},
-          { id:'detail', label:'상세페이지', block:{ type:'note', text:'<b>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.</b> 두 브랜드의 결을 살리되 하나의 비주얼 시스템으로 정렬했습니다.' }},
-          { id:'video', label:'영상', block:{ type:'cards', items:[
-            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
           ]}},
         ]},
     ]},
@@ -482,19 +496,44 @@
     { id:'aruncompany', name:'에이런컴퍼니', meta:'프리랜서 · 콘텐츠 디렉터 · 2022.05 – 2026.03', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'브레이킹 씬을,<br><em>브랜딩</em>하다.',
-          desc:'브레이킹(B-boy) 문화 기반 컴퍼니. WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고, B-ON TOP 메인 영상 및 백월 영상을 디자인했습니다.' },
-        block:{ type:'cards', items:[
-          { title:'에이런컴퍼니 영상 작업', sub:'WBC 선발전 · B-ON TOP 등 영상 재생목록', url:plu('PLxytJQTYF-QXssEpcK6V-ncxsGfNmdlJy'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
-        ]} },
+          desc:'브레이킹(B-boy) 문화 기반 컴퍼니.<br>WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고,<br>행사 백월 미디어아트와 메인 영상을 디자인했습니다.' },
+        blocks:[
+          { type:'heading', title:'대표 영상' },
+          { type:'cards', center:true, items:[
+            { title:'WA:ZAK 거리예술작품 홍보영상', sub:'1인 3Cam 촬영·편집·보정 (기여도 100%)', videoId:'8fNJkbhj0B0', url:vurl('8fNJkbhj0B0'), badge:'홍보영상' },
+          ]},
+          { type:'heading', title:'행사장용 Backwall Media ART 영상', desc:'디자인 · 기획 · 편집 (기여도 100%)' },
+          { type:'cards', items:[
+            { title:'2023 WBC · BACK WALL', videoId:'D6qjgbx7-UI', url:vurl('D6qjgbx7-UI'), badge:'영상' },
+            { title:'2022 B-ON TOP · BACK WALL', videoId:'J_ahQDayVVU', url:vurl('J_ahQDayVVU'), badge:'영상' },
+            { title:'2022 WB · BACK WALL', videoId:'7RBo7CIo9vA', url:vurl('7RBo7CIo9vA'), badge:'영상' },
+          ]},
+          { type:'divider' },
+          { type:'heading', title:'2022~2024 홍보 영상 디렉팅 총괄 및 운영', desc:'WBC (World Breaking Classic) 국가대표 선발전' },
+          { type:'cards', vertical:true, more:{label:'에이런컴퍼니 영상 전체보기 →', url:plu('PLxytJQTYF-QXssEpcK6V-ncxsGfNmdlJy')}, items:[
+            ['2023 WBC JUDGE 5','0tTuod982EA'],['2023 WBC JUDGE 4','02EBC3NK_l8'],['2023 WBC JUDGE 3','2ZOKnq49IlQ'],
+            ['2023 WBC JUDGE 2','umsh3M_1_1g'],['2023 WBC JUDGE 1','VIDS_OATNlA'],['2023 WBC MUSIC','cuTNOXbyfoc'],
+            ['2023 WBC GUEST SHOWCASE','lYMrWtMnaUc'],['2023 WBC What is WBC?','Lkno1KBQowM'],['2022 WBC Great 8','dxXroACRaso'],
+            ['2022 WBC 참가자모집','_-UgfZRnh88'],['2022 WBC 미국대표','bRS8AlK5pXI'],['2022 WBC 유럽대표','faUs-SKPfts'],
+            ['2022 WBC 네덜란드 대표','C-zwbPxiy6g'],['2022 WBC MUSIC (DJ)','YjMYI6SzZ5s'],['2022 WBC JUDGE 3','n-REpB7OKx4'],
+            ['2022 WBC JUDGE 2','aFYnB0uifzI'],['2022 WBC JUDGE 1','7bwdlHnFs8c'],['2022 WBC CHAMPS FLOW XL','SMCaQ4t0Ve0'],
+            ['2022 WBC 디펜딩챔피언','slhmklBQlbY'],
+          ].map(v=>({ title:v[0], videoId:v[1], url:vurl(v[1]), badge:'영상' })) },
+        ] },
     ]},
 
     { id:'batontouch', name:'배턴터치', meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'대본부터 음원까지,<br><em>직접 설계한</em> 시리즈.',
-          desc:'맥스체대입시(MAX Inc)의 외주 의뢰 작업. 드림한양·슈퍼맥스 시리즈의 촬영·편집을 진행하며 대본·구성·톤은 물론 영상 내 음원까지 직접 제작했습니다. (Keepit 1:1 PT 매칭 앱 콘텐츠 편집 — 런칭 전 참여, 서비스 종료)' },
+        hero:{ title:'전국을 누비며 담은,<br><em>체대입시생의 꿈.</em>',
+          desc:'맥스체대입시 외주 1인 총괄 작업입니다.<br>‘체대입시생들의 꿈’을 주제로 강남 · 논산 · 울산 · 순천 · 대구까지<br>전국을 직접 다니며, 기획부터 음악 제작 · 촬영 · 편집까지 모두 진행했습니다.<br>(기여도 100% · 1인 제작)' },
         block:{ type:'cards', items:[
-          { title:'배턴터치 영상 작업', sub:'드림한양 · 슈퍼맥스 시리즈 재생목록', url:plu('PLxytJQTYF-QUpvPpislNriB4tKBVV2O4N'), badge:'재생목록', ph:'HOVER 영상 연결 예정' },
-        ]} },
+          ['체대입시생의 꿈 [대구]','Afy54zR10uY'],
+          ['체대입시생의 꿈 [순천]','jnF_LRvk72M'],
+          ['체대입시생의 꿈 [논산]','Gvo69s7GebU'],
+          ['체대입시생의 꿈 [울산]','WUALzMa3ZZ8'],
+          ['체대입시생의 꿈 [종합본]','IVnsAM8fyoc'],
+          ['전국체육대학 실기능력평가 현장스케치','R-TXIL2F4FA'],
+        ].map(v=>({ title:v[0], videoId:v[1], url:vurl(v[1]), badge:'영상' })) } },
     ]},
   ];
 
@@ -522,7 +561,7 @@
 
   function block(b){
     if(!b) return '';
-    if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':''); return `<div class="grid${cls}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
+    if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':'')+(b.vertical?' vertical':''); return `<div class="grid${cls}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
     if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
     if(b.type==='divider') return `<div class="block-div"></div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
