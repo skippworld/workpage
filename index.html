@@ -84,7 +84,8 @@
   .client-head .ch-main{ display:block; font-size:14px; font-weight:700; color:var(--paper); letter-spacing:.01em; }
   .client-head .ch-period{ display:block; margin-top:5px; font-size:12.5px; font-weight:500; color:var(--paper-mute); letter-spacing:.02em; }
 
-  .wtoggle-row{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; padding:22px 0 4px; }
+  .wtoggle-row{ display:flex; justify-content:center; flex-wrap:wrap; gap:20px; padding:22px 0 6px; }
+  .client-head + .wtoggle-row{ padding-top:42px; }
   .wtoggle{ display:inline-flex; align-items:center; gap:9px; padding:12px 22px; background:var(--ink-2); border:1px solid var(--line-soft); border-radius:12px; color:var(--paper-dim); font-size:13.5px; font-weight:700; letter-spacing:.05em; transition:color .25s,border-color .25s,background .25s,transform .25s; }
   .wtoggle svg{ width:16px; height:16px; opacity:.85; }
   .wtoggle:hover{ color:var(--paper); border-color:var(--line); transform:translateY(-1px); }
@@ -115,6 +116,39 @@
   .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
   .block-head p{ margin:12px auto 0; max-width:66ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
   .block-div{ height:1px; background:var(--line); margin:22px 0 34px; }
+
+  /* before → after flow */
+  .flow{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; padding:6px 0 22px; }
+  .flow-item{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .flow-label{ font-size:12px; font-weight:800; letter-spacing:.1em; color:var(--accent-soft); }
+  .flow-fig{ position:relative; width:min(340px,80vw); aspect-ratio:450/845; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
+  .flow-fig img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .ph-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--paper-mute); text-align:center; padding:10px; }
+  .flow-arrow{ color:var(--accent-soft); font-size:26px; }
+  @media (max-width:640px){ .flow{ flex-direction:column; } .flow-arrow{ transform:rotate(90deg); } }
+  .flow-glow .flow-fig{ animation:flowGlow 6s ease-in-out infinite; }
+  .flow-glow .flow-item:nth-child(1) .flow-fig{ animation-delay:0s; }
+  .flow-glow .flow-item:nth-child(3) .flow-fig{ animation-delay:3s; }
+  @keyframes flowGlow{
+    0%, 20%, 100%{ box-shadow:0 4px 14px -8px rgba(0,0,0,.5); border-color:var(--line-soft); }
+    9%{ box-shadow:0 0 34px -2px rgba(58,134,255,.55); border-color:rgba(58,134,255,.75); }
+  }
+
+  /* image gallery + captions */
+  .gallery{ display:grid; gap:18px; padding:6px 0 16px; }
+  @media (max-width:820px){ .gallery{ grid-template-columns:repeat(2,1fr)!important; } }
+  @media (max-width:520px){ .gallery{ grid-template-columns:1fr!important; } }
+  .gal-item{ display:flex; flex-direction:column; gap:11px; }
+  .gal-fig{ position:relative; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
+  .gal-fig.v{ aspect-ratio:3/4; }
+  .gal-fig img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .gal-item figcaption{ font-size:13px; color:var(--paper-dim); text-align:center; line-height:1.5; }
+  .gal-item figcaption em{ color:var(--accent-soft); font-size:12px; }
+
+  /* pill button row */
+  .btnrow{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; padding:8px 0 16px; }
+  .pill-btn{ display:inline-flex; align-items:center; gap:6px; padding:12px 22px; border:1px solid var(--line); border-radius:24px; color:var(--paper-dim); font-size:13px; font-weight:700; transition:border-color .2s, color .2s, transform .2s; }
+  .pill-btn:hover{ border-color:var(--accent); color:var(--accent-soft); transform:translateY(-2px); }
 
   .card{ display:block; position:relative; border-radius:var(--radius); background:var(--ink-2); border:1px solid var(--line-soft); overflow:hidden; transition:border-color .3s,transform .3s,box-shadow .3s; opacity:0; transform:translateY(18px); }
   .card.reveal{ opacity:1; transform:translateY(0); }
@@ -504,7 +538,8 @@
   const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
 
   const CLIENTS = [
-    { id:'myauction', name:'마이옥션', meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재', toggles:[
+    { id:'myauction', name:'마이옥션', meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재',
+      hero:{ title:'마이<em>옥션</em>', desc:'부동산 경매 사이트 &amp; 컨설팅' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
           desc:'단일 출연진의 딱딱한 기업 채널을, 다양한 <em>출연자 기반 IP</em>로 재설계했습니다.<br>개인의 스타일에 맞춘 콘텐츠로 전문성과 개성을 함께 살려,<br>회사와 컨설턴트 개개인의 인지도를 동시에 끌어올렸습니다.<br><br>그리고 지금도, 끊임없이 새로운 콘텐츠를 기획하고 실험하고 있습니다.',
@@ -520,13 +555,36 @@
         ] },
       { id:'web', label:'WEB', icon:I.web,
         hero:{ title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
-        block:{ type:'cards', items:[{ title:'마이옥션 홈페이지', sub:'홈·상품·상세페이지 UI/UX 리뉴얼 · 자동결제 동선', url:'https://my-auction.co.kr', badge:'WEB', ph:'WEB 미리보기' }] } },
+        blocks:[
+          { type:'flow', glow:true, items:[
+            { img:'image/web_before.jpg', label:'01  기존', ph:'기존 페이지' },
+            { img:'image/web_after.jpg', label:'02  개선', ph:'개선 페이지' },
+          ]},
+          { type:'divider' },
+          { type:'heading', title:'대표 상품페이지 — 올인원서비스',
+            desc:'없었던 결제 동선을 1-Step으로 시각화했습니다.<br>올인원서비스 자동결제 전환율 약 400% 향상 (*추정)' },
+          { type:'gallery', cols:3, items:[
+            { img:'image/web_service1.jpg', ratio:'v', cap:'올인원 컨설팅 서비스 안내', ph:'이미지' },
+            { img:'image/web_service2.jpg', ratio:'v', cap:'서비스 특장점 · 결제 동선', ph:'이미지' },
+            { img:'image/web_service3.jpg', ratio:'v', cap:'전문가 매칭 · 물건 추천', ph:'이미지' },
+          ], more:{ label:'올인원서비스 페이지 바로가기 →', url:'https://my-auction.co.kr' } },
+          { type:'btnrow', items:[
+            { label:'권리분석 서비스 페이지', url:'https://my-auction.co.kr' },
+            { label:'입찰대리 서비스 페이지', url:'https://my-auction.co.kr' },
+            { label:'앱 다운로드 안내 페이지', url:'https://my-auction.co.kr' },
+          ]},
+        ] },
       { id:'document', label:'DOCUMENT', icon:I.doc,
-        hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'보고서 표준 틀 부재로 직원마다 제각각이던 양식을 정리했습니다.' },
-        block:{ type:'note', text:'<b>표준 디자인 틀과 자동화 서식</b>을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다. 사내 운영 자료로, 공개 링크 대신 요청 시 포트폴리오로 공유합니다.' } },
+        hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
+        block:{ type:'gallery', cols:3, items:[
+          { img:'image/docu1.jpg', cap:'경매사건 브리핑 보고서 <em>(*대외비 · 유료회원 전용)</em>', ph:'docu1.jpg' },
+          { img:'image/docu2.jpg', cap:'회사소개서', ph:'docu2.jpg' },
+          { img:'image/docu3.jpg', cap:'광고 협업 제안서', ph:'docu3.jpg' },
+        ]} },
     ]},
 
-    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01', toggles:[
+    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01',
+      hero:{ title:'체대<em>친구들</em>', desc:'체대입시 교육 &amp; 공무원 체력 학원' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'단일 캐릭터의 채널을,<br>7개의 시리즈 <em>IP</em>로.',
           desc:'단일 강사 중심이던 채널을 7종의 IP 콘텐츠 시리즈로 확장하며,<br>포맷 다각화로 채널에 생동감을 더했습니다.<br>— 기획부터 편집까지 직접 책임진 메인 PD 프로젝트입니다.',
@@ -543,42 +601,44 @@
         ]} },
     ]},
 
-    { id:'wonderwind', name:'원더윈드코리아', meta:'㈜원더윈드코리아 · 비주얼 디렉터 / 디자이너 · 2022.08 – 2023.05', toggles:[
-      { id:'blackbeast', label:'블랙비스트', icon:I.star, type:'subtabs',
-        hero:{ title:'블랙<em>비스트</em>', desc:'프리미엄 데님 컬렉션 브랜드로 BI/BX를 구성. 패션코드 정식 런칭·트렌드페어·독일 K-전시회 선정·무신사 입점까지 이어졌습니다.' },
-        subtabs:[
-          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
-            { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
-          ]}},
-          { id:'detail', label:'상세페이지', block:{ type:'note', text:'<b>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.</b> 두 브랜드의 결을 살리되 하나의 비주얼 시스템으로 정렬했습니다.' }},
-          { id:'video', label:'영상', block:{ type:'cards', items:[
-            { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록' },
-          ]}},
-        ]},
-      { id:'williwo', label:'윌리워스튜디오', icon:I.shirt, type:'subtabs',
-        hero:{ title:'윌리워<em>스튜디오</em>', desc:'스트릿 애슬레저 톤으로 재구성. 무신사 아울렛 제품군 구성·룩북 제작·SNS 마케팅으로 완판을 견인했습니다.' },
-        subtabs:[
-          { id:'lookbook', label:'룩북', block:{ type:'cards', items:[
-            { title:'무신사 룩북 #1', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'룩북 보기' },
-            { title:'무신사 룩북 #2', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'룩북 보기' },
-          ]}},
-          { id:'detail', label:'상세페이지', block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
-          { id:'video', label:'영상', blocks:[
-            { type:'cards', center:true, items:[
-              { title:'윌리워 브랜드 영상 #1', videoId:'M5L5DEMer4Q', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
-              { title:'윌리워 브랜드 영상 #2', videoId:'WS5khR9Iwvg', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
-            ]},
-            { type:'divider' },
-            { type:'cards', vertical:true, items:[
-              { title:'윌리워 숏폼 #1', videoId:'Dj-i6g6YhP4', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
-              { title:'윌리워 숏폼 #2', videoId:'BzzfsMkMOPs', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
-              { title:'윌리워 숏폼 #3', videoId:'d8LpIM-pRwo', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
-            ]},
+    { id:'blackbeast', name:'블랙비스트', meta:'(주)원더윈드코리아 · 비주얼 디렉터 & 디자이너 · 2022.08 – 2023.05',
+      hero:{ title:'블랙<em>비스트</em>',
+        desc:'데님 패션 브랜드<br><br>프리미엄 데님 컬렉션 신규 브랜드로,<br>브랜드 오픈에 필요한 모든 BI/BX 구성과 디자인 전반을 기획·참여했습니다.<br>브랜드 무드를 담은 룩북 기획·촬영부터 제품 상세페이지·제품 디자인·제품 기획,<br>피팅가이드 영상까지 — 고객 여정의 전반을 디자인했습니다.<br><br>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.' },
+      toggles:[
+        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', center:true, items:[
+          { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
+        ]}},
+        { id:'detail', label:'상세페이지', icon:I.doc, block:{ type:'note', text:'브랜드 무드를 담은 룩북·상세페이지 디자인부터 <b>제품 디자인·제품 기획·피팅가이드 영상</b>까지, 고객 여정 전반의 비주얼을 하나의 시스템으로 정렬했습니다.' }},
+        { id:'video', label:'영상', icon:I.play, block:{ type:'cards', items:[
+          { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록' },
+        ]}},
+      ]},
+
+    { id:'williwo', name:'윌리워스튜디오', meta:'(주)원더윈드코리아 · 그래픽 & 디자이너 · 2022.08 – 2023.05',
+      hero:{ title:'윌리워<em>스튜디오</em>',
+        desc:'애슬레저 패션 브랜드<br><br>기존 애매한 스트릿 브랜드 포지셔닝을,<br>스트릿 애슬레저 브랜드 톤으로 재구성했습니다.<br>감성과 일상, 애슬레틱한 운동의 접점을 찾아 제품을 기획·디자인하며,<br>기존과는 다른 방향으로 브랜딩을 새로 시작했습니다.<br><br>이후 무신사 아울렛 제품군 구성 · 룩북 제작 ·<br>SNS 마케팅으로 완판을 견인했습니다.' },
+      toggles:[
+        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', center:true, items:[
+          { title:'무신사 룩북 #1', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'룩북 보기' },
+          { title:'무신사 룩북 #2', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'룩북 보기' },
+        ]}},
+        { id:'detail', label:'상세페이지', icon:I.doc, block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
+        { id:'video', label:'영상', icon:I.play, blocks:[
+          { type:'cards', center:true, items:[
+            { title:'윌리워 브랜드 영상 #1', videoId:'M5L5DEMer4Q', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+            { title:'윌리워 브랜드 영상 #2', videoId:'WS5khR9Iwvg', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+          ]},
+          { type:'divider' },
+          { type:'cards', vertical:true, items:[
+            { title:'윌리워 숏폼 #1', videoId:'Dj-i6g6YhP4', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+            { title:'윌리워 숏폼 #2', videoId:'BzzfsMkMOPs', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
+            { title:'윌리워 숏폼 #3', videoId:'d8LpIM-pRwo', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
           ]},
         ]},
-    ]},
+      ]},
 
-    { id:'kmong', name:'크몽', meta:'크몽 · 프리랜서 @SKIPPWORKS · 2022.08 – 2026.07', toggles:[
+    { id:'kmong', name:'크몽', meta:'크몽 · 프리랜서 @SKIPPWORKS · 2022.08 – 2026.07',
+      hero:{ title:'크몽 <em>(SKWS)</em>', desc:'앨범 커버 아트워크 채널' }, toggles:[
       { id:'album', label:'앨범커버 아트워크', icon:I.disc,
         hero:{ title:'들리는 음악을,<br><em>보이는 커버</em>로.',
           desc:'아티스트명 SKIPPWORKS로 진행하는 앨범 아트워크 작업입니다. 음악 톤·가사·아티스트 정체성을 해석해 시각화하며, 트로트·락·발라드·캐롤 등 다양한 장르를 다룹니다.',
@@ -586,7 +646,8 @@
         block:{ type:'album' } },
     ]},
 
-    { id:'aruncompany', name:'에이런컴퍼니', meta:'프리랜서 · 콘텐츠 디렉터 · 2022.05 – 2026.03', toggles:[
+    { id:'aruncompany', name:'에이런컴퍼니', meta:'프리랜서 · 콘텐츠 디렉터 · 2022.05 – 2026.03',
+      hero:{ title:'에이런<em>컴퍼니</em>', desc:'브레이킹 컬처 &amp; 아트 컴퍼니' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'브레이킹 씬을,<br><em>브랜딩</em>하다.',
           desc:'브레이킹(B-boy) 문화 기반 컴퍼니.<br>WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고,<br>행사 백월 미디어아트와 메인 영상을 디자인했습니다.' },
@@ -615,7 +676,8 @@
         ] },
     ]},
 
-    { id:'batontouch', name:'배턴터치', meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09', toggles:[
+    { id:'batontouch', name:'배턴터치', meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09',
+      hero:{ title:'배턴<em>터치</em>', desc:'헬스테크(Health Tech) 기반 스타트업' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'전국을 누비며 담은,<br><em>체대입시생의 꿈.</em>',
           desc:'맥스체대입시 외주 1인 총괄 작업입니다.<br>‘체대입시생들의 꿈’을 주제로 강남 · 논산 · 울산 · 순천 · 대구까지<br>전국을 직접 다니며, 기획부터 음악 제작 · 촬영 · 편집까지 모두 진행했습니다.<br>(기여도 100% · 1인 제작)' },
@@ -657,6 +719,9 @@
     if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':'')+(b.vertical?' vertical':''); return `<div class="grid${cls}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
     if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
     if(b.type==='divider') return `<div class="block-div"></div>`;
+    if(b.type==='flow') return `<div class="flow${b.glow?' flow-glow':''}"${b.ratio?` style="--fr:${b.ratio}"`:''}>`+b.items.map((it,i)=>`<div class="flow-item">${it.label?`<span class="flow-label">${it.label}</span>`:''}<div class="flow-fig"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.label||it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption class="flow-cap">${it.cap}</figcaption>`:''}</div>`+(i<b.items.length-1?`<div class="flow-arrow">→</div>`:'')).join('')+`</div>`+moreBtn(b.more);
+    if(b.type==='gallery') return `<div class="gallery" style="grid-template-columns:repeat(${b.cols||3},1fr)">`+b.items.map(it=>`<figure class="gal-item"><div class="gal-fig${it.ratio==='v'?' v':''}"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption>${it.cap}</figcaption>`:''}</figure>`).join('')+`</div>`+moreBtn(b.more);
+    if(b.type==='btnrow') return `<div class="btnrow">`+b.items.map(it=>`<a class="pill-btn" href="${it.url}" target="_blank" rel="noopener">${it.label} ↗</a>`).join('')+`</div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
     if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
@@ -667,9 +732,9 @@
     if(t.type==='subtabs'){
       const row = `<div class="subtab-row">${t.subtabs.map((s,i)=>`<button class="subtab${i?'':' is-active'}" data-sub="${s.id}">${s.label}</button>`).join('')}</div>`;
       const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${s.blocks ? s.blocks.map(block).join('') : block(s.block)}</div>`).join('');
-      return hero(t.hero) + row + panels;
+      return (t.hero?hero(t.hero):'') + row + panels;
     }
-    return hero(t.hero) + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
+    return (t.hero?hero(t.hero):'') + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
   }
 
   const clientNav = document.getElementById('clientNav');
@@ -678,6 +743,7 @@
   clients.innerHTML = CLIENTS.map((c,i)=>`
     <div class="client${i?'':' is-active'}" data-client="${c.id}">
       ${c.meta?`<div class="client-head">${(()=>{const p=c.meta.split(' · ');const per=p.pop();return `<span class="ch-main">${p.join(' · ')}</span><span class="ch-period">${per}</span>`;})()}</div>`:''}
+      ${c.hero?hero(c.hero):''}
       <div class="wtoggle-row">${c.toggles.map((t,j)=>`<button class="wtoggle${j?'':' is-active'}" data-toggle="${t.id}">${t.icon}${t.label}</button>`).join('')}</div>
       ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t)}</div>`).join('')}
     </div>`).join('');
