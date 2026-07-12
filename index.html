@@ -100,38 +100,41 @@
   .subpanel{ display:none; } .subpanel.is-active{ display:block; }
 
   /* unified 16:9 card grid */
-  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; padding-bottom:8px; }
-  @media (max-width:980px){ .grid{ grid-template-columns:repeat(2,1fr); gap:18px; } }
-  @media (max-width:600px){ .grid{ grid-template-columns:1fr; gap:20px; } }
-  .grid.single, .grid.center{ display:flex; justify-content:center; flex-wrap:wrap; gap:22px; }
-  .grid.single .card, .grid.center .card{ width:100%; max-width:440px; }
-  .grid.vertical{ grid-template-columns:repeat(5,1fr); gap:16px; }
-  @media (max-width:1100px){ .grid.vertical{ grid-template-columns:repeat(4,1fr); } }
-  @media (max-width:820px){ .grid.vertical{ grid-template-columns:repeat(3,1fr); } }
-  @media (max-width:560px){ .grid.vertical{ grid-template-columns:repeat(2,1fr); } }
+  .grid{ display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-start; gap:22px; padding-bottom:8px; }
+  .grid > .card{ flex:0 0 calc(33.333% - 15px); max-width:calc(33.333% - 15px); }
+  @media (max-width:980px){ .grid{ gap:18px; } .grid > .card{ flex-basis:calc(50% - 9px); max-width:calc(50% - 9px); } }
+  @media (max-width:600px){ .grid{ gap:20px; } .grid > .card{ flex-basis:100%; max-width:100%; } }
+  .grid.single .card, .grid.center .card{ flex:0 0 auto; width:100%; max-width:440px; }
+  .grid.pf .card{ flex:0 0 auto; width:100%; max-width:360px; }
+  .grid.pgrid{ gap:16px; }
+  .grid.pgrid .card{ flex:0 0 auto; width:clamp(150px,22vw,210px); max-width:210px; }
+  .grid.vertical{ gap:16px; }
+  .grid.vertical .card{ flex:0 0 auto; width:clamp(150px,18vw,200px); max-width:200px; }
   .grid.vertical .card__media{ aspect-ratio:9/16; }
   .grid.vertical .card__title{ font-size:14px; }
   .grid.vertical .card__body{ padding:12px; }
+  .card__mp4{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
   .block-head{ text-align:center; padding:10px 0 22px; }
   .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
   .block-head p{ margin:12px auto 0; max-width:66ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
   .block-div{ height:1px; background:var(--line); margin:22px 0 34px; }
 
-  /* before → after flow */
-  .flow{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; padding:6px 0 22px; }
-  .flow-item{ display:flex; flex-direction:column; align-items:center; gap:12px; }
-  .flow-label{ font-size:12px; font-weight:800; letter-spacing:.1em; color:var(--accent-soft); }
-  .flow-fig{ position:relative; width:min(340px,80vw); aspect-ratio:450/845; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
+  /* before → after flow (항상 좌→우) */
+  .flow{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:nowrap; padding:8px 0 24px; }
+  .flow-item{ flex:1 1 0; min-width:0; max-width:340px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .flow-label{ font-size:11.5px; font-weight:800; letter-spacing:.05em; color:var(--accent-soft); text-align:center; line-height:1.4; }
+  .flow-fig{ position:relative; width:100%; aspect-ratio:var(--fr,450/845); border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
   .flow-fig img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .flow-cap{ font-size:12.5px; color:var(--paper-dim); text-align:center; line-height:1.4; }
   .ph-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--paper-mute); text-align:center; padding:10px; }
-  .flow-arrow{ color:var(--accent-soft); font-size:26px; }
-  @media (max-width:640px){ .flow{ flex-direction:column; } .flow-arrow{ transform:rotate(90deg); } }
-  .flow-glow .flow-fig{ animation:flowGlow 6s ease-in-out infinite; }
+  .flow-arrow{ flex:0 0 auto; color:var(--accent-soft); font-size:clamp(15px,2.8vw,24px); }
+  .flow-glow .flow-fig{ animation:flowGlow 5s ease-in-out infinite; }
   .flow-glow .flow-item:nth-child(1) .flow-fig{ animation-delay:0s; }
-  .flow-glow .flow-item:nth-child(3) .flow-fig{ animation-delay:3s; }
+  .flow-glow .flow-item:nth-child(3) .flow-fig{ animation-delay:1.7s; }
+  .flow-glow .flow-item:nth-child(5) .flow-fig{ animation-delay:3.4s; }
   @keyframes flowGlow{
-    0%, 20%, 100%{ box-shadow:0 4px 14px -8px rgba(0,0,0,.5); border-color:var(--line-soft); }
-    9%{ box-shadow:0 0 34px -2px rgba(58,134,255,.55); border-color:rgba(58,134,255,.75); }
+    0%, 24%, 100%{ transform:scale(1); box-shadow:0 4px 14px -8px rgba(0,0,0,.5); border-color:var(--line-soft); }
+    10%{ transform:scale(1.055); box-shadow:0 0 42px -2px rgba(58,134,255,.65); border-color:rgba(58,134,255,.85); }
   }
 
   /* image gallery + captions */
@@ -557,29 +560,32 @@
         hero:{ title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
         blocks:[
           { type:'flow', glow:true, items:[
-            { img:'image/web_before.jpg', label:'01  기존', ph:'기존 페이지' },
-            { img:'image/web_after.jpg', label:'02  개선', ph:'개선 페이지' },
+            { img:'image/web_before.jpg', label:'01  리뉴얼 Before (홈페이지)', ph:'Before' },
+            { img:'image/web_after.jpg', label:'02  리뉴얼 After (홈페이지)', ph:'After' },
           ]},
           { type:'divider' },
           { type:'heading', title:'대표 상품페이지 — 올인원서비스',
             desc:'없었던 결제 동선을 1-Step으로 시각화했습니다.<br>올인원서비스 자동결제 전환율 약 400% 향상 (*추정)' },
-          { type:'gallery', cols:3, items:[
-            { img:'image/web_service1.jpg', ratio:'v', cap:'올인원 컨설팅 서비스 안내', ph:'이미지' },
-            { img:'image/web_service2.jpg', ratio:'v', cap:'서비스 특장점 · 결제 동선', ph:'이미지' },
-            { img:'image/web_service3.jpg', ratio:'v', cap:'전문가 매칭 · 물건 추천', ph:'이미지' },
-          ], more:{ label:'올인원서비스 페이지 바로가기 →', url:'https://my-auction.co.kr' } },
+          { type:'cards', center:true, items:[
+            { title:'올인원서비스 소개영상', sub:'기획 · 제작 · 편집 기여도 100%', videoId:'0VIqWcYyHcI', url:vurl('0VIqWcYyHcI'), badge:'영상' },
+          ]},
+          { type:'flow', glow:true, ratio:'426/756', more:{ label:'올인원서비스 페이지 바로가기 →', url:'https://www.my-auction.co.kr/counsel/report03.php' }, items:[
+            { img:'image/web_service1.jpg', cap:'올인원컨설팅 서비스 #1', ph:'이미지' },
+            { img:'image/web_service2.jpg', cap:'올인원컨설팅 서비스 #2', ph:'이미지' },
+            { img:'image/web_service3.jpg', cap:'올인원컨설팅 서비스 #3', ph:'이미지' },
+          ]},
           { type:'btnrow', items:[
-            { label:'권리분석 서비스 페이지', url:'https://my-auction.co.kr' },
-            { label:'입찰대리 서비스 페이지', url:'https://my-auction.co.kr' },
-            { label:'앱 다운로드 안내 페이지', url:'https://my-auction.co.kr' },
+            { label:'권리분석 서비스 페이지', url:'https://www.my-auction.co.kr/counsel/report01.php' },
+            { label:'입찰대리 서비스 페이지', url:'https://www.my-auction.co.kr/proxy/proxy01.php' },
+            { label:'앱 다운로드 안내 페이지', url:'https://www.my-auction.co.kr/company/app.php' },
           ]},
         ] },
       { id:'document', label:'DOCUMENT', icon:I.doc,
         hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
         block:{ type:'gallery', cols:3, items:[
-          { img:'image/docu1.jpg', cap:'경매사건 브리핑 보고서 <em>(*대외비 · 유료회원 전용)</em>', ph:'docu1.jpg' },
-          { img:'image/docu2.jpg', cap:'회사소개서', ph:'docu2.jpg' },
-          { img:'image/docu3.jpg', cap:'광고 협업 제안서', ph:'docu3.jpg' },
+          { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>(*대외비 · 유료회원 전용)</em>', ph:'docu1.png' },
+          { img:'image/docu2.png', cap:'회사소개서', ph:'docu2.png' },
+          { img:'image/docu3.png', cap:'광고 협업 제안서', ph:'docu3.png' },
         ]} },
     ]},
 
@@ -595,9 +601,9 @@
           desc:'채널이 쌓은 신뢰를 대치동 학원 오픈 · 원데이클래스 · 입시 합격까지<br>실질적인 오프라인 성과로 연결했습니다.<br>— 소방공무원 체력시험(제자리멀리뛰기) 원데이클래스는<br>20회차 완판, 약 150명이 참가해 기록 향상을 이끌었습니다.',
           stats:[['대치동','오프라인 학원 확장'],['20회차','원데이클래스 완판'],['150명+','참가 · 기록 향상']] },
         block:{ type:'cards', items:[
-          { title:'대치동 오프라인센터', sub:'센터 홍보영상', badge:'OFFLINE', ph:'영상 추가 예정' },
+          { title:'대치동 오프라인센터', sub:'센터 홍보영상', mp4:'video/cdf.mp4', badge:'OFFLINE' },
           { title:'원데이클래스 (소방 제자리멀리뛰기)', sub:'클래스 홍보영상', videoId:'SYU61ezqz4c', url:vurl('SYU61ezqz4c'), badge:'OFFLINE' },
-          { title:'체대입시 최종 합격자 리스트', sub:'개인정보 일부 블러 처리', badge:'자료', ph:'이미지 추가 예정' },
+          { title:'체대입시 최종 합격자 리스트', sub:'개인정보 일부 블러 처리', thumb:'image/congrat.jpg', badge:'자료', ph:'congrat.jpg' },
         ]} },
     ]},
 
@@ -605,10 +611,20 @@
       hero:{ title:'블랙<em>비스트</em>',
         desc:'데님 패션 브랜드<br><br>프리미엄 데님 컬렉션 신규 브랜드로,<br>브랜드 오픈에 필요한 모든 BI/BX 구성과 디자인 전반을 기획·참여했습니다.<br>브랜드 무드를 담은 룩북 기획·촬영부터 제품 상세페이지·제품 디자인·제품 기획,<br>피팅가이드 영상까지 — 고객 여정의 전반을 디자인했습니다.<br><br>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.' },
       toggles:[
-        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', center:true, items:[
-          { title:'블랙비스트 데님 컬렉션', sub:'프리미엄 데님 BI/BX', thumb:'image/blackbeast.jpg', badge:'룩북' },
+        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
+          { title:'블랙비스트 룩북', sub:'프리미엄 데님 BI/BX', thumb:'image/vlackveast.jpg', url:'https://www.musinsa.com/content/mz/100102', badge:'룩북', ph:'vlackveast.jpg' },
         ]}},
-        { id:'detail', label:'상세페이지', icon:I.doc, block:{ type:'note', text:'브랜드 무드를 담은 룩북·상세페이지 디자인부터 <b>제품 디자인·제품 기획·피팅가이드 영상</b>까지, 고객 여정 전반의 비주얼을 하나의 시스템으로 정렬했습니다.' }},
+        { id:'detail', label:'상세페이지', icon:I.doc, blocks:[
+          { type:'cards', pgrid:true, ratio:'426/756', items:[
+            { thumb:'image/vv1.jpg', badge:'상세', ph:'vv1.jpg' },
+            { thumb:'image/vv2.jpg', badge:'상세', ph:'vv2.jpg' },
+            { thumb:'image/vv3.jpg', badge:'상세', ph:'vv3.jpg' },
+            { thumb:'image/vv4.jpg', badge:'상세', ph:'vv4.jpg' },
+            { thumb:'image/vv5.jpg', badge:'상세', ph:'vv5.jpg' },
+            { thumb:'image/vv6.jpg', badge:'상세', ph:'vv6.jpg' },
+          ]},
+          { type:'btnrow', items:[{ label:'블랙비스트 무신사 사이트', url:'https://www.musinsa.com/brand/vlackveast' }]},
+        ]},
         { id:'video', label:'영상', icon:I.play, block:{ type:'cards', items:[
           { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록' },
         ]}},
@@ -618,11 +634,21 @@
       hero:{ title:'윌리워<em>스튜디오</em>',
         desc:'애슬레저 패션 브랜드<br><br>기존 애매한 스트릿 브랜드 포지셔닝을,<br>스트릿 애슬레저 브랜드 톤으로 재구성했습니다.<br>감성과 일상, 애슬레틱한 운동의 접점을 찾아 제품을 기획·디자인하며,<br>기존과는 다른 방향으로 브랜딩을 새로 시작했습니다.<br><br>이후 무신사 아울렛 제품군 구성 · 룩북 제작 ·<br>SNS 마케팅으로 완판을 견인했습니다.' },
       toggles:[
-        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', center:true, items:[
-          { title:'무신사 룩북 #1', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'룩북 보기' },
-          { title:'무신사 룩북 #2', sub:'윌리워 룩북 콘텐츠', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'룩북 보기' },
+        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
+          { title:'윌리워 룩북 #1', sub:'무신사 룩북', thumb:'image/ww1.jpg', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'ww1.jpg' },
+          { title:'윌리워 룩북 #2', sub:'무신사 룩북', thumb:'image/ww2.jpg', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'ww2.jpg' },
         ]}},
-        { id:'detail', label:'상세페이지', icon:I.doc, block:{ type:'note', text:'무신사 아울렛 <b>제품군 상세페이지</b>를 구성하고 SNS 마케팅으로 완판을 견인했습니다.' }},
+        { id:'detail', label:'상세페이지', icon:I.doc, blocks:[
+          { type:'cards', pgrid:true, ratio:'426/756', items:[
+            { thumb:'image/wwd1.jpg', badge:'상세', ph:'wwd1.jpg' },
+            { thumb:'image/wwd2.jpg', badge:'상세', ph:'wwd2.jpg' },
+            { thumb:'image/wwd3.jpg', badge:'상세', ph:'wwd3.jpg' },
+            { thumb:'image/wwd4.jpg', badge:'상세', ph:'wwd4.jpg' },
+            { thumb:'image/wwd5.jpg', badge:'상세', ph:'wwd5.jpg' },
+            { thumb:'image/wwd6.jpg', badge:'상세', ph:'wwd6.jpg' },
+          ]},
+          { type:'btnrow', items:[{ label:'윌리워스튜디오 무신사 사이트', url:'https://www.musinsa.com/brand/williwawstudio' }]},
+        ]},
         { id:'video', label:'영상', icon:I.play, blocks:[
           { type:'cards', center:true, items:[
             { title:'윌리워 브랜드 영상 #1', videoId:'M5L5DEMer4Q', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
@@ -697,26 +723,29 @@
   const emptyBox = m => `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><b>${m}</b><span>콘텐츠를 추가하면 이 섹션에 표시됩니다.</span></div>`;
   const moreBtn = m => m?`<div class="more-wrap"><a class="more-btn" href="${m.url}" target="_blank" rel="noopener">${m.label}</a></div>`:'';
 
-  function cardHTML(it){
-    const media = it.videoId
+  function cardHTML(it, blockRatio){
+    const ratio = it.ratio || blockRatio;
+    const media = it.mp4
+      ? `<video class="card__mp4" muted loop playsinline preload="metadata"><source src="${it.mp4}" type="video/mp4"></video>`
+      : it.videoId
       ? `<img src="https://i.ytimg.com/vi/${it.videoId}/maxresdefault.jpg" alt="${it.title||''}" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';" onload="if(this.naturalWidth<=120&&this.src.indexOf('hqdefault')<0)this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';">`
       : it.thumb
-        ? `<img src="${it.thumb}" alt="${it.title||''}" loading="lazy">`
+        ? `<span class="card__ph">${it.ph||'이미지'}</span><img src="${it.thumb}" alt="${it.title||''}" loading="lazy" onerror="this.style.display='none'">`
         : `<div class="card__ph">${it.ph||'영상 연결 예정'}</div>`;
     const tag = it.url ? 'a' : 'div';
     const attrs = it.url ? `href="${it.url}" target="_blank" rel="noopener"` : '';
-    const hover = it.videoId ? `data-video="${it.videoId}"${it.start?` data-start="${it.start}"`:''}` : (it.plist ? `data-plist="${it.plist}"` : '');
+    const hover = it.videoId ? `data-video="${it.videoId}"${it.start?` data-start="${it.start}"`:''}` : (it.plist ? `data-plist="${it.plist}"` : (it.mp4 ? `data-mp4="1"` : ''));
     return `<${tag} class="card${it.url?'':' nolink'}" ${attrs} ${hover} aria-label="${it.title||''}">
       <div class="badge">${I.layers}<span>${it.badge||'재생목록'}</span></div>
-      ${(it.videoId||it.plist)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
-      <div class="card__media">${media}<div class="card__shade"></div></div>
+      ${(it.videoId||it.plist||it.mp4)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
+      <div class="card__media"${ratio?` style="aspect-ratio:${ratio}"`:''}>${media}<div class="card__shade"></div></div>
       <div class="card__body"><div class="card__title">${it.title||''}</div>${it.sub?`<div class="card__sub">${it.sub}</div>`:''}</div>
     </${tag}>`;
   }
 
   function block(b){
     if(!b) return '';
-    if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':'')+(b.vertical?' vertical':''); return `<div class="grid${cls}">${b.items.map(cardHTML).join('')}</div>` + moreBtn(b.more); }
+    if(b.type==='cards'){ const cls=(b.items.length===1?' single':'')+(b.center?' center':'')+(b.vertical?' vertical':'')+(b.pf?' pf':'')+(b.pgrid?' pgrid':''); return `<div class="grid${cls}">${b.items.map(it=>cardHTML(it,b.ratio)).join('')}</div>` + moreBtn(b.more); }
     if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
     if(b.type==='divider') return `<div class="block-div"></div>`;
     if(b.type==='flow') return `<div class="flow${b.glow?' flow-glow':''}"${b.ratio?` style="--fr:${b.ratio}"`:''}>`+b.items.map((it,i)=>`<div class="flow-item">${it.label?`<span class="flow-label">${it.label}</span>`:''}<div class="flow-fig"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.label||it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption class="flow-cap">${it.cap}</figcaption>`:''}</div>`+(i<b.items.length-1?`<div class="flow-arrow">→</div>`:'')).join('')+`</div>`+moreBtn(b.more);
@@ -751,8 +780,13 @@
   /* hover play */
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   function attachHover(a){
-    const vid=a.dataset.video, plist=a.dataset.plist;
-    if(!vid && !plist) return;
+    const vid=a.dataset.video, plist=a.dataset.plist, mp4El=a.querySelector('.card__mp4');
+    if(!vid && !plist && !mp4El) return;
+    if(mp4El){
+      a.addEventListener('mouseenter',()=>{ mp4El.play().catch(()=>{}); });
+      a.addEventListener('mouseleave',()=>{ mp4El.pause(); });
+      return;
+    }
     const media=a.querySelector('.card__media'); let iframe=null, timer=null;
     function cmd(func){ if(iframe&&iframe.contentWindow){ iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:''}),'*'); } }
     function src(){
@@ -768,7 +802,7 @@
     },180); });
     a.addEventListener('mouseleave',()=>{ clearTimeout(timer); cmd('pauseVideo'); });
   }
-  if(canHover) document.querySelectorAll('.card[data-video],.card[data-plist]').forEach(attachHover);
+  if(canHover) document.querySelectorAll('.card[data-video],.card[data-plist],.card[data-mp4]').forEach(attachHover);
 
   /* reveal */
   const io=new IntersectionObserver((es)=>{es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('reveal'),(i%5)*55); io.unobserve(e.target);} });},{threshold:.1});
