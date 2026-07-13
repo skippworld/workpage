@@ -153,13 +153,20 @@
   .gal-item figcaption{ font-size:13px; color:var(--paper-dim); text-align:center; line-height:1.5; }
   .gal-item figcaption em{ display:inline-block; font-style:normal; font-size:11px; font-weight:800; color:#fff; background:#d64530; padding:3px 8px; border-radius:6px; margin-left:6px; letter-spacing:.02em; vertical-align:middle; box-shadow:0 0 12px -2px rgba(214,69,48,.6); }
   .gallery.bare .gal-fig{ background:none; border:none; border-radius:0; overflow:visible; }
-  .gallery.bare .gal-fig img{ object-fit:contain; animation:docGlow 3.6s ease-in-out infinite; }
-  .gallery.bare .gal-item:nth-child(2) .gal-fig img{ animation-delay:1.2s; }
-  .gallery.bare .gal-item:nth-child(3) .gal-fig img{ animation-delay:2.4s; }
-  @keyframes docGlow{
-    0%,100%{ filter:drop-shadow(0 0 16px rgba(58,134,255,.30)) drop-shadow(0 8px 20px rgba(0,0,0,.45)); }
-    50%{ filter:drop-shadow(0 0 38px rgba(58,134,255,.62)) drop-shadow(0 10px 24px rgba(0,0,0,.45)); }
-  }
+  .gal-fig{ position:relative; }
+  .gal-lock{ position:absolute; top:8px; right:8px; z-index:3; width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:14px; background:rgba(13,13,15,.82); border:1px solid rgba(255,255,255,.14); border-radius:50%; backdrop-filter:blur(6px); }
+  .gallery.bare .gal-fig img{ object-fit:contain; filter:drop-shadow(0 0 30px rgba(58,134,255,.5)) drop-shadow(0 10px 24px rgba(0,0,0,.5)); }
+  .doc-files{ display:flex; justify-content:center; gap:18px; margin-top:12px; }
+  .doc-extra{ margin-top:14px; }
+  .doc-extra-label{ font-size:12px; font-weight:700; color:var(--accent-soft); text-align:center; letter-spacing:.01em; }
+  .doc-file{ display:flex; flex-direction:column; align-items:center; gap:8px; cursor:default; user-select:none; }
+  .df-wrap{ position:relative; display:inline-block; }
+  .df-ic{ position:relative; width:46px; height:56px; border-radius:7px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:7px; font-size:10.5px; font-weight:800; color:#fff; letter-spacing:.03em; opacity:.4; filter:grayscale(.4) blur(.5px); }
+  .df-ic::before{ content:''; position:absolute; top:8px; left:9px; right:9px; height:2px; background:rgba(255,255,255,.55); border-radius:2px; box-shadow:0 5px 0 rgba(255,255,255,.4), 0 10px 0 rgba(255,255,255,.28); }
+  .df-lock{ position:absolute; top:-8px; right:-9px; width:21px; height:21px; display:flex; align-items:center; justify-content:center; font-size:11px; background:#161618; border:1px solid var(--line); border-radius:50%; }
+  .df-pdf{ background:linear-gradient(160deg,#e0492f,#b5301d); }
+  .df-xls{ background:linear-gradient(160deg,#20a15a,#157a41); }
+  .df-cap{ font-size:12px; color:var(--paper-mute); text-align:center; line-height:1.4; }
 
   /* pill button row */
   .btnrow{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; padding:8px 0 16px; }
@@ -596,7 +603,10 @@
       { id:'document', label:'DOCUMENT', icon:I.doc,
         hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
         block:{ type:'gallery', bare:true, cols:3, items:[
-          { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>대외비 · 유료회원 전용</em>', ph:'docu1.png' },
+          { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>대외비 · 외부 반출 금지</em>', ph:'docu1.png', lock:true, extrasLabel:'* 표준화를 위한 가이드문서 및 엑셀 리뉴얼 작업', extras:[
+            { type:'PDF', cls:'df-pdf', label:'브리핑보고서 작성가이드' },
+            { type:'XLS', cls:'df-xls', label:'비용계산 총괄 엑셀' },
+          ]},
           { img:'image/docu2.png', cap:'회사소개서', ph:'docu2.png' },
           { img:'image/docu3.png', cap:'광고 협업 제안서', ph:'docu3.png' },
         ]} },
@@ -638,9 +648,26 @@
           ]},
           { type:'btnrow', items:[{ label:'블랙비스트 무신사 사이트', url:'https://www.musinsa.com/brand/vlackveast' }]},
         ]},
-        { id:'video', label:'영상', icon:I.play, block:{ type:'cards', items:[
-          { title:'블랙비스트 영상', sub:'브랜드 영상 재생목록', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'재생목록' },
-        ]}},
+        { id:'video', label:'영상', icon:I.play, blocks:[
+          { type:'cards', center:true, items:[
+            { title:'나이트 라이딩', sub:'브랜드 비주얼 영상 (기여도 100%)', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'영상' },
+          ]},
+          { type:'divider' },
+          { type:'heading', title:'피팅가이드 영상 제작', desc:'기획 · 촬영 · 편집 기여도 100%' },
+          { type:'cards', items:[
+            { title:'신제품 출시 자켓 #1', videoId:'X4oN7xJiyIs', url:vurl('X4oN7xJiyIs'), badge:'영상' },
+            { title:'신제품 출시 자켓 #2', videoId:'j0PysRsTaLw', url:vurl('j0PysRsTaLw'), badge:'영상' },
+            { title:'신제품 출시 자켓 #3', videoId:'2z919iV3XDw', url:vurl('2z919iV3XDw'), badge:'영상' },
+            { title:'신제품 출시 자켓 #4', videoId:'p6XOGbOS2Jc', url:vurl('p6XOGbOS2Jc'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #1', videoId:'u483J3DAaWY', url:vurl('u483J3DAaWY'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #2', videoId:'UBP9wsHLOmE', url:vurl('UBP9wsHLOmE'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #3', videoId:'THf_oM8aefU', url:vurl('THf_oM8aefU'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #4', videoId:'Y5H3Emz8vqg', url:vurl('Y5H3Emz8vqg'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #5', videoId:'yW9Xvgz5DMA', url:vurl('yW9Xvgz5DMA'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #6', videoId:'yW9Xvgz5DMA', url:vurl('yW9Xvgz5DMA'), badge:'영상' },
+            { title:'신제품 출시 팬츠 #7', videoId:'Mo9R1dwagnA', url:vurl('Mo9R1dwagnA'), badge:'영상' },
+          ]},
+        ]},
       ]},
 
     { id:'williwo', name:'윌리워스튜디오', meta:'(주)원더윈드코리아 · 그래픽 & 디자이너 · 2022.08 – 2023.05',
@@ -762,7 +789,7 @@
     if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
     if(b.type==='divider') return `<div class="block-div"></div>`;
     if(b.type==='flow') return `<div class="flow${b.glow?' flow-glow':''}"${b.ratio?` style="--fr:${b.ratio}"`:''}>`+b.items.map((it,i)=>`<div class="flow-item">${it.label?`<span class="flow-label">${it.label}</span>`:''}<div class="flow-fig"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.label||it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption class="flow-cap">${it.cap}</figcaption>`:''}</div>`+(i<b.items.length-1?`<div class="flow-arrow">→</div>`:'')).join('')+`</div>`+moreBtn(b.more);
-    if(b.type==='gallery') return `<div class="gallery${b.bare?' bare':''}" style="grid-template-columns:repeat(${b.cols||3},1fr)">`+b.items.map(it=>`<figure class="gal-item"><div class="gal-fig${it.ratio==='v'?' v':''}"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption>${it.cap}</figcaption>`:''}</figure>`).join('')+`</div>`+moreBtn(b.more);
+    if(b.type==='gallery') return `<div class="gallery${b.bare?' bare':''}" style="grid-template-columns:repeat(${b.cols||3},1fr)">`+b.items.map(it=>`<figure class="gal-item"><div class="gal-fig${it.ratio==='v'?' v':''}">${it.lock?`<span class="gal-lock">🔒</span>`:''}<span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption>${it.cap}</figcaption>`:''}${it.extras?`<div class="doc-extra">${it.extrasLabel?`<div class="doc-extra-label">${it.extrasLabel}</div>`:''}<div class="doc-files">${it.extras.map(f=>`<div class="doc-file"><span class="df-wrap"><span class="df-ic ${f.cls}">${f.type}</span><span class="df-lock">🔒</span></span><span class="df-cap">${f.label}</span></div>`).join('')}</div></div>`:''}</figure>`).join('')+`</div>`+moreBtn(b.more);
     if(b.type==='btnrow') return `<div class="btnrow">`+b.items.map(it=>`<a class="pill-btn" href="${it.url}" target="_blank" rel="noopener">${it.label} ↗</a>`).join('')+`</div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
