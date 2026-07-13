@@ -92,6 +92,11 @@
   .wtoggle.is-active{ color:#fff; background:var(--accent); border-color:var(--accent); }
   .wtoggle.is-active svg{ opacity:1; }
   .wpanel{ display:none; padding-bottom:56px; } .wpanel.is-active{ display:block; animation:fadeUp .4s ease both; }
+  @media (max-width:600px){
+    .wtoggle-row{ gap:8px; padding-top:18px; }
+    .wtoggle{ padding:9px 14px; font-size:12px; gap:6px; letter-spacing:.02em; }
+    .wtoggle svg{ width:14px; height:14px; }
+  }
 
   .subtab-row{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:6px 0 12px; }
   .subtab{ padding:8px 16px; border-radius:20px; font-size:12.5px; font-weight:700; color:var(--paper-mute); border:1px solid var(--line-soft); transition:color .2s,border-color .2s; }
@@ -106,14 +111,14 @@
   @media (max-width:600px){ .grid{ gap:20px; } .grid > .card{ flex-basis:100%; max-width:100%; } }
   .grid.single .card, .grid.center .card{ flex:0 0 auto; width:100%; max-width:440px; }
   .grid.pf .card{ flex:0 0 auto; width:100%; max-width:360px; }
-  .grid.pgrid{ gap:16px; }
-  .grid.pgrid .card{ flex:0 0 auto; width:clamp(150px,22vw,210px); max-width:210px; }
+  .grid.pgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:760px; margin:0 auto; }
+  .grid.pgrid .card{ flex:none; width:100%; max-width:none; }
   .grid.vertical{ gap:16px; }
   .grid.vertical .card{ flex:0 0 auto; width:clamp(150px,18vw,200px); max-width:200px; }
   .grid.vertical .card__media{ aspect-ratio:9/16; }
   .grid.vertical .card__title{ font-size:14px; }
   .grid.vertical .card__body{ padding:12px; }
-  .card__mp4{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .card__mp4{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
   .block-head{ text-align:center; padding:10px 0 22px; }
   .block-head h3{ font-size:clamp(18px,2.6vw,24px); font-weight:800; letter-spacing:-.01em; color:var(--paper); }
   .block-head p{ margin:12px auto 0; max-width:66ch; font-size:13.5px; line-height:1.7; color:var(--paper-dim); }
@@ -726,7 +731,7 @@
   function cardHTML(it, blockRatio){
     const ratio = it.ratio || blockRatio;
     const media = it.mp4
-      ? `<video class="card__mp4" muted loop playsinline preload="metadata"><source src="${it.mp4}" type="video/mp4"></video>`
+      ? `<video class="card__mp4" autoplay muted loop playsinline preload="auto"><source src="${it.mp4}" type="video/mp4"></video>`
       : it.videoId
       ? `<img src="https://i.ytimg.com/vi/${it.videoId}/maxresdefault.jpg" alt="${it.title||''}" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';" onload="if(this.naturalWidth<=120&&this.src.indexOf('hqdefault')<0)this.src='https://i.ytimg.com/vi/${it.videoId}/hqdefault.jpg';">`
       : it.thumb
@@ -734,10 +739,10 @@
         : `<div class="card__ph">${it.ph||'영상 연결 예정'}</div>`;
     const tag = it.url ? 'a' : 'div';
     const attrs = it.url ? `href="${it.url}" target="_blank" rel="noopener"` : '';
-    const hover = it.videoId ? `data-video="${it.videoId}"${it.start?` data-start="${it.start}"`:''}` : (it.plist ? `data-plist="${it.plist}"` : (it.mp4 ? `data-mp4="1"` : ''));
+    const hover = it.videoId ? `data-video="${it.videoId}"${it.start?` data-start="${it.start}"`:''}` : (it.plist ? `data-plist="${it.plist}"` : '');
     return `<${tag} class="card${it.url?'':' nolink'}" ${attrs} ${hover} aria-label="${it.title||''}">
       <div class="badge">${I.layers}<span>${it.badge||'재생목록'}</span></div>
-      ${(it.videoId||it.plist||it.mp4)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
+      ${(it.videoId||it.plist)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
       <div class="card__media"${ratio?` style="aspect-ratio:${ratio}"`:''}>${media}<div class="card__shade"></div></div>
       <div class="card__body"><div class="card__title">${it.title||''}</div>${it.sub?`<div class="card__sub">${it.sub}</div>`:''}</div>
     </${tag}>`;
@@ -780,13 +785,8 @@
   /* hover play */
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   function attachHover(a){
-    const vid=a.dataset.video, plist=a.dataset.plist, mp4El=a.querySelector('.card__mp4');
-    if(!vid && !plist && !mp4El) return;
-    if(mp4El){
-      a.addEventListener('mouseenter',()=>{ mp4El.play().catch(()=>{}); });
-      a.addEventListener('mouseleave',()=>{ mp4El.pause(); });
-      return;
-    }
+    const vid=a.dataset.video, plist=a.dataset.plist;
+    if(!vid && !plist) return;
     const media=a.querySelector('.card__media'); let iframe=null, timer=null;
     function cmd(func){ if(iframe&&iframe.contentWindow){ iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:''}),'*'); } }
     function src(){
@@ -802,7 +802,7 @@
     },180); });
     a.addEventListener('mouseleave',()=>{ clearTimeout(timer); cmd('pauseVideo'); });
   }
-  if(canHover) document.querySelectorAll('.card[data-video],.card[data-plist],.card[data-mp4]').forEach(attachHover);
+  if(canHover) document.querySelectorAll('.card[data-video],.card[data-plist]').forEach(attachHover);
 
   /* reveal */
   const io=new IntersectionObserver((es)=>{es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('reveal'),(i%5)*55); io.unobserve(e.target);} });},{threshold:.1});
