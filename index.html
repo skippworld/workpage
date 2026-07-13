@@ -151,7 +151,15 @@
   .gal-fig.v{ aspect-ratio:3/4; }
   .gal-fig img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
   .gal-item figcaption{ font-size:13px; color:var(--paper-dim); text-align:center; line-height:1.5; }
-  .gal-item figcaption em{ color:var(--accent-soft); font-size:12px; }
+  .gal-item figcaption em{ display:inline-block; font-style:normal; font-size:11px; font-weight:800; color:#fff; background:#d64530; padding:3px 8px; border-radius:6px; margin-left:6px; letter-spacing:.02em; vertical-align:middle; box-shadow:0 0 12px -2px rgba(214,69,48,.6); }
+  .gallery.bare .gal-fig{ background:none; border:none; border-radius:0; overflow:visible; }
+  .gallery.bare .gal-fig img{ object-fit:contain; animation:docGlow 3.6s ease-in-out infinite; }
+  .gallery.bare .gal-item:nth-child(2) .gal-fig img{ animation-delay:1.2s; }
+  .gallery.bare .gal-item:nth-child(3) .gal-fig img{ animation-delay:2.4s; }
+  @keyframes docGlow{
+    0%,100%{ filter:drop-shadow(0 0 16px rgba(58,134,255,.30)) drop-shadow(0 8px 20px rgba(0,0,0,.45)); }
+    50%{ filter:drop-shadow(0 0 38px rgba(58,134,255,.62)) drop-shadow(0 10px 24px rgba(0,0,0,.45)); }
+  }
 
   /* pill button row */
   .btnrow{ display:flex; justify-content:center; flex-wrap:wrap; gap:12px; padding:8px 0 16px; }
@@ -587,8 +595,8 @@
         ] },
       { id:'document', label:'DOCUMENT', icon:I.doc,
         hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
-        block:{ type:'gallery', cols:3, items:[
-          { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>(*대외비 · 유료회원 전용)</em>', ph:'docu1.png' },
+        block:{ type:'gallery', bare:true, cols:3, items:[
+          { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>대외비 · 유료회원 전용</em>', ph:'docu1.png' },
           { img:'image/docu2.png', cap:'회사소개서', ph:'docu2.png' },
           { img:'image/docu3.png', cap:'광고 협업 제안서', ph:'docu3.png' },
         ]} },
@@ -754,7 +762,7 @@
     if(b.type==='heading') return `<div class="block-head"><h3>${b.title}</h3>${b.desc?`<p>${b.desc}</p>`:''}</div>`;
     if(b.type==='divider') return `<div class="block-div"></div>`;
     if(b.type==='flow') return `<div class="flow${b.glow?' flow-glow':''}"${b.ratio?` style="--fr:${b.ratio}"`:''}>`+b.items.map((it,i)=>`<div class="flow-item">${it.label?`<span class="flow-label">${it.label}</span>`:''}<div class="flow-fig"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.label||it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption class="flow-cap">${it.cap}</figcaption>`:''}</div>`+(i<b.items.length-1?`<div class="flow-arrow">→</div>`:'')).join('')+`</div>`+moreBtn(b.more);
-    if(b.type==='gallery') return `<div class="gallery" style="grid-template-columns:repeat(${b.cols||3},1fr)">`+b.items.map(it=>`<figure class="gal-item"><div class="gal-fig${it.ratio==='v'?' v':''}"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption>${it.cap}</figcaption>`:''}</figure>`).join('')+`</div>`+moreBtn(b.more);
+    if(b.type==='gallery') return `<div class="gallery${b.bare?' bare':''}" style="grid-template-columns:repeat(${b.cols||3},1fr)">`+b.items.map(it=>`<figure class="gal-item"><div class="gal-fig${it.ratio==='v'?' v':''}"><span class="ph-label">${it.ph||'이미지'}</span><img src="${it.img}" alt="${it.cap||''}" loading="lazy" onerror="this.style.display='none'"></div>${it.cap?`<figcaption>${it.cap}</figcaption>`:''}</figure>`).join('')+`</div>`+moreBtn(b.more);
     if(b.type==='btnrow') return `<div class="btnrow">`+b.items.map(it=>`<a class="pill-btn" href="${it.url}" target="_blank" rel="noopener">${it.label} ↗</a>`).join('')+`</div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
