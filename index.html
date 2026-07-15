@@ -52,10 +52,10 @@
   .sec-hero p{ margin:18px auto 0; max-width:62ch; font-size:clamp(14px,1.6vw,16px); color:var(--paper-dim); line-height:1.7; }
   .sec-hero p.roles{ color:var(--paper); font-weight:600; letter-spacing:.01em; margin-top:16px; }
   .stats{ display:flex; justify-content:center; flex-wrap:wrap; margin-top:32px; }
-  .stat{ display:flex; align-items:baseline; gap:8px; padding:6px 24px; }
+  .stat{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px; padding:4px 30px; }
   .stat + .stat{ border-left:1px solid var(--line); }
-  .stat b{ font-size:18px; font-weight:800; letter-spacing:-.01em; }
-  .stat span{ font-size:12.5px; color:var(--paper-mute); }
+  .stat b{ font-size:20px; font-weight:800; letter-spacing:-.01em; }
+  .stat span{ font-size:12px; color:var(--paper-mute); }
 
   /* rounded overlapping folder tabs (macOS/browser style), left-aligned */
   .client-nav{ display:flex; justify-content:center; align-items:flex-end; padding:30px 0 0; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; border-bottom:2px solid var(--accent); }
@@ -64,6 +64,17 @@
   .client-btn:first-child{ margin-left:0; }
   .client-btn:hover{ background:#24396c; color:#d6e0f2; z-index:4; }
   .client-btn.is-active{ color:#fff; background:linear-gradient(180deg,#57a0ff,var(--accent)); z-index:6; box-shadow:0 -2px 14px rgba(58,134,255,.45); }
+  .client-btn::before{ content:''; position:absolute; top:0; left:14px; right:14px; height:3px; border-radius:0 0 2px 2px; z-index:2; }
+  .client-btn.full::before{ background:var(--accent); }
+  .client-btn.free::before{ background:#d98a2b; }
+  .client-btn.free.is-active{ background:linear-gradient(180deg,#e8ab55,#d98a2b); box-shadow:0 -2px 14px rgba(217,138,43,.45); }
+  .client-btn.free.is-active::before{ background:#fff; }
+  .client.free{ --accent:#d98a2b; --accent-soft:#e8ab55; }
+  .client-legend{ display:flex; justify-content:center; align-items:center; gap:18px; flex-wrap:wrap; padding:32px 0 16px; font-size:11.5px; color:var(--paper-mute); }
+  .lg{ display:inline-flex; align-items:center; gap:6px; }
+  .lg::before{ content:''; width:9px; height:9px; border-radius:50%; }
+  .lg.full::before{ background:var(--accent); }
+  .lg.free::before{ background:#d98a2b; }
 
   .client{ display:none; }
   .client-nav-wrap{ position:relative; }
@@ -228,6 +239,9 @@
   .profile-hero{ position:relative; min-height:calc(100vh - var(--navh)); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:40px 0; }
   .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
   .profile-hero-inner{ position:relative; z-index:2; width:100%; }
+  .scroll-cue{ position:absolute; left:50%; bottom:24px; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; color:#98a0ac; font-size:10px; font-weight:800; letter-spacing:.22em; pointer-events:none; animation:scrollBounce 2s ease-in-out infinite; }
+  .sc-arrow{ font-size:17px; line-height:1; letter-spacing:0; }
+  @keyframes scrollBounce{ 0%,100%{ transform:translateX(-50%) translateY(0); opacity:.45; } 50%{ transform:translateX(-50%) translateY(6px); opacity:1; } }
   .profile-hero .s-eyebrow{ color:var(--accent); }
   .profile-hero h1{ color:#0d0d0d; font-size:clamp(32px,6.2vw,66px); font-weight:800; line-height:1.16; letter-spacing:-.03em; }
   .profile-hero h1 em{ color:var(--accent); }
@@ -328,7 +342,7 @@
       <button class="brand js-view" data-view="profile">Skipp Kim's <em>WORKS</em></button>
       <nav class="nav-links">
         <button class="nav-btn is-active js-view" data-view="profile">PROFILE</button>
-        <button class="nav-btn js-view" data-view="works">WORKS <span>(PD · Designer)</span></button>
+        <button class="nav-btn js-view" data-view="works">WORKS</button>
         <button class="nav-btn js-view" data-view="performer">PERFORMER</button>
         <button class="nav-btn js-view" data-view="contact">CONTACT</button>
       </nav>
@@ -349,6 +363,7 @@
             <button class="more-btn js-view" data-view="works">WORKS 보러가기 →</button>
           </div>
         </div>
+        <div class="scroll-cue"><span>SCROLL</span><span class="sc-arrow">⌄</span></div>
       </div>
 
       <div class="profile-info">
@@ -406,7 +421,7 @@
     </section>
 
     <section class="view" data-view="works">
-      <div class="wrap"><div class="client-nav-wrap"><button class="cn-arrow cn-prev" aria-label="이전 탭">‹</button><nav class="client-nav" id="clientNav"></nav><button class="cn-arrow cn-next" aria-label="다음 탭">›</button></div></div>
+      <div class="wrap"><div class="client-legend"><span class="lg full">정규직</span><span class="lg free">프리랜서</span></div><div class="client-nav-wrap"><button class="cn-arrow cn-prev" aria-label="이전 탭">‹</button><nav class="client-nav" id="clientNav"></nav><button class="cn-arrow cn-next" aria-label="다음 탭">›</button></div></div>
       <div class="wrap" id="clients"></div>
     </section>
 
@@ -561,19 +576,19 @@
   const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
 
   const CLIENTS = [
-    { id:'myauction', name:'마이옥션', meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재',
+    { id:'myauction', name:'마이옥션', type:'full', ord:1, meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재',
       hero:{ title:'마이<em>옥션</em>', desc:'부동산 경매 사이트 &amp; 컨설팅' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
-          desc:'단일 출연진의 딱딱한 기업 채널을, 다양한 <em>출연자 기반 IP</em>로 재설계했습니다.<br>개인의 스타일에 맞춘 콘텐츠로 전문성과 개성을 함께 살려,<br>회사와 컨설턴트 개개인의 인지도를 동시에 끌어올렸습니다.<br><br>그리고 지금도, 끊임없이 새로운 콘텐츠를 기획하고 실험하고 있습니다.',
-          stats:[['1,800 → 23,000+','구독자 성장'],['400편+','콘텐츠 누계'],['80%','콘텐츠 기획']] },
+          desc:'단일 출연진 중심의 기업 채널을,<br>다양한 컨설턴트가 주인공이 되는 <em>콘텐츠 IP 채널</em>로 전환했습니다.<br>전문성과 캐릭터를 결합한 맞춤형 콘텐츠를 기획해,<br>회사 브랜드와 컨설턴트 개인 브랜딩을 함께 성장시키는 구조를 설계했습니다.<br><br>현재도 새로운 콘텐츠 포맷을 지속적으로 실험하며 채널을 고도화하고 있습니다.',
+          stats:[['1,800 → 23,000+','구독자 성장'],['400편+','콘텐츠 누계'],['IP 기획','콘텐츠 설계·운영']] },
         blocks:[
           { type:'heading', title:'김피디의 실험형 콘텐츠',
             desc:'경매사건 현장 임장과 분석부터, AI를 활용한 경매 RAP 브리핑,<br>경매의 역사를 다루는 콘텐츠, 컨설턴트들의 물건 추천 배틀까지 —<br>포맷의 틀을 깬, 실험적인 1인 단독 콘텐츠입니다.<br><br>경매물건 선정·분석 → 콘텐츠 기획 → 촬영 →<br>편집 → 더빙 → 완성까지 직접 진행했습니다. (기여도 100%)' },
           { type:'cards', items:MYA_EXP },
           { type:'divider' },
           { type:'heading', title:'주요 콘텐츠 작업 재생목록',
-            desc:'각 컨설턴트의 성격과 스타일에 맞춰 기획한, 출연자 기반 IP 콘텐츠들입니다.<br>인물마다 다른 콘셉트와 이름으로 채널의 전문성과 개성을 함께 담았습니다.' },
+            desc:'출연자별 개성을 살린 독립적인 콘텐츠 IP 라인업입니다.<br>인물마다 다른 콘셉트와 이름으로 채널의 전문성과 개성을 함께 담았습니다.' },
           { type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} },
         ] },
       { id:'web', label:'WEB', icon:I.web,
@@ -612,12 +627,12 @@
         ]} },
     ]},
 
-    { id:'cdf', name:'체대친구들', meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01',
+    { id:'cdf', name:'체대친구들', type:'full', ord:2, meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01',
       hero:{ title:'체대<em>친구들</em>', desc:'체대입시 교육 &amp; 공무원 체력 학원' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'단일 캐릭터의 채널을,<br>7개의 시리즈 <em>IP</em>로.',
-          desc:'단일 강사 중심이던 채널을 7종의 IP 콘텐츠 시리즈로 확장하며,<br>포맷 다각화로 채널에 생동감을 더했습니다.<br>— 기획부터 편집까지 직접 책임진 메인 PD 프로젝트입니다.',
-          stats:[['17,000 → 33,000+','구독자 성장'],['7종','시리즈 IP 포맷'],['100%','콘텐츠 기획']] },
+        hero:{ title:'한 명의 캐릭터를,<br>7종의 <em>콘텐츠 IP</em>로.',
+          desc:'체대입시 운동 강의에만 치우쳐 있던 채널을,<br>대표적인 인터뷰형 콘텐츠부터 시작해<br>분석 · 브이로그 · 핵심강의 · 꿀팁 · 실험 · 리액션까지 —<br>7가지 포맷의 <em>콘텐츠 IP 구조</em>로 확장 · 재설계했습니다.',
+          stats:[['17,000 → 33,000+','구독자 성장'],['7종','콘텐츠 IP'],['메인 PD','기획 · 촬영 · 편집']] },
         block:{ type:'cards', items:CDF, more:{label:'체대친구들 유튜브 채널 →', url:'https://youtube.com/@cdf_jason'} } },
       { id:'offline', label:'OFFLINE', icon:I.pin,
         hero:{ title:'콘텐츠의 신뢰를,<br><em>오프라인의 성과</em>로.',
@@ -630,7 +645,7 @@
         ]} },
     ]},
 
-    { id:'blackbeast', name:'블랙비스트', meta:'(주)원더윈드코리아 · 비주얼 디렉터 & 디자이너 · 2022.08 – 2023.05',
+    { id:'blackbeast', name:'블랙비스트', type:'full', ord:6, meta:'(주)원더윈드코리아 · 비주얼 디렉터 & 디자이너 · 2022.08 – 2023.05',
       hero:{ title:'블랙<em>비스트</em>',
         desc:'데님 패션 브랜드<br><br>프리미엄 데님 컬렉션 신규 브랜드로,<br>브랜드 오픈에 필요한 모든 BI/BX 구성과 디자인 전반을 기획·참여했습니다.<br>브랜드 무드를 담은 룩북 기획·촬영부터 제품 상세페이지·제품 디자인·제품 기획,<br>피팅가이드 영상까지 — 고객 여정의 전반을 디자인했습니다.<br><br>패션코드 정식 런칭 · 트렌드페어 · 독일 K-전시회 선정 · 무신사 입점.' },
       toggles:[
@@ -646,7 +661,10 @@
             { thumb:'image/vv5.jpg', badge:'상세', ph:'vv5.jpg' },
             { thumb:'image/vv6.jpg', badge:'상세', ph:'vv6.jpg' },
           ]},
-          { type:'btnrow', items:[{ label:'블랙비스트 무신사 사이트', url:'https://www.musinsa.com/brand/vlackveast' }]},
+          { type:'btnrow', items:[
+            { label:'블랙비스트 홈페이지', url:'https://www.vlackveast.com' },
+            { label:'블랙비스트 무신사 사이트', url:'https://www.musinsa.com/brand/vlackveast' },
+          ]},
         ]},
         { id:'video', label:'영상', icon:I.play, blocks:[
           { type:'cards', center:true, items:[
@@ -670,7 +688,7 @@
         ]},
       ]},
 
-    { id:'williwo', name:'윌리워스튜디오', meta:'(주)원더윈드코리아 · 그래픽 & 디자이너 · 2022.08 – 2023.05',
+    { id:'williwo', name:'윌리워스튜디오', type:'full', ord:7, meta:'(주)원더윈드코리아 · 그래픽 & 디자이너 · 2022.08 – 2023.05',
       hero:{ title:'윌리워<em>스튜디오</em>',
         desc:'애슬레저 패션 브랜드<br><br>기존 애매한 스트릿 브랜드 포지셔닝을,<br>스트릿 애슬레저 브랜드 톤으로 재구성했습니다.<br>감성과 일상, 애슬레틱한 운동의 접점을 찾아 제품을 기획·디자인하며,<br>기존과는 다른 방향으로 브랜딩을 새로 시작했습니다.<br><br>이후 무신사 아울렛 제품군 구성 · 룩북 제작 ·<br>SNS 마케팅으로 완판을 견인했습니다.' },
       toggles:[
@@ -687,7 +705,10 @@
             { thumb:'image/wwd5.jpg', badge:'상세', ph:'wwd5.jpg' },
             { thumb:'image/wwd6.jpg', badge:'상세', ph:'wwd6.jpg' },
           ]},
-          { type:'btnrow', items:[{ label:'윌리워스튜디오 무신사 사이트', url:'https://www.musinsa.com/brand/williwawstudio' }]},
+          { type:'btnrow', items:[
+            { label:'윌리워스튜디오 홈페이지', url:'https://wonderwind.cafe24.com/' },
+            { label:'윌리워스튜디오 무신사 사이트', url:'https://www.musinsa.com/brand/williwawstudio' },
+          ]},
         ]},
         { id:'video', label:'영상', icon:I.play, blocks:[
           { type:'cards', center:true, items:[
@@ -703,7 +724,7 @@
         ]},
       ]},
 
-    { id:'kmong', name:'크몽', meta:'크몽 · 프리랜서 @SKIPPWORKS · 2022.08 – 2026.07',
+    { id:'kmong', name:'크몽', type:'free', ord:5, meta:'크몽 · 프리랜서 앨범아트 디자이너 · 2022.08 – 2026.07',
       hero:{ title:'크몽 <em>(SKWS)</em>', desc:'앨범 커버 아트워크 채널' }, toggles:[
       { id:'album', label:'앨범커버 아트워크', icon:I.disc,
         hero:{ title:'들리는 음악을,<br><em>보이는 커버</em>로.',
@@ -712,11 +733,12 @@
         block:{ type:'album' } },
     ]},
 
-    { id:'aruncompany', name:'에이런컴퍼니', meta:'프리랜서 · 콘텐츠 디렉터 · 2022.05 – 2026.03',
+    { id:'aruncompany', name:'에이런컴퍼니', type:'free', ord:3, meta:'에이런컴퍼니 · 프리랜서 콘텐츠 디렉터 · 2022.05 – 2026.03',
       hero:{ title:'에이런<em>컴퍼니</em>', desc:'브레이킹 컬처 &amp; 아트 컴퍼니' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'브레이킹 씬을,<br><em>브랜딩</em>하다.',
-          desc:'브레이킹(B-boy) 문화 기반 컴퍼니.<br>WBC 국가대표 선발전(2022·2023·2024) 홍보영상을 디렉팅하고,<br>행사 백월 미디어아트와 메인 영상을 디자인했습니다.' },
+        hero:{ title:'낯선 브레이킹 문화를,<br>경험하고 싶은 <em>브랜드</em>로.',
+          desc:'2022~2024 월드 브레이킹 클래식(WBC) 국가대표 선발전의<br>콘텐츠와 비주얼을 총괄했습니다.<br>숏폼 중심의 콘텐츠 전략으로 선수와 대회의 매력을 지속적으로 노출하며,<br>‘가보고 싶은 행사’로 브랜딩했습니다.<br>홍보 영상, 행사장 미디어아트, 거리예술극 등<br>온·오프라인 콘텐츠로 브랜드 경험을 확장했습니다.',
+          stats:[['3년 연속','WBC 콘텐츠 디렉팅'],['숏폼 전략','릴스·쇼츠 중심 운영'],['객석 매진','콘텐츠 기반 티켓팅 흥행']] },
         blocks:[
           { type:'heading', title:'길거리예술작 WA:ZAK 홍보영상 제작' },
           { type:'cards', center:true, items:[
@@ -742,11 +764,12 @@
         ] },
     ]},
 
-    { id:'batontouch', name:'배턴터치', meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09',
+    { id:'batontouch', name:'배턴터치', type:'full', ord:4, meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09',
       hero:{ title:'배턴<em>터치</em>', desc:'헬스테크(Health Tech) 기반 스타트업' }, toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'전국을 누비며 담은,<br><em>체대입시생의 꿈.</em>',
-          desc:'맥스체대입시 외주 1인 총괄 작업입니다.<br>‘체대입시생들의 꿈’을 주제로 강남 · 논산 · 울산 · 순천 · 대구까지<br>전국을 직접 다니며, 기획부터 음악 제작 · 촬영 · 편집까지 모두 진행했습니다.<br>(기여도 100% · 1인 제작)' },
+        hero:{ title:'체대입시생의 꿈을,<br><em>브랜드 다큐</em>로.',
+          desc:'체대입시 대표 브랜드 ‘맥스체대입시’의<br>전국 연합 테스트(드림한양)를 배경으로,<br>체대입시생들의 목표와 꿈을 인터뷰의 형식으로 담아낸<br><em>다큐멘터리형</em> 브랜드 콘텐츠입니다.<br>강남·논산·울산·순천·대구 등 전국 지점을 직접 돌며,<br>기획부터 촬영·편집·음악까지 전 과정을 1인으로 완성했습니다.',
+          stats:[['전국 5개 도시','로케이션 촬영'],['1인 제작','기획·촬영·편집·음악'],['기여도 100%','전 과정 총괄']] },
         block:{ type:'cards', items:[
           ['체대입시생의 꿈 [대구]','Afy54zR10uY'],
           ['체대입시생의 꿈 [순천]','jnF_LRvk72M'],
@@ -808,9 +831,10 @@
 
   const clientNav = document.getElementById('clientNav');
   const clients   = document.getElementById('clients');
-  clientNav.innerHTML = CLIENTS.map((c,i)=>`<button class="client-btn${i?'':' is-active'}" data-client="${c.id}">${c.name}</button>`).join('');
-  clients.innerHTML = CLIENTS.map((c,i)=>`
-    <div class="client${i?'':' is-active'}" data-client="${c.id}">
+  const CO = [...CLIENTS].sort((a,b)=>(a.ord||99)-(b.ord||99));
+  clientNav.innerHTML = CO.map((c,i)=>`<button class="client-btn ${c.type==='free'?'free':'full'}${i?'':' is-active'}" data-client="${c.id}">${c.name}</button>`).join('');
+  clients.innerHTML = CO.map((c,i)=>`
+    <div class="client${c.type==='free'?' free':''}${i?'':' is-active'}" data-client="${c.id}">
       ${c.meta?`<div class="client-head">${(()=>{const p=c.meta.split(' · ');const per=p.pop();return `<span class="ch-main">${p.join(' · ')}</span><span class="ch-period">${per}</span>`;})()}</div>`:''}
       ${c.hero?hero(c.hero):''}
       <div class="wtoggle-row">${c.toggles.map((t,j)=>`<button class="wtoggle${j?'':' is-active'}" data-toggle="${t.id}">${t.icon}${t.label}</button>`).join('')}</div>
