@@ -103,6 +103,7 @@
   .wtoggle.is-active{ color:#fff; background:var(--accent); border-color:var(--accent); }
   .wtoggle.is-active svg{ opacity:1; }
   .wpanel{ display:none; padding-bottom:56px; } .wpanel.is-active{ display:block; animation:fadeUp .4s ease both; }
+  .whero{ display:none; } .whero.is-active{ display:block; animation:fadeUp .4s ease both; }
   @media (max-width:600px){
     .wtoggle-row{ gap:8px; padding-top:18px; }
     .wtoggle{ padding:9px 14px; font-size:12px; gap:6px; letter-spacing:.02em; }
@@ -577,7 +578,7 @@
 
   const CLIENTS = [
     { id:'myauction', name:'마이옥션', type:'full', ord:1, meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재',
-      hero:{ title:'마이<em>옥션</em>', desc:'부동산 경매 사이트 &amp; 컨설팅' }, toggles:[
+      eyebrow:'마이옥션 · 부동산 경매 사이트 &amp; 컨설팅', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
           desc:'단일 출연진 중심의 기업 채널을,<br>다양한 컨설턴트가 주인공이 되는 <em>콘텐츠 IP 채널</em>로 전환했습니다.<br>전문성과 캐릭터를 결합한 맞춤형 콘텐츠를 기획해,<br>회사 브랜드와 컨설턴트 개인 브랜딩을 함께 성장시키는 구조를 설계했습니다.<br><br>현재도 새로운 콘텐츠 포맷을 지속적으로 실험하며 채널을 고도화하고 있습니다.',
@@ -628,7 +629,7 @@
     ]},
 
     { id:'cdf', name:'체대친구들', type:'full', ord:2, meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01',
-      hero:{ title:'체대<em>친구들</em>', desc:'체대입시 교육 &amp; 공무원 체력 학원' }, toggles:[
+      eyebrow:'체대친구들 · 체대입시 교육 &amp; 공무원 체력 학원', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'한 명의 캐릭터를,<br>7종의 <em>콘텐츠 IP</em>로.',
           desc:'체대입시 운동 강의에만 치우쳐 있던 채널을,<br>대표적인 인터뷰형 콘텐츠부터 시작해<br>분석 · 브이로그 · 핵심강의 · 꿀팁 · 실험 · 리액션까지 —<br>7가지 포맷의 <em>콘텐츠 IP 구조</em>로 확장 · 재설계했습니다.',
@@ -729,7 +730,7 @@
       ]},
 
     { id:'kmong', name:'크몽', type:'free', ord:5, meta:'크몽 · 프리랜서 앨범아트 디자이너 · 2022.08 – 2026.07',
-      hero:{ title:'크몽 <em>(SKWS)</em>', desc:'앨범커버 아트워크 디자이너' }, toggles:[
+      eyebrow:'크몽(SKWS) · 앨범커버 아트워크 디자이너', toggles:[
       { id:'album', label:'앨범커버 아트워크', icon:I.disc,
         hero:{ title:'들리는 음악을,<br><em>보이는 커버</em>로.',
           desc:'아티스트명 ‘SKWS (SKIPPWORKS)’로 진행해온 앨범아트 디자인 작업입니다.<br>뮤지션의 정체성을 해석해, 발매를 앞둔 음악 · 가사 · 타이틀곡을<br>하나의 앨범 톤으로 시각화했습니다.<br><br>트로트를 시작으로 락 · 캐롤 · CCM · 발라드 · 힙합까지,<br>다양한 장르를 넘나들며 앨범 아트워크를 작업했습니다.',
@@ -738,7 +739,7 @@
     ]},
 
     { id:'aruncompany', name:'에이런컴퍼니', type:'free', ord:3, meta:'에이런컴퍼니 · 프리랜서 콘텐츠 디렉터 · 2022.05 – 2026.03',
-      hero:{ title:'에이런<em>컴퍼니</em>', desc:'브레이킹 컬처 &amp; 아트 컴퍼니' }, toggles:[
+      eyebrow:'에이런컴퍼니 · 브레이킹 컬처 &amp; 아트 컴퍼니', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'낯선 브레이킹 문화를,<br><em>경험하고 싶은</em> 브랜드로.',
           desc:'2022~2024 월드 브레이킹 클래식(WBC) 국가대표 선발전의<br>콘텐츠와 비주얼을 총괄했습니다.<br>숏폼 중심의 콘텐츠 전략으로 선수와 대회의 매력을 지속적으로 노출하며,<br>‘가보고 싶은 행사’로 브랜딩했습니다.<br>홍보 영상, 행사장 미디어아트, 거리예술극 등<br>온·오프라인 콘텐츠로 브랜드 경험을 확장했습니다.',
@@ -769,7 +770,7 @@
     ]},
 
     { id:'batontouch', name:'배턴터치', type:'full', ord:4, meta:'(주)배턴터치 · 영상 PD · 2019.06 – 2019.09',
-      hero:{ title:'배턴<em>터치</em>', desc:'헬스테크(Health Tech) 기반 스타트업' }, toggles:[
+      eyebrow:'배턴터치 · 헬스테크(Health Tech) 기반 스타트업', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
         hero:{ title:'체대입시생의 꿈을,<br><em>브랜드 다큐</em>로.',
           desc:'체대입시 대표 브랜드 ‘맥스체대입시’의<br>전국 연합 테스트(드림한양)를 배경으로,<br>체대입시생들의 목표와 꿈을 인터뷰의 형식으로 담아낸<br><em>다큐멘터리형</em> 브랜드 콘텐츠입니다.<br>강남·논산·울산·순천·대구 등 전국 지점을 직접 돌며,<br>기획부터 촬영·편집·음악까지 전 과정을 1인으로 완성했습니다.',
@@ -824,26 +825,32 @@
     return '';
   }
 
-  function toggleContent(t){
+  function toggleContent(t, cEye, skipHero){
+    const eye = h => h ? {...h, eyebrow: h.eyebrow || cEye} : h;
+    const h0 = (!skipHero && t.hero) ? hero(eye(t.hero)) : '';
     if(t.type==='subtabs'){
       const row = `<div class="subtab-row">${t.subtabs.map((s,i)=>`<button class="subtab${i?'':' is-active'}" data-sub="${s.id}">${s.label}</button>`).join('')}</div>`;
       const panels = t.subtabs.map((s,i)=>`<div class="subpanel${i?'':' is-active'}" data-sub="${s.id}">${s.blocks ? s.blocks.map(block).join('') : block(s.block)}</div>`).join('');
-      return (t.hero?hero(t.hero):'') + row + panels;
+      return h0 + row + panels;
     }
-    return (t.hero?hero(t.hero):'') + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
+    return h0 + (t.blocks ? t.blocks.map(block).join('') : block(t.block));
   }
 
   const clientNav = document.getElementById('clientNav');
   const clients   = document.getElementById('clients');
   const CO = [...CLIENTS].sort((a,b)=>(a.ord||99)-(b.ord||99));
   clientNav.innerHTML = CO.map((c,i)=>`<button class="client-btn ${c.type==='free'?'free':'full'}${i?'':' is-active'}" data-client="${c.id}">${c.name}</button>`).join('');
-  clients.innerHTML = CO.map((c,i)=>`
+  clients.innerHTML = CO.map((c,i)=>{
+    const heros = c.toggles.map((t,j)=> t.hero ? `<div class="whero${j?'':' is-active'}" data-toggle="${t.id}">${hero({...t.hero, eyebrow: t.hero.eyebrow || c.eyebrow})}</div>` : '').join('');
+    return `
     <div class="client${c.type==='free'?' free':''}${i?'':' is-active'}" data-client="${c.id}">
       ${c.meta?`<div class="client-head">${(()=>{const p=c.meta.split(' · ');const per=p.pop();return `<span class="ch-main">${p.join(' · ')}</span><span class="ch-period">${per}</span>`;})()}</div>`:''}
       ${c.hero?hero(c.hero):''}
+      ${heros?`<div class="whero-area">${heros}</div>`:''}
       <div class="wtoggle-row">${c.toggles.map((t,j)=>`<button class="wtoggle${j?'':' is-active'}" data-toggle="${t.id}">${t.icon}${t.label}</button>`).join('')}</div>
-      ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t)}</div>`).join('')}
-    </div>`).join('');
+      ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t, c.eyebrow, true)}</div>`).join('')}
+    </div>`;
+  }).join('');
 
   /* hover play */
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -916,8 +923,14 @@
     hwIo.observe(hwSteps);
   }
   document.querySelectorAll('.client').forEach(cl=>{
-    wire(cl.querySelectorAll('.wtoggle'), cl.querySelectorAll('.wpanel'), 'toggle');
-    cl.querySelectorAll('.wpanel').forEach(wp=>{ const sb=wp.querySelectorAll('.subtab'), sp=wp.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
+    const wt=cl.querySelectorAll('.wtoggle'), wp=cl.querySelectorAll('.wpanel'), wh=cl.querySelectorAll('.whero'), ha=cl.querySelector('.whero-area');
+    wt.forEach(b=>b.addEventListener('click',()=>{
+      wt.forEach(x=>x.classList.remove('is-active')); b.classList.add('is-active');
+      wp.forEach(p=>p.classList.toggle('is-active', p.dataset.toggle===b.dataset.toggle));
+      wh.forEach(h=>h.classList.toggle('is-active', h.dataset.toggle===b.dataset.toggle));
+      if(ha && wt.length>1){ const y=ha.getBoundingClientRect().top+window.scrollY-78; window.scrollTo({top:y,behavior:'smooth'}); }
+    }));
+    cl.querySelectorAll('.wpanel').forEach(p=>{ const sb=p.querySelectorAll('.subtab'), sp=p.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
   });
 </script>
 </body>
