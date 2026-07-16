@@ -3,7 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SKIPPWORLD — 김영훈 콘텐츠 디렉터 포트폴리오</title>
+<title>Skipp Kim's WORKS — 콘텐츠PD 김영훈 포트폴리오</title>
+<meta name="description" content="어서오세요, 콘텐츠PD 김영훈 웹포트폴리오입니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Skipp Kim's WORKS — 콘텐츠PD 김영훈 포트폴리오">
+<meta property="og:description" content="어서오세요, 콘텐츠PD 김영훈 웹포트폴리오입니다.">
+<meta property="og:image" content="https://skippworks.vercel.app/image/cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://skippworks.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skipp Kim's WORKS — 콘텐츠PD 김영훈 포트폴리오">
+<meta name="twitter:description" content="어서오세요, 콘텐츠PD 김영훈 웹포트폴리오입니다.">
+<meta name="twitter:image" content="https://skippworks.vercel.app/image/cover.jpg">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -240,7 +252,7 @@
   .profile-hero{ position:relative; min-height:calc(100vh - var(--navh)); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:40px 0; }
   .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
   .profile-hero-inner{ position:relative; z-index:2; width:100%; }
-  .scroll-cue{ position:absolute; left:50%; bottom:24px; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; color:#98a0ac; font-size:10px; font-weight:800; letter-spacing:.22em; pointer-events:none; animation:scrollBounce 2s ease-in-out infinite; }
+  .scroll-cue{ position:absolute; left:50%; bottom:60px; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; color:#98a0ac; font-size:10px; font-weight:800; letter-spacing:.22em; pointer-events:none; animation:scrollBounce 2s ease-in-out infinite; }
   .sc-arrow{ font-size:17px; line-height:1; letter-spacing:0; }
   @keyframes scrollBounce{ 0%,100%{ transform:translateX(-50%) translateY(0); opacity:.45; } 50%{ transform:translateX(-50%) translateY(6px); opacity:1; } }
   .profile-hero .s-eyebrow{ color:var(--accent); }
@@ -277,6 +289,9 @@
   .hw-body h4{ font-size:17px; font-weight:800; color:#101114; }
   .hw-body p{ font-size:13.5px; color:#4a4f57; margin-top:6px; line-height:1.6; }
   .hw-arrow{ text-align:center; color:#c2c8d2; font-size:18px; padding:7px 0; }
+  .hw-cta{ display:flex; justify-content:center; margin-top:40px; }
+  .hw-cta .more-btn{ border-color:var(--accent); color:var(--accent); }
+  .hw-cta .more-btn:hover{ background:var(--accent); color:#fff; }
 
   .profile-info{ background:#fff; border-top:1px solid #e9ecf1; padding:24px 0 30px; }
   .pinfo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
@@ -319,6 +334,7 @@
   /* performer detail */
   .perf-photo{ position:relative; aspect-ratio:16/9; width:100%; border-radius:16px; overflow:hidden; margin:4px 0 32px; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid var(--line-soft); }
   .perf-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .perf-vid{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
   .perf-photo-ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; letter-spacing:.14em; color:var(--paper-mute); }
   .perf-cols{ display:grid; grid-template-columns:1fr 1fr; gap:18px; padding-bottom:80px; align-items:start; }
   @media (max-width:760px){ .perf-cols{ grid-template-columns:1fr; } }
@@ -417,6 +433,7 @@
             <div class="hw-arrow">↓</div>
             <div class="hw-step"><div class="hw-num">05</div><div class="hw-body"><h4>성과를 성장시킵니다.</h4><p>데이터를 기반으로 분석하고 개선하며 지속 가능한 성장을 만듭니다.</p></div></div>
           </div>
+          <div class="hw-cta"><button class="more-btn js-view" data-view="works">WORKS 보러가기 →</button></div>
         </div>
       </div>
     </section>
@@ -436,7 +453,9 @@
       <div class="wrap">
         <div class="perf-photo">
           <span class="perf-photo-ph">PERFORMER</span>
-          <img src="image/performer.jpg" alt="비보이 퍼포먼스" onerror="this.style.display='none'">
+          <video class="perf-vid" autoplay muted loop playsinline preload="auto" poster="image/performer.jpg">
+            <source src="video/performer.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
       <div class="wrap perf-cols">
@@ -928,7 +947,7 @@
       wt.forEach(x=>x.classList.remove('is-active')); b.classList.add('is-active');
       wp.forEach(p=>p.classList.toggle('is-active', p.dataset.toggle===b.dataset.toggle));
       wh.forEach(h=>h.classList.toggle('is-active', h.dataset.toggle===b.dataset.toggle));
-      if(ha && wt.length>1){ const y=ha.getBoundingClientRect().top+window.scrollY-78; window.scrollTo({top:y,behavior:'smooth'}); }
+      if(ha && wt.length>1){ window.scrollTo({top:0,behavior:'smooth'}); }
     }));
     cl.querySelectorAll('.wpanel').forEach(p=>{ const sb=p.querySelectorAll('.subtab'), sp=p.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
   });
