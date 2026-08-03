@@ -16,6 +16,7 @@
 <meta name="twitter:title" content="Skipp Kim's WORKS — 콘텐츠PD 김영훈 포트폴리오">
 <meta name="twitter:description" content="어서오세요, 콘텐츠PD 김영훈 웹포트폴리오입니다.">
 <meta name="twitter:image" content="https://skippworks.vercel.app/image/cover.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0d0d'/%3E%3Ctext x='32' y='33' font-family='Arial,sans-serif' font-size='30' font-weight='800' fill='%233A86FF' text-anchor='middle' dominant-baseline='central' letter-spacing='-1'%3ESW%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -95,6 +96,8 @@
   .lg::before{ content:''; width:9px; height:9px; border-radius:50%; }
   .lg.full::before{ background:var(--accent); }
   .lg.free::before{ background:#d98a2b; }
+  .lg-hint{ color:var(--paper-mute); font-size:11px; padding-left:6px; border-left:1px solid var(--line); }
+  @media (max-width:760px){ .lg-hint{ display:none; } }
 
   .client{ display:none; }
   .client-nav-wrap{ position:relative; }
@@ -357,6 +360,7 @@
   .perf-card li.etc{ color:var(--paper-mute); margin-top:6px; }
 
   .foot{ border-top:1px solid var(--line-soft); padding:30px 28px 60px; margin-top:20px; color:var(--paper-mute); font-size:12.5px; display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; justify-content:space-between; }
+  .foot-made{ flex-basis:100%; order:3; text-align:center; opacity:.72; margin-top:10px; letter-spacing:.01em; }
   .foot b{ color:var(--paper-dim); font-weight:700; }
 
   @media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } .card,.album{ opacity:1; transform:none; } }
@@ -450,7 +454,7 @@
     </section>
 
     <section class="view" data-view="works">
-      <div class="wrap"><div class="client-legend"><span class="lg full">정규직</span><span class="lg free">프리랜서</span></div><div class="client-nav-wrap"><button class="cn-arrow cn-prev" aria-label="이전 탭">‹</button><nav class="client-nav" id="clientNav"></nav><button class="cn-arrow cn-next" aria-label="다음 탭">›</button></div></div>
+      <div class="wrap"><div class="client-legend"><span class="lg full">정규직</span><span class="lg free">프리랜서</span><span class="lg-hint">PC에서 카드에 마우스를 올리면 영상이 재생됩니다</span></div><div class="client-nav-wrap"><button class="cn-arrow cn-prev" aria-label="이전 탭">‹</button><nav class="client-nav" id="clientNav"></nav><button class="cn-arrow cn-next" aria-label="다음 탭">›</button></div></div>
       <div class="wrap" id="clients"></div>
     </section>
 
@@ -543,6 +547,7 @@
 
   <footer class="wrap foot">
     <span>© 2026 Kim Younghoon · SKIPPWORLD</span>
+    <span class="foot-made">이 웹사이트는 Claude를 활용하여 제작되었습니다.</span>
     <span><b>SKIPP</b> · Content PD · Brand Designer</span>
   </footer>
 
