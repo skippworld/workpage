@@ -173,6 +173,13 @@
   .grid.single .card, .grid.center .card{ flex:0 0 auto; width:100%; max-width:440px; }
   .grid.pf .card{ flex:0 0 auto; width:100%; max-width:360px; }
   .grid.pgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:760px; margin:0 auto; }
+  .grid.pgrid .card{ cursor:zoom-in; }
+  #lightbox{ position:fixed; inset:0; z-index:9998; display:none; background:rgba(5,5,7,.94); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; text-align:center; }
+  #lightbox.open{ display:block; animation:lbIn .28s ease; }
+  #lightbox img{ display:block; width:100%; max-width:620px; height:auto; margin:0 auto; padding:64px 0 48px; }
+  #lbClose{ position:fixed; top:14px; right:14px; z-index:9999; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.22); background:rgba(20,20,24,.8); color:#fff; font-size:24px; line-height:1; cursor:pointer; display:none; align-items:center; justify-content:center; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+  #lightbox.open #lbClose{ display:flex; }
+  @keyframes lbIn{ from{ opacity:0; } to{ opacity:1; } }
   .grid.pgrid .card{ flex:none; width:100%; max-width:none; }
   .grid.vertical{ gap:16px; }
   .grid.vertical .card{ flex:0 0 auto; width:clamp(150px,18vw,200px); max-width:200px; }
@@ -1021,6 +1028,22 @@
   if(intro){ setTimeout(()=>document.body.classList.add('entered'), 3750); setTimeout(()=>intro.classList.add('done'), 3900); }
   else{ document.body.classList.add('entered'); }
 
+  // lightbox for 상세페이지 images (scrollable full view)
+  const lightbox=document.getElementById('lightbox');
+  const lbImg=lightbox?lightbox.querySelector('img'):null;
+  const lbClose=document.getElementById('lbClose');
+  if(lightbox){
+    function openLB(src){ lbImg.src=src; lightbox.classList.add('open'); lightbox.scrollTop=0; document.body.style.overflow='hidden'; }
+    function closeLB(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
+    document.addEventListener('click', e=>{
+      const card=e.target.closest('.grid.pgrid .card');
+      if(card){ const img=card.querySelector('img'); if(img && img.getAttribute('src') && img.style.display!=='none'){ openLB(img.src); } }
+    });
+    lightbox.addEventListener('click', e=>{ if(e.target!==lbImg) closeLB(); });
+    if(lbClose) lbClose.addEventListener('click', closeLB);
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
+  }
+
   function scrollTopSlow(){
     const start=window.scrollY, t0=performance.now(), dur=1150;
     function step(now){ const p=Math.min((now-t0)/dur,1), e=1-Math.pow(1-p,3); window.scrollTo(0, start*(1-e)); if(p<1) requestAnimationFrame(step); }
@@ -1037,5 +1060,6 @@
     cl.querySelectorAll('.wpanel').forEach(p=>{ const sb=p.querySelectorAll('.subtab'), sp=p.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
   });
 </script>
+  <div id="lightbox"><button id="lbClose" aria-label="닫기">×</button><img alt="확대 이미지"></div>
 </body>
 </html>
