@@ -601,6 +601,7 @@
   </footer>
 
   <button id="toTop" aria-label="맨 위로">↑</button>
+  <div id="lightbox"><button id="lbClose" aria-label="닫기">×</button><img alt="확대 이미지"></div>
 
 <script>
   const I = {
@@ -1060,6 +1061,5 @@
     cl.querySelectorAll('.wpanel').forEach(p=>{ const sb=p.querySelectorAll('.subtab'), sp=p.querySelectorAll('.subpanel'); if(sb.length) wire(sb,sp,'sub'); });
   });
 </script>
-  <div id="lightbox"><button id="lbClose" aria-label="닫기">×</button><img alt="확대 이미지"></div>
 </body>
 </html>
