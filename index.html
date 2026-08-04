@@ -59,8 +59,9 @@
     background:linear-gradient(100deg, var(--accent) 0%, var(--accent) 45%, #ffffff 50%, var(--accent) 55%, var(--accent) 100%);
     background-size:250% 100%; background-position:130% 0;
     -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    animation:shineText 1.15s cubic-bezier(.35,0,.25,1) .7s both;
   }
+  .sec-hero h1 em{ animation:shineText 1.15s cubic-bezier(.35,0,.25,1) .7s both; }
+  body.entered .profile-hero h1 em{ animation:shineText 1.3s cubic-bezier(.35,0,.25,1) .25s 1 both; }
   @keyframes shineText{ from{ background-position:130% 0; } to{ background-position:-30% 0; } }
 
   .site-nav{ position:sticky; top:0; z-index:100; height:var(--navh); background:rgba(13,13,13,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--line-soft); }
@@ -1017,7 +1018,8 @@
 
   // intro cleanup
   const intro=document.getElementById('intro');
-  if(intro){ setTimeout(()=>intro.classList.add('done'), 3900); }
+  if(intro){ setTimeout(()=>document.body.classList.add('entered'), 3750); setTimeout(()=>intro.classList.add('done'), 3900); }
+  else{ document.body.classList.add('entered'); }
 
   function scrollTopSlow(){
     const start=window.scrollY, t0=performance.now(), dur=1150;
