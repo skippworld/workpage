@@ -61,7 +61,7 @@
     -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   }
   .sec-hero h1 em{ animation:shineText 1.15s cubic-bezier(.35,0,.25,1) .7s both; }
-  body.entered .profile-hero h1 em{ animation:shineText 1.3s cubic-bezier(.35,0,.25,1) .25s 1 both; }
+  body.entered .profile-hero h1 em{ animation:shineText 1.3s cubic-bezier(.35,0,.25,1) 1.15s 1 both; }
   @keyframes shineText{ from{ background-position:130% 0; } to{ background-position:-30% 0; } }
 
   .site-nav{ position:sticky; top:0; z-index:100; height:var(--navh); background:rgba(13,13,13,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--line-soft); }
@@ -288,18 +288,20 @@
   .empty span{ font-size:12.5px; }
 
   .contact-links{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:36px; }
-  .contact-links a{ display:flex; align-items:center; gap:16px; width:min(380px,86vw); padding:16px 24px; background:var(--ink-2); border:1px solid var(--line); border-radius:12px; transition:border-color .2s, transform .2s, background .2s; }
-  .contact-links a:hover{ border-color:var(--accent); transform:translateY(-2px); background:#17171b; }
+  .contact-links a{ display:flex; align-items:center; gap:16px; width:min(380px,86vw); padding:16px 24px; background:var(--ink-2); border:1px solid var(--line); border-radius:12px; transition:border-color .4s cubic-bezier(.2,.7,.3,1), transform .4s cubic-bezier(.2,.7,.3,1), background .4s, box-shadow .4s cubic-bezier(.2,.7,.3,1); }
+  .contact-links a:hover{ transform:translateY(-7px); border-color:var(--accent); background:#17171b; box-shadow:0 16px 32px -12px rgba(58,134,255,.5); }
   .contact-links .c-label{ font-size:11px; font-weight:800; letter-spacing:.13em; color:var(--accent); min-width:80px; text-align:left; }
   .contact-links .c-val{ font-size:16px; font-weight:700; color:var(--paper); letter-spacing:.01em; }
-  .contact-cta{ display:flex; justify-content:center; margin-top:28px; }
+  .contact-cta{ display:flex; flex-direction:column; align-items:center; gap:16px; margin-top:40px; }
+  .cta-bridge{ margin:0; font-size:13.5px; color:var(--paper-dim); letter-spacing:.01em; }
+  .closing-line{ font-style:italic; font-weight:600; color:var(--paper); letter-spacing:.01em; }
   .contact-photo{ position:relative; width:168px; aspect-ratio:4/5; margin:26px auto 22px; border-radius:16px; overflow:hidden; background:linear-gradient(135deg,#17171a,#0f0f11); border:1px solid rgba(58,134,255,.4); box-shadow:0 0 30px -4px rgba(58,134,255,.4), 0 14px 40px -18px rgba(0,0,0,.7); }
   .contact-photo::after{ content:''; position:absolute; inset:0; z-index:3; pointer-events:none; background:linear-gradient(105deg, transparent 35%, rgba(255,255,255,.18) 48%, rgba(255,255,255,.6) 50%, rgba(255,255,255,.18) 52%, transparent 65%); transform:translateX(-120%); }
-  .view[data-view="contact"].is-active .contact-photo::after{ animation:perfShine 1s cubic-bezier(.4,0,.2,1) 1.5s 1 both; }
-  .view[data-view="contact"].is-active .contact-photo{ animation:cardFlip 1.15s cubic-bezier(.34,.8,.3,1) .25s both; }
+  .view[data-view="contact"].is-active .contact-photo::after{ animation:perfShine 1.4s cubic-bezier(.4,0,.25,1) 2.5s 1 both; }
+  .view[data-view="contact"].is-active .contact-photo{ animation:cardFlip 2s cubic-bezier(.3,.7,.25,1) .3s both; }
   @keyframes cardFlip{
-    0%{ opacity:0; transform:perspective(1000px) rotateY(-360deg) scale(.9); }
-    70%{ opacity:1; transform:perspective(1000px) rotateY(12deg) scale(1); }
+    0%{ opacity:0; transform:perspective(1000px) rotateY(-180deg) scale(.92); }
+    68%{ opacity:1; transform:perspective(1000px) rotateY(10deg) scale(1); }
     100%{ opacity:1; transform:perspective(1000px) rotateY(0deg) scale(1); }
   }
   .contact-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
@@ -317,6 +319,16 @@
   .profile-hero .s-eyebrow{ color:var(--accent); }
   .profile-hero h1{ color:#0d0d0d; font-size:clamp(32px,6.2vw,66px); font-weight:800; line-height:1.16; letter-spacing:-.03em; }
   .profile-hero h1 em{ color:var(--accent); }
+  .reveal-word{ position:relative; display:inline-block; }
+  .rw-fill{ position:relative; z-index:2; color:#fff; -webkit-text-fill-color:#fff; }
+  .reveal-word::before{ content:''; position:absolute; top:-1px; bottom:-1px; left:-5px; right:-5px; background:var(--accent); transform:scaleX(0); transform-origin:left center; z-index:1; }
+  body.entered .reveal-word::before{ animation:boxFill .7s cubic-bezier(.7,0,.25,1) .1s forwards; }
+  @keyframes boxFill{ to{ transform:scaleX(1); } }
+  .rw-caret{ display:inline-block; width:4px; height:.9em; margin-left:4px; background:#fff; vertical-align:middle; opacity:0; position:relative; z-index:2; }
+  body.entered .rw-caret{ animation:caretBlink 1.05s step-end .9s infinite; }
+  @keyframes caretBlink{ 0%,50%{ opacity:1; } 50.01%,100%{ opacity:0; } }
+  .mo-br{ display:none; }
+  @media (max-width:600px){ .mo-br{ display:inline; } }
   .profile-hero .roles{ margin-top:20px; color:#3a3a40; font-size:clamp(14px,1.7vw,17px); font-weight:500; }
   .profile-cta{ margin-top:36px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
   .profile-hero .more-btn{ border-color:var(--accent); color:var(--accent); }
@@ -353,6 +365,47 @@
   .hw-cta .more-btn:hover{ background:var(--accent); color:#fff; }
 
   .profile-info{ background:#fff; border-top:1px solid #e9ecf1; padding:24px 0 30px; }
+  .stat-scroll{ position:relative; background:#fff; padding:100px 24px; overflow:hidden; }
+  .stat-sticky{ position:relative; height:clamp(180px,26vh,240px); display:flex; align-items:center; justify-content:center; }
+  .stat-single{ position:absolute; text-align:center; opacity:0; transform:translateX(90px); }
+  .stat-single b{ display:block; font-size:clamp(54px,10.5vw,116px); font-weight:800; color:var(--accent); letter-spacing:-.03em; line-height:1; }
+  .stat-single span{ display:block; margin-top:20px; font-size:clamp(14px,2.2vw,22px); color:var(--accent); font-weight:600; letter-spacing:.01em; }
+  .stat-single.on{ animation:statFlow .75s cubic-bezier(.3,.7,.3,1) both; }
+  @keyframes statFlow{ 0%{ opacity:0; transform:translateX(90px); } 26%,74%{ opacity:1; transform:translateX(0); } 100%{ opacity:0; transform:translateX(-90px); } }
+  .stat-single.on b{ background:linear-gradient(100deg,var(--accent) 0%,var(--accent) 42%,#fff 50%,var(--accent) 58%,var(--accent) 100%); background-size:250% 100%; background-position:130% 0; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shineText .7s cubic-bezier(.35,0,.25,1) .05s 1 forwards; }
+  .stat-final{ position:absolute; display:flex; gap:clamp(14px,3vw,28px); opacity:0; }
+  .stat-final.show{ opacity:1; }
+  .sf-item{ background:#fff; border:1px solid #e6e9ee; border-radius:16px; padding:clamp(22px,3vw,32px) clamp(16px,2.4vw,26px); min-width:clamp(122px,19vw,172px); text-align:center; opacity:0; transform:translateY(16px); box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .stat-final.show .sf-item{ animation:sfCardIn .75s cubic-bezier(.2,.7,.3,1) forwards; }
+  .stat-final.show .sf-item:nth-child(1){ animation-delay:0s; }
+  .stat-final.show .sf-item:nth-child(2){ animation-delay:.13s; }
+  .stat-final.show .sf-item:nth-child(3){ animation-delay:.26s; }
+  .stat-final.show .sf-item:nth-child(4){ animation-delay:.39s; }
+  @keyframes sfCardIn{
+    0%{ opacity:0; transform:translateY(16px); box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    55%{ opacity:1; transform:translateY(-4px); box-shadow:0 18px 40px -12px rgba(58,134,255,.5); }
+    100%{ opacity:1; transform:translateY(0); box-shadow:0 10px 26px -14px rgba(58,134,255,.32); }
+  }
+  .sf-item b{ display:block; font-size:clamp(30px,4.4vw,50px); font-weight:800; color:var(--accent); letter-spacing:-.02em; line-height:1; }
+  .sf-item span{ display:block; margin-top:12px; font-size:clamp(11px,1.4vw,14px); color:#555; font-weight:700; }
+  @media (max-width:640px){ .stat-final{ flex-wrap:wrap; justify-content:center; gap:14px; max-width:360px; } .sf-item{ flex:1 1 42%; min-width:0; } .sf-item b{ font-size:32px; } }
+  .stat-profile{ display:flex; justify-content:center; margin-top:38px; }
+  .sp-card{ display:flex; gap:clamp(20px,3vw,36px); align-items:center; background:#fff; border:1px solid #e6e9ee; border-radius:20px; padding:clamp(20px,3vw,32px); box-shadow:0 2px 8px rgba(0,0,0,.04); max-width:620px; width:100%; opacity:0; transform:translateY(18px); }
+  .stat-profile.show .sp-card{ animation:sfCardIn .8s cubic-bezier(.2,.7,.3,1) forwards; }
+  .sp-photo{ position:relative; flex:0 0 auto; width:clamp(108px,15vw,146px); aspect-ratio:4/5; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#eef1f5,#e3e7ee); border:1px solid rgba(58,134,255,.3); box-shadow:0 0 22px -6px rgba(58,134,255,.35); }
+  .sp-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .sp-ph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; letter-spacing:.14em; color:#9aa1ac; }
+  .sp-info{ flex:1 1 auto; min-width:0; text-align:left; }
+  .sp-name{ margin:0; font-size:clamp(20px,2.6vw,26px); font-weight:800; color:#0d0d0d; letter-spacing:-.01em; }
+  .sp-name span{ font-size:.6em; font-weight:600; color:#8a8f98; letter-spacing:0; }
+  .sp-role{ margin:9px 0 0; font-size:clamp(12px,1.5vw,13.5px); font-weight:700; letter-spacing:.06em; color:var(--accent); }
+  .sp-birth{ margin:6px 0 0; font-size:13px; color:#6f6f76; }
+  .sp-div{ height:1px; background:#e6e9ee; margin:16px 0; }
+  .sp-contact{ margin:0; display:flex; align-items:center; gap:14px; font-size:14px; }
+  .sp-label{ font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); min-width:54px; }
+  .sp-contact a{ color:#0d0d0d; font-weight:600; }
+  .sp-contact a:hover{ color:var(--accent); }
+  @media (max-width:560px){ .sp-card{ flex-direction:column; text-align:center; } .sp-info{ text-align:center; } .sp-contact{ justify-content:center; } }
   .pinfo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
   @media (max-width:760px){ .pinfo-grid{ grid-template-columns:repeat(2,1fr); gap:22px 26px; } }
   @media (max-width:420px){ .pinfo-grid{ grid-template-columns:1fr; } }
@@ -408,8 +461,13 @@
   .perf-card li .yr{ flex-shrink:0; min-width:72px; color:var(--accent-soft); font-weight:700; font-size:12.5px; }
   .perf-card li.etc{ color:var(--paper-mute); margin-top:6px; }
 
-  .foot{ border-top:1px solid var(--line-soft); padding:30px 28px 60px; margin-top:20px; color:var(--paper-mute); font-size:12.5px; display:flex; flex-wrap:wrap; gap:6px 18px; align-items:center; justify-content:space-between; }
-  .foot-made{ flex-basis:100%; order:3; text-align:center; opacity:.72; margin-top:10px; letter-spacing:.01em; }
+  .foot{ border-top:1px solid var(--line-soft); padding:30px 28px 60px; margin-top:20px; color:var(--paper-mute); font-size:12.5px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; }
+  .foot > span{ flex:1 1 210px; }
+  .foot > span:first-child{ text-align:left; }
+  .foot-made{ text-align:center; opacity:.85; margin:0; letter-spacing:.01em; }
+  .foot > span:last-child{ text-align:right; }
+  .claude-mark{ color:#d97757; font-weight:700; }
+  @media (max-width:640px){ .foot > span{ flex-basis:100%; text-align:center; } }
   .foot b{ color:var(--paper-dim); font-weight:700; }
 
   @media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } .card,.album{ opacity:1; transform:none; } }
@@ -438,15 +496,42 @@
           <source src="video/hero.mp4" type="video/mp4">
         </video>
         <div class="wrap profile-hero-inner">
-          <span class="s-eyebrow">SKIPPWORLD · CONTENT PD &amp; BRAND DESIGNER</span>
-          <h1 class="big">브랜드의 성장을 위한<br><em>영상 · 디자인</em>을 만듭니다.</h1>
-          <p class="roles">영상 기획 · 촬영 · 편집 · 디자인을 직접 다루는 콘텐츠 PD, 김영훈입니다.</p>
+          <span class="s-eyebrow">CONTENT PD &amp; BRAND DESIGNER</span>
+          <h1 class="big">보이지 않던<br class="mo-br"> <span class="reveal-word"><span class="rw-fill">가능성</span><span class="rw-caret"></span></span>을 찾아,<br><em>보이는 성장</em>으로<br class="mo-br"> 만듭니다.</h1>
+          <p class="roles">안녕하세요?<br class="mo-br"> 영상 기획 · 촬영 · 편집 · 디자인을 직접 다루는<br class="mo-br"> 콘텐츠 PD 김영훈입니다.</p>
           <div class="profile-cta">
             <button class="more-btn js-view" data-view="works">WORKS 보러가기 →</button>
             <a class="more-btn ghost" href="SkippCV.pdf" download target="_blank" rel="noopener">이력서 다운로드 ↓</a>
           </div>
         </div>
         <div class="scroll-cue"><span>SCROLL</span><span class="sc-arrow">⌄</span></div>
+      </div>
+
+      <div class="stat-scroll">
+        <div class="stat-sticky">
+          <div class="stat-single" data-i="0"><b>8년차</b><span>콘텐츠 PD</span></div>
+          <div class="stat-single" data-i="1"><b>700편+</b><span>누적 제작 영상 (숏폼 제외)</span></div>
+          <div class="stat-single" data-i="2"><b>1200%</b><span>채널 성장 리드</span></div>
+          <div class="stat-single" data-i="3"><b>7번의 성장</b><span>7개 브랜드</span></div>
+          <div class="stat-final" data-i="4">
+            <div class="sf-item"><b>8년차</b><span>콘텐츠 PD</span></div>
+            <div class="sf-item"><b>700편+</b><span>누적 제작 영상</span></div>
+            <div class="sf-item"><b>1200%</b><span>채널 성장 리드</span></div>
+            <div class="sf-item"><b>7번의 성장</b><span>7개 브랜드</span></div>
+          </div>
+        </div>
+        <div class="stat-profile">
+          <div class="sp-card">
+            <div class="sp-photo"><span class="sp-ph">PROFILE</span><img src="image/profile.jpg" alt="콘텐츠 PD 김영훈" onerror="this.style.display='none'"></div>
+            <div class="sp-info">
+              <h3 class="sp-name">김영훈 <span>(Kim Younghoon · SKIPP)</span></h3>
+              <p class="sp-role">CONTENT PD &amp; BRAND DESIGNER</p>
+              <p class="sp-birth">1992년생</p>
+              <div class="sp-div"></div>
+              <p class="sp-contact"><span class="sp-label">E-MAIL</span><a href="mailto:skippkim@naver.com">skippkim@naver.com</a></p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="profile-info">
@@ -586,20 +671,20 @@
         <span class="s-eyebrow">CONTACT</span>
         <h1>18년의 감각은 여전히 —<br><em>"현재진행형"</em>입니다.</h1>
         <div class="contact-photo"><span class="cp-ph">PROFILE</span><img src="image/profile.jpg" alt="콘텐츠 PD 김영훈" onerror="this.style.display='none'"></div>
-        <p>지금까지 콘텐츠 PD 김영훈이었습니다.<br>함께할 좋은 제안이라면, 언제든 환영입니다.</p>
+        <p><span class="closing-line">지금까지 콘텐츠 PD 김영훈이었습니다.</span><br>함께할 좋은 제안이라면, 언제든 환영입니다.</p>
         <div class="contact-links">
-          <a href="mailto:skippkim@naver.com"><span class="c-label">EMAIL</span><span class="c-val">skippkim@naver.com</span></a>
           <a href="tel:+821039297375"><span class="c-label">TEL</span><span class="c-val">010-3929-7375</span></a>
           <a href="https://instagram.com/skippworld" target="_blank" rel="noopener"><span class="c-label">INSTAGRAM</span><span class="c-val">@skippworld</span></a>
+          <a href="mailto:skippkim@naver.com"><span class="c-label">EMAIL</span><span class="c-val">skippkim@naver.com</span></a>
         </div>
-        <div class="contact-cta"><a class="more-btn" href="SkippCV.pdf" download target="_blank" rel="noopener">이력서 다운로드 ↓</a></div>
+        <div class="contact-cta"><p class="cta-bridge">더 자세한 경력과 프로젝트는 이력서에 담아두었습니다.</p><a class="more-btn" href="SkippCV.pdf" download target="_blank" rel="noopener">이력서 다운로드 ↓</a></div>
       </div>
     </section>
   </main>
 
   <footer class="wrap foot">
     <span>© 2026 Kim Younghoon · SKIPPWORLD</span>
-    <span class="foot-made">이 웹사이트는 Claude를 활용하여 제작되었습니다.</span>
+    <span class="foot-made">이 웹사이트는 <span class="claude-mark">Claude</span>를 활용하여 제작되었습니다.</span>
     <span><b>SKIPP</b> · Content PD · Brand Designer</span>
   </footer>
 
@@ -1020,7 +1105,24 @@
     }, {threshold:0.35});
     hwIo.observe(hwSteps);
   }
-  // scroll progress bar
+  // career stats: play once when scrolled into view
+  const statScroll=document.querySelector('.stat-scroll');
+  if(statScroll){
+    const singles=[...statScroll.querySelectorAll('.stat-single')];
+    const statFinal=statScroll.querySelector('.stat-final');
+    const statProfile=statScroll.querySelector('.stat-profile');
+    let played=false;
+    function playStats(){
+      if(played) return; played=true;
+      singles.forEach((el,i)=>{ setTimeout(()=>el.classList.add('on'), i*750); });
+      setTimeout(()=>{ if(statFinal) statFinal.classList.add('show'); }, singles.length*750 + 150);
+      setTimeout(()=>{ if(statProfile) statProfile.classList.add('show'); }, singles.length*750 + 1050);
+    }
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ playStats(); io.disconnect(); } });
+    }, { threshold:.4 });
+    io.observe(statScroll);
+  }
   const scrollProg=document.getElementById('scrollProg');
   function updateProg(){ const h=document.documentElement.scrollHeight-window.innerHeight; scrollProg.style.width=(h>0?(window.scrollY/h*100):0)+'%'; }
   window.addEventListener('scroll', updateProg, {passive:true});
