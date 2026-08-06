@@ -311,7 +311,8 @@
   /* main page (PROFILE): white immersive hero + light ABOUT */
   .view[data-view="profile"].is-active{ display:block; background:#fff; color:#0d0d0d; }
   .profile-hero{ position:relative; min-height:calc(100vh - var(--navh)); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:40px 0; }
-  .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .hero-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; pointer-events:none; transition:opacity .5s ease; }
+  .hero-video.loaded{ opacity:1; }
   .profile-hero-inner{ position:relative; z-index:2; width:100%; }
   .scroll-cue{ position:absolute; left:50%; bottom:60px; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; color:#98a0ac; font-size:10px; font-weight:800; letter-spacing:.22em; pointer-events:none; animation:scrollBounce 2s ease-in-out infinite; }
   .sc-arrow{ font-size:17px; line-height:1; letter-spacing:0; }
@@ -366,6 +367,23 @@
 
   .profile-info{ background:#fff; border-top:1px solid #e9ecf1; padding:24px 0 30px; }
   .stat-scroll{ position:relative; background:#fff; padding:100px 24px; overflow:hidden; }
+  .tnav{ display:flex; justify-content:space-between; align-items:stretch; gap:12px; max-width:900px; margin:44px auto 0; padding-top:26px; border-top:1px solid var(--line); }
+  .tnav-spacer{ flex:0 0 1px; }
+  .tnav-btn{ display:flex; align-items:center; gap:14px; background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:12px 20px; cursor:pointer; transition:border-color .25s, transform .25s, background .25s, box-shadow .25s; min-width:150px; max-width:46%; }
+  .tnav-next{ margin-left:auto; }
+  .tnav-btn:hover{ border-color:var(--accent); transform:translateY(-2px); background:#17171b; box-shadow:0 12px 26px -14px rgba(58,134,255,.5); }
+  .tnav-arrow{ flex:0 0 auto; font-size:30px; line-height:1; color:var(--accent); font-weight:300; }
+  .tnav-txt{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .tnav-prev .tnav-txt{ text-align:left; }
+  .tnav-next .tnav-txt{ text-align:right; margin-left:auto; }
+  .tnav-cli{ font-size:11px; font-weight:800; letter-spacing:.05em; color:var(--accent); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tnav-sec{ font-size:15px; font-weight:700; color:var(--paper); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tnav-view{ background:var(--accent); border-color:var(--accent); }
+  .tnav-view .tnav-arrow{ color:rgba(255,255,255,.85); }
+  .tnav-view .tnav-cli{ color:rgba(255,255,255,.82); }
+  .tnav-view .tnav-sec{ color:#fff; letter-spacing:.03em; }
+  .tnav-view:hover{ background:#2f74e0; border-color:#2f74e0; box-shadow:0 12px 26px -12px rgba(58,134,255,.7); }
+  @media (max-width:600px){ .tnav-btn{ min-width:0; flex:1 1 0; max-width:none; padding:11px 14px; gap:10px; } .tnav-sec{ font-size:13px; } .tnav-arrow{ font-size:24px; } }
   .stat-sticky{ position:relative; height:clamp(180px,26vh,240px); display:flex; align-items:center; justify-content:center; }
   .stat-single{ position:absolute; text-align:center; opacity:0; transform:translateX(90px); }
   .stat-single b{ display:block; font-size:clamp(54px,10.5vw,116px); font-weight:800; color:var(--accent); letter-spacing:-.03em; line-height:1; }
@@ -400,6 +418,7 @@
   .sp-name span{ font-size:.6em; font-weight:600; color:#8a8f98; letter-spacing:0; }
   .sp-role{ margin:9px 0 0; font-size:clamp(12px,1.5vw,13.5px); font-weight:700; letter-spacing:.06em; color:var(--accent); }
   .sp-birth{ margin:6px 0 0; font-size:13px; color:#6f6f76; }
+  .sp-slogan{ margin:12px 0 0; font-style:italic; font-size:clamp(13px,1.6vw,15px); line-height:1.55; color:#5a5a62; font-weight:500; }
   .sp-div{ height:1px; background:#e6e9ee; margin:16px 0; }
   .sp-contact{ margin:0; display:flex; align-items:center; gap:14px; font-size:14px; }
   .sp-label{ font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); min-width:54px; }
@@ -526,7 +545,7 @@
             <div class="sp-info">
               <h3 class="sp-name">김영훈 <span>(Kim Younghoon · SKIPP)</span></h3>
               <p class="sp-role">CONTENT PD &amp; BRAND DESIGNER</p>
-              <p class="sp-birth">1992년생</p>
+              <p class="sp-slogan">브랜드의 성장을 위한 영상과 디자인을<br>기획하고, 직접 제작합니다.</p>
               <div class="sp-div"></div>
               <p class="sp-contact"><span class="sp-label">E-MAIL</span><a href="mailto:skippkim@naver.com">skippkim@naver.com</a></p>
             </div>
@@ -664,6 +683,10 @@
           </div>
         </div>
       </div>
+      <div class="wrap"><div class="tnav">
+        <button class="tnav-btn tnav-prev tnav-view js-view" data-view="works"><span class="tnav-arrow">‹</span><span class="tnav-txt"><span class="tnav-cli">이전 섹션</span><span class="tnav-sec">WORKS</span></span></button>
+        <button class="tnav-btn tnav-next tnav-view js-view" data-view="contact"><span class="tnav-txt"><span class="tnav-cli">다음 섹션</span><span class="tnav-sec">CONTACT</span></span><span class="tnav-arrow">›</span></button>
+      </div></div>
     </section>
 
     <section class="view" data-view="contact">
@@ -679,6 +702,10 @@
         </div>
         <div class="contact-cta"><p class="cta-bridge">더 자세한 경력과 프로젝트는 이력서에 담아두었습니다.</p><a class="more-btn" href="SkippCV.pdf" download target="_blank" rel="noopener">이력서 다운로드 ↓</a></div>
       </div>
+      <div class="wrap"><div class="tnav">
+        <button class="tnav-btn tnav-prev tnav-view js-view" data-view="performer"><span class="tnav-arrow">‹</span><span class="tnav-txt"><span class="tnav-cli">이전 섹션</span><span class="tnav-sec">PERFORMER</span></span></button>
+        <button class="tnav-btn tnav-next tnav-view js-view" data-view="profile"><span class="tnav-txt"><span class="tnav-cli">처음으로</span><span class="tnav-sec">PROFILE</span></span><span class="tnav-arrow">›</span></button>
+      </div></div>
     </section>
   </main>
 
@@ -688,7 +715,6 @@
     <span><b>SKIPP</b> · Content PD · Brand Designer</span>
   </footer>
 
-  <button id="toTop" aria-label="맨 위로">↑</button>
   <div id="lightbox"><button id="lbClose" aria-label="닫기">×</button><img alt="확대 이미지"></div>
 
 <script>
@@ -827,7 +853,7 @@
         desc:'프리미엄 데님 신규 브랜드의 BI/BX 구축부터<br>제품 기획, 룩북, 상세페이지, 피팅 콘텐츠까지<br><em>브랜드 경험 전반</em>을 설계했습니다.<br>패션코드 정식 런칭, 트렌드페어 참가, 독일 K-전시회 선정,<br>무신사 입점까지 브랜드의 시작을 함께 만들었습니다.',
         stats:[['브랜드 런칭','프리미엄 데님 신규 브랜드'],['BI/BX 구축','브랜드 경험 전반 설계'],['무신사 입점','트렌드페어·독일 전시 선정']] },
       toggles:[
-        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
+        { id:'lookbook', label:'룩북 (LookBook)', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
           { title:'블랙비스트 룩북', sub:'프리미엄 데님 BI/BX', thumb:'image/vlackveast.jpg', url:'https://www.musinsa.com/content/mz/100102', badge:'룩북', ph:'vlackveast.jpg' },
         ]}},
         { id:'detail', label:'상세페이지', icon:I.doc, blocks:[
@@ -840,7 +866,7 @@
             { thumb:'image/vv6.jpg', badge:'상세', ph:'vv6.jpg' },
           ]},
         ]},
-        { id:'video', label:'영상', icon:I.play, blocks:[
+        { id:'video', label:'영상 작업 (Video)', icon:I.play, blocks:[
           { type:'cards', center:true, items:[
             { title:'나이트 라이딩', sub:'브랜드 비주얼 영상 (기여도 100%)', videoId:'dWxOYsZALIQ', url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX'), badge:'영상' },
           ]},
@@ -869,7 +895,7 @@
         desc:'기존 스트릿 브랜드의 포지셔닝을 <em>애슬레저 중심으로 재정의</em>했습니다.<br>제품 디자인부터 룩북 · 모델 촬영, 무신사 · 자사몰 웹 운영까지<br>브랜드 전반을 1인 다역으로 리브랜딩하며,<br>아울렛 전환 입점과 완판(Sold Out) 성과를 만들었습니다.',
         stats:[['리브랜딩','스트릿 → 애슬레저'],['브랜드 운영','디자인·촬영·웹·CS까지'],['Sold Out','아울렛 전환 효과']] },
       toggles:[
-        { id:'lookbook', label:'룩북', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
+        { id:'lookbook', label:'룩북 (LookBook)', icon:I.shirt, block:{ type:'cards', pf:true, ratio:'800/1200', items:[
           { title:'윌리워 룩북 #1', sub:'무신사 룩북', thumb:'image/ww1.jpg', url:'https://www.musinsa.com/content/mz/88762', badge:'룩북', ph:'ww1.jpg' },
           { title:'윌리워 룩북 #2', sub:'무신사 룩북', thumb:'image/ww2.jpg', url:'https://www.musinsa.com/content/mz/92648', badge:'룩북', ph:'ww2.jpg' },
         ]}},
@@ -883,7 +909,7 @@
             { thumb:'image/wwd6.jpg', badge:'상세', ph:'wwd6.jpg' },
           ]},
         ]},
-        { id:'video', label:'영상', icon:I.play, blocks:[
+        { id:'video', label:'영상 작업 (Video)', icon:I.play, blocks:[
           { type:'cards', center:true, items:[
             { title:'윌리워 브랜드 영상 #1', videoId:'M5L5DEMer4Q', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
             { title:'윌리워 브랜드 영상 #2', videoId:'WS5khR9Iwvg', url:plu('PLxytJQTYF-QVoTTd4ViAW6tm-bMDT-PoL'), badge:'영상' },
@@ -897,7 +923,7 @@
         ]},
       ]},
 
-    { id:'kmong', name:'크몽', type:'free', ord:5, meta:'크몽 · 프리랜서 앨범아트 디자이너 · 2022.08 – 2026.07',
+    { id:'kmong', name:'크몽(SKWS)', type:'free', ord:5, meta:'크몽 · 프리랜서 앨범아트 디자이너 · 2022.08 – 2026.07',
       eyebrow:'크몽(SKWS) · 앨범커버 아트워크 디자이너', toggles:[
       { id:'album', label:'앨범커버 아트워크', icon:I.disc,
         hero:{ title:'들리는 음악을,<br><em>보이는 커버</em>로.',
@@ -1007,6 +1033,15 @@
   const clientNav = document.getElementById('clientNav');
   const clients   = document.getElementById('clients');
   const CO = [...CLIENTS].sort((a,b)=>(a.ord||99)-(b.ord||99));
+  const SEQ=[];
+  CO.forEach(c=>c.toggles.forEach(t=>SEQ.push({cid:c.id, tid:t.id, cname:c.name, tlabel:t.label})));
+  function navFor(cid, tid){
+    const idx=SEQ.findIndex(s=>s.cid===cid && s.tid===tid);
+    const prev=idx>0?SEQ[idx-1]:null, next=idx<SEQ.length-1?SEQ[idx+1]:null;
+    const prevBtn = prev?`<button class="tnav-btn tnav-prev" data-cid="${prev.cid}" data-tid="${prev.tid}"><span class="tnav-arrow">‹</span><span class="tnav-txt"><span class="tnav-cli">${prev.cname}</span><span class="tnav-sec">${prev.tlabel}</span></span></button>`:`<span class="tnav-spacer"></span>`;
+    const nextBtn = next?`<button class="tnav-btn tnav-next" data-cid="${next.cid}" data-tid="${next.tid}"><span class="tnav-txt"><span class="tnav-cli">${next.cname}</span><span class="tnav-sec">${next.tlabel}</span></span><span class="tnav-arrow">›</span></button>`:`<button class="tnav-btn tnav-next tnav-view js-view" data-view="performer"><span class="tnav-txt"><span class="tnav-cli">다음 섹션</span><span class="tnav-sec">PERFORMER</span></span><span class="tnav-arrow">›</span></button>`;
+    return `<div class="tnav">${prevBtn}${nextBtn}</div>`;
+  }
   clientNav.innerHTML = CO.map((c,i)=>`<button class="client-btn ${c.type==='free'?'free':'full'}${i?'':' is-active'}" data-client="${c.id}">${c.name}</button>`).join('');
   clients.innerHTML = CO.map((c,i)=>{
     const heros = c.toggles.map((t,j)=> t.hero ? `<div class="whero${j?'':' is-active'}" data-toggle="${t.id}">${hero({...t.hero, eyebrow: t.hero.eyebrow || c.eyebrow})}</div>` : '').join('');
@@ -1016,8 +1051,7 @@
       ${c.hero?hero(c.hero):''}
       ${heros?`<div class="whero-area">${heros}</div>`:''}
       <div class="wtoggle-row">${c.toggles.map((t,j)=>`<button class="wtoggle${j?'':' is-active'}" data-toggle="${t.id}">${t.icon}${t.label}</button>`).join('')}</div>
-      ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t, c.eyebrow, true)}</div>`).join('')}
-      ${c.foot?block({type:'btnrow',items:c.foot}):''}
+      ${c.toggles.map((t,j)=>`<div class="wpanel${j?'':' is-active'}" data-toggle="${t.id}">${toggleContent(t, c.eyebrow, true)}${c.foot?block({type:'btnrow',items:c.foot}):''}${navFor(c.id, t.id)}</div>`).join('')}
     </div>`;
   }).join('');
 
@@ -1079,6 +1113,19 @@
     smoothScrollX(clientNav, target, 900);
   }));
 
+  // prev/next section navigation
+  clients.addEventListener('click', e=>{
+    const btn=e.target.closest('.tnav-btn'); if(!btn || !btn.dataset.cid) return;
+    const cid=btn.dataset.cid, tid=btn.dataset.tid;
+    const cur=clients.querySelector('.client.is-active');
+    if(!cur || cur.dataset.client!==cid){
+      const cbtn=clientNav.querySelector(`.client-btn[data-client="${cid}"]`); if(cbtn) cbtn.click();
+    }
+    const cl=clients.querySelector(`.client[data-client="${cid}"]`);
+    const tbtn=cl && cl.querySelector(`.wtoggle[data-toggle="${tid}"]`); if(tbtn) tbtn.click();
+    scrollTopSlow();
+  });
+
   // client tab arrows
   const cnPrev=document.querySelector('.cn-prev'), cnNext=document.querySelector('.cn-next');
   cnPrev.addEventListener('click', ()=>clientNav.scrollBy({left:-170, behavior:'smooth'}));
@@ -1093,9 +1140,6 @@
   updateCnArrows();
 
   // back to top
-  const toTop=document.getElementById('toTop');
-  window.addEventListener('scroll', ()=>{ toTop.classList.toggle('show', window.scrollY>380); }, {passive:true});
-  toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
 
   // HOW I WORK: 스크롤 도달 시 1번부터 순차 재생
   const hwSteps=document.querySelector('.hw-steps');
@@ -1130,6 +1174,9 @@
   updateProg();
 
   // intro cleanup
+  const heroVid=document.querySelector('.hero-video');
+  if(heroVid){ heroVid.addEventListener('loadeddata', ()=>heroVid.classList.add('loaded')); if(heroVid.readyState>=2) heroVid.classList.add('loaded'); }
+
   const intro=document.getElementById('intro');
   if(intro){ setTimeout(()=>document.body.classList.add('entered'), 3750); setTimeout(()=>intro.classList.add('done'), 3900); }
   else{ document.body.classList.add('entered'); }
