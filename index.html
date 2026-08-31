@@ -61,7 +61,6 @@
     -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   }
   .sec-hero h1 em{ animation:shineText 1.15s cubic-bezier(.35,0,.25,1) .7s both; }
-  body.entered .profile-hero h1 em{ animation:shineText 1.3s cubic-bezier(.35,0,.25,1) 1.15s 1 both; }
   @keyframes shineText{ from{ background-position:130% 0; } to{ background-position:-30% 0; } }
 
   .site-nav{ position:sticky; top:0; z-index:100; height:var(--navh); background:rgba(13,13,13,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--line-soft); }
@@ -320,11 +319,18 @@
   .profile-hero .s-eyebrow{ color:var(--accent); }
   .profile-hero h1{ color:#0d0d0d; font-size:clamp(32px,6.2vw,66px); font-weight:800; line-height:1.16; letter-spacing:-.03em; }
   .profile-hero h1 em{ color:var(--accent); }
-  .reveal-word{ position:relative; display:inline-block; }
-  .rw-fill{ position:relative; z-index:2; color:#fff; -webkit-text-fill-color:#fff; }
-  .reveal-word::before{ content:''; position:absolute; top:-1px; bottom:-1px; left:-5px; right:-5px; background:var(--accent); transform:scaleX(0); transform-origin:left center; z-index:1; }
-  body.entered .reveal-word::before{ animation:boxFill .7s cubic-bezier(.7,0,.25,1) .1s forwards; }
+  .profile-hero h1{ position:relative; z-index:1; }
+  .reveal-word{ position:relative; display:inline-block; color:#0d0d0d; margin-right:10px; }
+  .rw-fill{ position:relative; z-index:2; }
+  .reveal-word::before{ content:''; position:absolute; top:-1px; bottom:-1px; left:-8px; right:-8px; background:var(--accent); transform:scaleX(0); transform-origin:left center; z-index:1; }
+  body.entered .reveal-word::before{ animation:boxFill .85s cubic-bezier(.6,0,.3,1) .45s forwards; }
   @keyframes boxFill{ to{ transform:scaleX(1); } }
+  .rw-white{ position:absolute; top:0; left:0; z-index:3; color:#fff; -webkit-text-fill-color:#fff; white-space:nowrap; clip-path:inset(0 100% 0 0); pointer-events:none; }
+  body.entered .rw-white{ animation:whiteReveal .85s cubic-bezier(.6,0,.3,1) .45s forwards; }
+  @keyframes whiteReveal{ to{ clip-path:inset(0 0 0 0); } }
+  .reveal-word::after{ content:''; position:absolute; top:-1px; bottom:-1px; left:-8px; right:-8px; z-index:4; pointer-events:none; background:linear-gradient(105deg, transparent 32%, rgba(255,255,255,.28) 46%, rgba(255,255,255,.62) 50%, rgba(255,255,255,.28) 54%, transparent 68%); transform:translateX(-130%); opacity:0; }
+  body.entered .reveal-word::after{ animation:rwShine 1.6s cubic-bezier(.4,0,.25,1) 1.5s 1 forwards; }
+  @keyframes rwShine{ 0%{ transform:translateX(-130%); opacity:1; } 100%{ transform:translateX(130%); opacity:1; } }
   .rw-caret{ display:inline-block; width:4px; height:.9em; margin-left:4px; background:#fff; vertical-align:middle; opacity:0; position:relative; z-index:2; }
   body.entered .rw-caret{ animation:caretBlink 1.05s step-end .9s infinite; }
   @keyframes caretBlink{ 0%,50%{ opacity:1; } 50.01%,100%{ opacity:0; } }
@@ -368,6 +374,33 @@
   .profile-info{ background:#fff; border-top:1px solid #e9ecf1; padding:24px 0 30px; }
   .stat-scroll{ position:relative; background:#fff; padding:100px 24px; overflow:hidden; }
   .tnav{ display:flex; justify-content:space-between; align-items:stretch; gap:12px; max-width:900px; margin:44px auto 0; padding-top:26px; border-top:1px solid var(--line); }
+  .sysnote{ max-width:760px; margin:52px auto 34px; text-align:center; font-size:clamp(14px,1.8vw,16.5px); line-height:1.8; color:var(--paper); font-weight:600; letter-spacing:.01em; }
+  /* credits roll (terminal) */
+  .credits{ max-width:760px; margin:0 auto; background:#0a0a0c; border:1px solid #23232a; border-radius:14px; overflow:hidden; box-shadow:0 20px 50px -24px rgba(0,0,0,.9); }
+  .credits-bar{ position:relative; display:flex; align-items:center; gap:7px; padding:11px 15px; background:#141418; border-bottom:1px solid #23232a; }
+  .cb-title{ position:absolute; left:0; right:0; text-align:center; font-size:11.5px; color:#6f6f7a; font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; letter-spacing:.02em; pointer-events:none; }
+  .cb-dot{ width:10px; height:10px; border-radius:50%; background:#3a3a44; }
+  .cb-dot:nth-child(1){ background:#ff5f57; } .cb-dot:nth-child(2){ background:#febc2e; } .cb-dot:nth-child(3){ background:#28c840; }
+  .credits-view{ position:relative; height:150px; overflow:hidden; padding:16px 18px; }
+  .credits-view::before, .credits-view::after{ content:''; position:absolute; left:0; right:0; height:38px; z-index:2; pointer-events:none; }
+  .credits-view::before{ top:0; background:linear-gradient(#0a0a0c,transparent); }
+  .credits-view::after{ bottom:0; background:linear-gradient(transparent,#0a0a0c); }
+  .credits-roll{ display:flex; flex-direction:column; align-items:center; gap:9px; transition:transform .55s cubic-bezier(.25,.7,.3,1); }
+  .cr-line{ display:flex; gap:10px; align-items:baseline; justify-content:center; text-align:center; font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:13px; line-height:1.5; color:#b9b9c4; white-space:nowrap; }
+  .cr-tag{ flex:0 0 auto; font-weight:700; font-size:11px; letter-spacing:.04em; }
+  .cr-tag.RULE{ color:#3A86FF; } .cr-tag.CHECK{ color:#28c840; } .cr-tag.LOG{ color:#7a7a86; } .cr-tag.VER{ color:#febc2e; }
+  .cr-txt b{ color:#fff; font-weight:700; }
+  .cr-cursor{ display:inline-block; width:7px; height:14px; background:#3A86FF; vertical-align:-2px; animation:caretBlink .9s step-end infinite; }
+  @media (max-width:600px){ .cr-line{ font-size:11px; gap:7px; } .credits-view{ height:118px; padding:14px; } }
+  /* instagram archive */
+  .insta-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:720px; margin:0 auto; }
+  @media (max-width:560px){ .insta-grid{ grid-template-columns:repeat(3,1fr); gap:8px; } }
+  .insta-card{ display:block; }
+  .insta-fig{ position:relative; aspect-ratio:9/16; border-radius:12px; overflow:hidden; background:linear-gradient(160deg,#1a1a20,#101014); border:1px solid var(--line); transition:transform .35s, border-color .35s, box-shadow .35s; }
+  .insta-card:hover .insta-fig{ transform:translateY(-4px); border-color:var(--accent); box-shadow:0 18px 38px -16px rgba(58,134,255,.6); }
+  .insta-fig img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .insta-views{ position:absolute; left:8px; bottom:8px; z-index:2; padding:4px 9px; border-radius:20px; background:rgba(8,8,10,.78); color:#fff; font-size:11.5px; font-weight:800; letter-spacing:.02em; backdrop-filter:blur(4px); }
+  .insta-cap{ display:block; margin-top:9px; font-size:12.5px; color:var(--paper-dim); line-height:1.45; }
   .tnav-spacer{ flex:0 0 1px; }
   .tnav-btn{ display:flex; align-items:center; gap:14px; background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:12px 20px; cursor:pointer; transition:border-color .25s, transform .25s, background .25s, box-shadow .25s; min-width:150px; max-width:46%; }
   .tnav-next{ margin-left:auto; }
@@ -494,7 +527,7 @@
 </head>
 <body>
   <div id="scrollProg"></div>
-  <div id="intro"><div class="intro-txt"><span class="il il1">WELCOME</span><span class="il il2">TO</span><span class="il il3">SKIPPWORLD</span></div></div>
+  <div id="intro"><div class="intro-txt"><span class="il il1">WELCOME</span><span class="il il2">TO</span><span class="il il3">SKIPPWORKS</span></div></div>
 
   <header class="site-nav">
     <div class="nav-inner wrap">
@@ -516,8 +549,8 @@
         </video>
         <div class="wrap profile-hero-inner">
           <span class="s-eyebrow">CONTENT PD &amp; BRAND DESIGNER</span>
-          <h1 class="big">보이지 않던<br class="mo-br"> <span class="reveal-word"><span class="rw-fill">가능성</span><span class="rw-caret"></span></span>을 찾아,<br><em>보이는 성장</em>으로<br class="mo-br"> 만듭니다.</h1>
-          <p class="roles">안녕하세요?<br class="mo-br"> 영상 기획 · 촬영 · 편집 · 디자인을 직접 다루는<br class="mo-br"> 콘텐츠 PD 김영훈입니다.</p>
+          <h1 class="big">조회수로 끝나지 않는,<br><span class="reveal-word"><span class="rw-fill">성과가 되는 콘텐츠</span><span class="rw-white" aria-hidden="true">성과가 되는 콘텐츠</span></span>를<br class="mo-br"> 만듭니다.</h1>
+          <p class="roles">안녕하세요?<br class="mo-br"> 콘텐츠 구조를 설계하고,<br class="mo-br"> 직접 만들어 증명해온 콘텐츠 PD 김영훈입니다.</p>
           <div class="profile-cta">
             <button class="more-btn js-view" data-view="works">WORKS 보러가기 →</button>
             <a class="more-btn ghost" href="SkippCV.pdf" download target="_blank" rel="noopener">이력서 다운로드 ↓</a>
@@ -530,12 +563,12 @@
         <div class="stat-sticky">
           <div class="stat-single" data-i="0"><b>8년차</b><span>콘텐츠 PD</span></div>
           <div class="stat-single" data-i="1"><b>700편+</b><span>누적 제작 영상 (숏폼 제외)</span></div>
-          <div class="stat-single" data-i="2"><b>1200%</b><span>채널 성장 리드</span></div>
+          <div class="stat-single" data-i="2"><b>1300%</b><span>채널 성장 리드</span></div>
           <div class="stat-single" data-i="3"><b>7번의 성장</b><span>7개 브랜드</span></div>
           <div class="stat-final" data-i="4">
             <div class="sf-item"><b>8년차</b><span>콘텐츠 PD</span></div>
             <div class="sf-item"><b>700편+</b><span>누적 제작 영상</span></div>
-            <div class="sf-item"><b>1200%</b><span>채널 성장 리드</span></div>
+            <div class="sf-item"><b>1300%</b><span>채널 성장 리드</span></div>
             <div class="sf-item"><b>7번의 성장</b><span>7개 브랜드</span></div>
           </div>
         </div>
@@ -710,7 +743,7 @@
   </main>
 
   <footer class="wrap foot">
-    <span>© 2026 Kim Younghoon · SKIPPWORLD</span>
+    <span>© 2026 Kim Younghoon · SKIPPWORKS</span>
     <span class="foot-made">이 웹사이트는 <span class="claude-mark">Claude</span>를 활용하여 제작되었습니다.</span>
     <span><b>SKIPP</b> · Content PD · Brand Designer</span>
   </footer>
@@ -773,6 +806,35 @@
   ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, start:p.start, url:plu(p.listId), badge:'재생목록' }));
 
   /* 크몽 앨범 이미지 경로 (image 폴더에 album1.jpg ~ album20.jpg) */
+  const CREDITS = [
+    ['RULE','물건 점수 <b>3.0 이하</b> → 대본을 출력하지 않는다'],
+    ['RULE','후킹은 <b>개념 하나</b>. 3초 안에 이해되지 않으면 버린다'],
+    ['RULE','커버는 숫자를 주되, <b>이유는 감춘다</b>'],
+    ['RULE','정보 갭 유지 · 이상함 제시 · <b>2줄 분업</b>'],
+    ['RULE','1줄은 <b>멈추게</b>, 2줄은 <b>누르게</b>'],
+    ['RULE','조건절은 이탈을 만든다 — 후킹에서 <b>제거</b>'],
+    ['RULE','지역명은 필터로 작동한다 — <b>노출을 뒤로</b>'],
+    ['RULE','싼 이유를 유추하게 하는 단어 <b>전면 금지</b>'],
+    ['RULE','영상 <b>2분 초과 금지</b> · 권장 45~75초'],
+    ['RULE','현장에 가본 것처럼 읽히는 표현 <b>금지</b>'],
+    ['RULE','원문에 <b>없는 정보</b>는 쓰지 않는다'],
+    ['RULE','법적 판단은 <b>관찰 톤</b>으로 서술한다'],
+    ['RULE','느낌표는 <b>단 한 번</b>만 허용된다'],
+    ['RULE','서류 항목명을 <b>그대로 읽지 않는다</b>'],
+    ['CHECK','작성 전 <b>숫자 검증</b> — 입력 게이트'],
+    ['CHECK','출력 전 <b>팩트체크 3패스</b> — 출력 게이트'],
+    ['CHECK','시세 인용 3조건 — <b>시점 · 층 · 면적</b>'],
+    ['LOG','조회수를 <b>기록</b>한다'],
+    ['LOG','실패한 커버는 <b>원인을 남긴다</b>'],
+    ['LOG','실측 결과를 <b>규칙으로 승격</b>한다'],
+    ['VER','v6.1 — 규격서는 <b>계속 개정된다</b>'],
+  ];
+  const INSTA_URL = 'https://www.instagram.com/myauction_official/';
+  const INSTA = [
+    { views:'47.4만' }, { views:'45.5만' }, { views:'14.4만' },
+    { views:'4.2만' },  { views:'1.3만' },  { views:'1만' },
+    { views:'6,000' },  { views:'3,700' },  { views:'NEW' },
+  ];
   const KMONG_BASE = "image/";
   const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
 
@@ -780,9 +842,10 @@
     { id:'myauction', name:'마이옥션', type:'full', ord:1, meta:'엘앤씨부동산중개법인 · 콘텐츠기획 팀장 · 2022.10 – 현재',
       eyebrow:'마이옥션 · 부동산 경매 사이트 &amp; 컨설팅', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
+        hero:{ eyebrow:'유튜브 채널 · 마이옥션TV · 2022.10 ~ 운영 중',
+          title:'복잡한 경매를,<br><em>보고 싶은</em> 콘텐츠로.',
           desc:'단일 출연진 중심의 기업 채널을,<br>다양한 컨설턴트가 주인공이 되는 <em>콘텐츠 IP 채널</em>로 전환했습니다.<br>전문성과 캐릭터를 결합한 맞춤형 콘텐츠를 기획해,<br>회사 브랜드와 컨설턴트 개인 브랜딩을 함께 성장시키는 구조를 설계했습니다.<br><br>현재도 새로운 콘텐츠 포맷을 지속적으로 실험하며 채널을 고도화하고 있습니다.',
-          stats:[['1,800 → 24,000+','구독자 성장'],['400편+','롱폼 콘텐츠 누계'],['IP 기획','콘텐츠 설계·운영']] },
+          stats:[['1,800 → 25,000+','구독자 성장'],['400편+','롱폼 콘텐츠 누계'],['IP 기획','콘텐츠 설계·운영']] },
         blocks:[
           { type:'heading', title:'김피디의 실험형 콘텐츠',
             desc:'경매사건 현장 임장과 분석부터, AI를 활용한 경매 RAP 브리핑,<br>경매의 역사를 다루는 콘텐츠, 컨설턴트들의 물건 추천 배틀까지 —<br>포맷의 틀을 깬, 실험적인 1인 단독 콘텐츠입니다.<br><br>경매물건 선정·분석 → 콘텐츠 기획 → 촬영 →<br>편집 → 더빙 → 완성까지 직접 진행했습니다. (기여도 100%)' },
@@ -792,8 +855,21 @@
             desc:'출연자별 개성을 살린 독립적인 콘텐츠 IP 라인업입니다.<br>인물마다 다른 콘셉트와 이름으로 채널의 전문성과 개성을 함께 담았습니다.' },
           { type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} },
         ] },
+      { id:'instagram', label:'INSTAGRAM', icon:I.play,
+        hero:{ eyebrow:'인스타그램 릴스 · 마이옥션 공식 · 2026.08.21 ~ 운영 중',
+          title:'그냥 터진 게 아니라,<br><em>터지도록</em> 설계했습니다.',
+          desc:'물건 선정 기준부터 후킹·커버 공식, 톤 프리셋, 검증 절차까지<br><em>숏폼 제작 전 과정을 규격서로 문서화</em>했습니다.<br><br>운이나 트렌드에 기댄 단발성 화제가 아니라,<br><em>단 8편으로 110만</em>을 만든 반복 가능한 포맷입니다.<br>기획 · 대본 · 편집 · 폰트 · BGM · TTS 보이스까지 직접 선정했습니다.',
+          stats:[['All','직접 기획 · 제작'],['110만','일주일 만에, 조회수'],['누구나','같은 품질로 재현 가능']] },
+        blocks:[
+          { type:'sysnote', text:'숏폼 제작의 모든 규칙을 문서로 만들고,<br>그 문서대로 직접 제작했습니다.' },
+          { type:'credits' },
+          { type:'divider' },
+          { type:'heading', title:'인스타그램 아카이브',
+            desc:'매주 월~금, 오후 5시 45분 정기 업로드.<br>릴스와 유튜브 쇼츠에 원소스 멀티유즈로 배포하고 있습니다.' },
+          { type:'insta' },
+        ] },
       { id:'web', label:'WEB', icon:I.web,
-        hero:{ title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
+        hero:{ eyebrow:'공식 웹사이트 · 마이옥션 · UI/UX 리뉴얼', title:'노후된 UI/UX를,<br><em>결제되는</em> 동선으로.', desc:'홈·상품·상세페이지 UI/UX를 전면 리뉴얼해 의도 전달과 자동결제 전환 동선을 완성했습니다.' },
         blocks:[
           { type:'flow', glow:true, items:[
             { img:'image/web_before.jpg', label:'01  리뉴얼 Before (홈페이지)', ph:'Before' },
@@ -817,7 +893,7 @@
           ]},
         ] },
       { id:'document', label:'DOCUMENT', icon:I.doc,
-        hero:{ title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
+        hero:{ eyebrow:'사내 문서 · 공식 보고서 · 회사 소개서', title:'제각각이던 서식을,<br><em>하나의 브랜드 톤</em>으로.', desc:'표준 디자인 틀과 자동화 서식을 구축해 전 직원의 보고서·양식 브랜드 톤을 통일했습니다.' },
         block:{ type:'gallery', bare:true, cols:3, items:[
           { img:'image/docu1.png', cap:'경매사건 브리핑 보고서 <em>대외비 · 외부 반출 금지</em>', ph:'docu1.png', lock:true, extrasLabel:'* 표준화를 위한 가이드문서 및 엑셀 리뉴얼 작업', extras:[
             { type:'PDF', cls:'df-pdf', label:'브리핑보고서 작성가이드' },
@@ -831,12 +907,14 @@
     { id:'cdf', name:'체대친구들', type:'full', ord:2, meta:'제이슨의V트레이닝 · 콘텐츠 총괄 PD / 오프라인 사업 기획 · 2019.09 – 2022.01',
       eyebrow:'체대친구들 · 체대입시 교육 &amp; 공무원 체력 학원', toggles:[
       { id:'youtube', label:'YOUTUBE', icon:I.play,
-        hero:{ title:'한 명의 캐릭터를,<br>7종의 <em>콘텐츠 IP</em>로.',
+        hero:{ eyebrow:'유튜브 채널 · 체대친구들 · 2019.09 – 2022.01',
+          title:'한 명의 캐릭터를,<br>7종의 <em>콘텐츠 IP</em>로.',
           desc:'체대입시 운동 강의에만 치우쳐 있던 채널을,<br>대표적인 인터뷰형 콘텐츠부터 시작해<br>분석 · 브이로그 · 핵심강의 · 꿀팁 · 실험 · 리액션까지 —<br>7가지 포맷의 <em>콘텐츠 IP 구조</em>로 확장 · 재설계했습니다.',
           stats:[['17,000 → 33,000+','구독자 성장'],['7종','콘텐츠 IP'],['메인 PD','기획 · 촬영 · 편집']] },
         block:{ type:'cards', items:CDF, more:{label:'체대친구들 유튜브 채널 →', url:'https://youtube.com/@cdf_jason'} } },
       { id:'offline', label:'OFFLINE', icon:I.pin,
-        hero:{ title:'콘텐츠의 신뢰를,<br><em>오프라인의 성과</em>로.',
+        hero:{ eyebrow:'오프라인 센터 · 대치동 체대친구들 · 사업 기획',
+          title:'콘텐츠의 신뢰를,<br><em>오프라인의 성과</em>로.',
           desc:'채널이 쌓은 신뢰를 대치동 학원 오픈 · 원데이클래스 · 입시 합격까지<br>실질적인 오프라인 성과로 연결했습니다.<br>— 소방공무원 체력시험(제자리멀리뛰기) 원데이클래스는<br>20회차 완판, 약 150명이 참가해 기록 향상을 이끌었습니다.',
           stats:[['대치동','오프라인 학원 확장'],['20회차','원데이클래스 완판'],['150명+','참가 · 기록 향상']] },
         block:{ type:'cards', items:[
@@ -1015,6 +1093,9 @@
     if(b.type==='btnrow') return `<div class="btnrow">`+b.items.map(it=>`<a class="pill-btn" href="${it.url}" target="_blank" rel="noopener">${it.label} ↗</a>`).join('')+`</div>`;
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
+    if(b.type==='sysnote') return `<p class="sysnote">${b.text}</p>`;
+    if(b.type==='credits') return `<div class="credits"><div class="credits-bar"><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-title">myauction_shortform_format.md — v6.1</span></div><div class="credits-view"><div class="credits-roll"></div></div></div>`;
+    if(b.type==='insta') return `<div class="insta-grid">${INSTA.map((it,i)=>`<a class="insta-card" href="${INSTA_URL}" target="_blank" rel="noopener"><div class="insta-fig"><span class="ph-label">REELS ${i+1}</span><img src="insta/insta${i+1}.jpg" alt="마이옥션 인스타그램 릴스 ${i+1}" loading="lazy" onerror="this.style.display='none'"><span class="insta-views">▶ ${it.views}+</span></div></a>`).join('')}</div>` + moreBtn({label:'마이옥션 인스타그램 보러가기 →', url:INSTA_URL});
     if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
     return '';
   }
@@ -1149,6 +1230,45 @@
     }, {threshold:0.35});
     hwIo.observe(hwSteps);
   }
+  // credits roll: typing + endless scroll
+  function initCredits(){
+    const roll=document.querySelector('.credits-roll'); if(!roll || roll.dataset.on) return;
+    roll.dataset.on='1';
+    let i=0;
+    function addLine(){
+      const [tag,txt]=CREDITS[i % CREDITS.length]; i++;
+      const line=document.createElement('div');
+      line.className='cr-line';
+      line.innerHTML=`<span class="cr-tag ${tag}">[${tag}]</span><span class="cr-txt"></span><span class="cr-cursor"></span>`;
+      roll.appendChild(line);
+      // smoothly shift up so the newest line stays in view
+      const over=roll.scrollHeight - roll.parentElement.clientHeight + 22;
+      if(over>0) roll.style.transform=`translateY(-${over}px)`;
+      while(roll.children.length>14){ 
+        const h=roll.firstChild.offsetHeight+9;
+        roll.removeChild(roll.firstChild);
+        const cur=parseFloat((roll.style.transform.match(/-?[\d.]+/)||[0])[0])||0;
+        roll.style.transition='none';
+        roll.style.transform=`translateY(${cur+h}px)`;
+        void roll.offsetHeight;
+        roll.style.transition='';
+      }
+      const target=line.querySelector('.cr-txt'), cur=line.querySelector('.cr-cursor');
+      const plain=txt.replace(/<\/?b>/g,''); let p=0;
+      const timer=setInterval(()=>{
+        p++;
+        target.textContent=plain.slice(0,p);
+        if(p>=plain.length){ clearInterval(timer); target.innerHTML=txt; if(cur) cur.remove(); setTimeout(addLine, 800); }
+      }, 26);
+    }
+    addLine();
+  }
+  const credEl=document.querySelector('.credits');
+  if(credEl){
+    new IntersectionObserver((es,o)=>{ es.forEach(e=>{ if(e.isIntersecting){ initCredits(); o.disconnect(); } }); },{threshold:.3}).observe(credEl);
+    document.addEventListener('click', e=>{ if(e.target.closest('.wtoggle')||e.target.closest('.client-btn')||e.target.closest('.tnav-btn')) setTimeout(initCredits, 500); });
+  }
+
   // career stats: play once when scrolled into view
   const statScroll=document.querySelector('.stat-scroll');
   if(statScroll){
