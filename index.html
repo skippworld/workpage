@@ -376,16 +376,16 @@
   .tnav{ display:flex; justify-content:space-between; align-items:stretch; gap:12px; max-width:900px; margin:44px auto 0; padding-top:26px; border-top:1px solid var(--line); }
   .sysnote{ max-width:760px; margin:52px auto 34px; text-align:center; font-size:clamp(14px,1.8vw,16.5px); line-height:1.8; color:var(--paper); font-weight:600; letter-spacing:.01em; }
   /* credits roll (terminal) */
-  .credits{ max-width:760px; margin:0 auto; background:#0a0a0c; border:1px solid #23232a; border-radius:14px; overflow:hidden; box-shadow:0 20px 50px -24px rgba(0,0,0,.9); }
+  .credits{ max-width:760px; margin:0 auto; background:#0a0a0c; border:1px solid #23232a; border-radius:14px; overflow:hidden; box-shadow:0 20px 50px -24px rgba(0,0,0,.9); pointer-events:none; user-select:none; }
   .credits-bar{ position:relative; display:flex; align-items:center; gap:7px; padding:11px 15px; background:#141418; border-bottom:1px solid #23232a; }
   .cb-title{ position:absolute; left:0; right:0; text-align:center; font-size:11.5px; color:#6f6f7a; font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; letter-spacing:.02em; pointer-events:none; }
   .cb-dot{ width:10px; height:10px; border-radius:50%; background:#3a3a44; }
   .cb-dot:nth-child(1){ background:#ff5f57; } .cb-dot:nth-child(2){ background:#febc2e; } .cb-dot:nth-child(3){ background:#28c840; }
-  .credits-view{ position:relative; height:150px; overflow:hidden; padding:16px 18px; overscroll-behavior:auto; touch-action:pan-y; pointer-events:none; }
+  .credits-view{ position:relative; height:150px; min-height:150px; max-height:150px; overflow:hidden; padding:16px 18px; pointer-events:none; contain:layout paint; }
   .credits-view::before, .credits-view::after{ content:''; position:absolute; left:0; right:0; height:38px; z-index:2; pointer-events:none; }
   .credits-view::before{ top:0; background:linear-gradient(#0a0a0c,transparent); }
   .credits-view::after{ bottom:0; background:linear-gradient(transparent,#0a0a0c); }
-  .credits-roll{ display:flex; flex-direction:column; align-items:center; gap:9px; transition:transform .55s cubic-bezier(.25,.7,.3,1); }
+  .credits-roll{ position:absolute; left:18px; right:18px; top:16px; display:flex; flex-direction:column; align-items:center; gap:9px; transition:transform .55s cubic-bezier(.25,.7,.3,1); will-change:transform; }
   .cr-line{ display:flex; gap:10px; align-items:baseline; justify-content:center; text-align:center; font-family:ui-monospace,'SFMono-Regular',Menlo,monospace; font-size:13px; line-height:1.5; color:#b9b9c4; white-space:nowrap; }
   .cr-tag{ flex:0 0 auto; font-weight:700; font-size:11px; letter-spacing:.04em; }
   .cr-tag.RULE{ color:#3A86FF; } .cr-tag.CHECK{ color:#28c840; } .cr-tag.LOG{ color:#7a7a86; } .cr-tag.VER{ color:#febc2e; }
@@ -827,13 +827,14 @@
     ['LOG','조회수를 <b>기록</b>한다'],
     ['LOG','실패한 커버는 <b>원인을 남긴다</b>'],
     ['LOG','실측 결과를 <b>규칙으로 승격</b>한다'],
-    ['VER','v6.1 — 규격서는 <b>계속 개정된다</b>'],
+    ['VER','v7.1 — 규격서는 <b>계속 개정된다</b>'],
   ];
   const INSTA_URL = 'https://www.instagram.com/myauction_official/';
   const INSTA = [
-    { views:'50만' },  { views:'48만' },  { views:'15만' },
-    { views:'5만' },   { views:'4.3만' }, { views:'1.3만' },
-    { views:'1만' },   { views:'1만' },   { views:'4,000' },
+    { views:'57만' },  { views:'50만' },  { views:'50만' },
+    { views:'16만' },  { views:'15만' },  { views:'5만' },
+    { views:'3.3만' }, { views:'1.7만' }, { views:'1.6만' },
+    { views:'1.3만' }, { views:'NEW' },   { views:'NEW' },
   ];
   const KMONG_BASE = "image/";
   const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
@@ -858,14 +859,14 @@
       { id:'instagram', label:'INSTAGRAM', icon:I.play,
         hero:{ eyebrow:'인스타그램 릴스 · 마이옥션 공식 · 2026.08.21 ~ 운영 중',
           title:'그냥 터진 게 아니라,<br><em>터지도록</em> 설계했습니다.',
-          desc:'물건 선정 기준부터 후킹·커버 공식, 톤 프리셋, 검증 절차까지<br><em>숏폼 제작 전 과정을 규격서로 문서화</em>했습니다.<br><br>운이나 트렌드에 기댄 단발성 화제가 아니라,<br><em>반복 가능한 구조</em>로 설계한 포맷입니다.<br>기획 · 대본 · 편집 · 폰트 · BGM · TTS 보이스까지 직접 선정했으며,<br>지금도 매일 업로드하며 성장하고 있습니다.',
-          stats:[['All','직접 기획 · 제작'],['125만+','2주간 누적 조회수'],['v6.1','지속 개발 중인 제작 규격서']] },
+          desc:'물건 선정 기준부터 후킹·커버 공식, 톤 프리셋, 검증 절차까지<br><em>숏폼 제작 전 과정을 규격서로 문서화</em>했습니다.<br><br>팔로워 80명 · 광고비 0원으로 시작해,<br><em>2주 만에 누적 조회수 205만</em>을 오가닉으로 달성했습니다.<br>기획 · 대본 · 편집 · 폰트 · BGM · TTS 보이스까지 직접 선정했으며,<br>실측 데이터로 규칙을 개정하며 지금도 매일 업로드하고 있습니다.',
+          stats:[['All','직접 기획 · 제작'],['205만+','2주간 누적 조회수'],['v7.1','지속 개발 중인 제작 규격서']] },
         blocks:[
           { type:'sysnote', text:'숏폼 제작의 모든 규칙을 문서로 만들고,<br>그 문서대로 직접 제작했습니다.' },
           { type:'credits' },
           { type:'divider' },
           { type:'heading', title:'인스타그램 아카이브',
-            desc:'매주 월~금, 오후 5시 45분 정기 업로드.<br>릴스와 유튜브 쇼츠에 원소스 멀티유즈로 배포하고 있습니다.' },
+            desc:'매일 오후 5시 45분 정기 업로드.<br>릴스와 유튜브 쇼츠에 원소스 멀티유즈로 배포하고 있습니다.' },
           { type:'insta' },
         ] },
       { id:'web', label:'WEB', icon:I.web,
@@ -1094,8 +1095,8 @@
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
     if(b.type==='sysnote') return `<p class="sysnote">${b.text}</p>`;
-    if(b.type==='credits') return `<div class="credits"><div class="credits-bar"><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-title">myauction_shortform_format.md — v6.1</span></div><div class="credits-view"><div class="credits-roll"></div></div></div>`;
-    if(b.type==='insta') return `<div class="insta-grid">${INSTA.map((it,i)=>`<a class="insta-card" href="${INSTA_URL}" target="_blank" rel="noopener"><div class="insta-fig"><span class="ph-label">REELS ${i+1}</span><img src="insta/insta${i+1}.jpg" alt="마이옥션 인스타그램 릴스 ${i+1}" loading="lazy" onerror="this.style.display='none'"><span class="insta-views">▶ ${it.views}+</span></div></a>`).join('')}</div>` + moreBtn({label:'마이옥션 인스타그램 보러가기 →', url:INSTA_URL});
+    if(b.type==='credits') return `<div class="credits"><div class="credits-bar"><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-title">myauction_shortform_format.md — v7.1</span></div><div class="credits-view"><div class="credits-roll"></div></div></div>`;
+    if(b.type==='insta') return `<div class="insta-grid">${INSTA.map((it,i)=>`<a class="insta-card" href="${INSTA_URL}" target="_blank" rel="noopener"><div class="insta-fig"><span class="ph-label">REELS ${i+1}</span><img src="insta/insta${i+1}.jpg" alt="마이옥션 인스타그램 릴스 ${i+1}" loading="lazy" onerror="this.style.display='none'"><span class="insta-views">▶ ${it.views}${it.views==='NEW'?'':'+'}</span></div></a>`).join('')}</div>` + moreBtn({label:'마이옥션 인스타그램 바로가기 →', url:INSTA_URL});
     if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
     return '';
   }
@@ -1241,18 +1242,11 @@
       line.className='cr-line';
       line.innerHTML=`<span class="cr-tag ${tag}">[${tag}]</span><span class="cr-txt"></span><span class="cr-cursor"></span>`;
       roll.appendChild(line);
-      // smoothly shift up so the newest line stays in view
-      const over=roll.scrollHeight - roll.parentElement.clientHeight + 22;
-      if(over>0) roll.style.transform=`translateY(-${over}px)`;
-      while(roll.children.length>14){ 
-        const h=roll.firstChild.offsetHeight+9;
-        roll.removeChild(roll.firstChild);
-        const cur=parseFloat((roll.style.transform.match(/-?[\d.]+/)||[0])[0])||0;
-        roll.style.transition='none';
-        roll.style.transform=`translateY(${cur+h}px)`;
-        void roll.offsetHeight;
-        roll.style.transition='';
-      }
+      // trim old lines first (no visual jump: recalc transform after)
+      while(roll.children.length>12) roll.removeChild(roll.firstChild);
+      const viewH=roll.parentElement.clientHeight - 32;
+      const over=roll.scrollHeight - viewH;
+      roll.style.transform = over>0 ? `translateY(-${over}px)` : 'translateY(0)';
       const target=line.querySelector('.cr-txt'), cur=line.querySelector('.cr-cursor');
       const plain=txt.replace(/<\/?b>/g,''); let p=0;
       const timer=setInterval(()=>{
