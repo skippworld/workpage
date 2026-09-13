@@ -248,6 +248,8 @@
   .card:hover{ border-color:rgba(58,134,255,.55); transform:translateY(-3px); box-shadow:0 16px 40px -18px rgba(0,0,0,.8); }
   .card.nolink{ cursor:default; }
   .card:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .card__vbadge{ display:inline-block; margin-left:8px; padding:3px 10px; border-radius:20px; background:var(--accent); color:#fff; font-size:11px; font-weight:800; letter-spacing:.02em; vertical-align:middle; white-space:nowrap; text-shadow:none; box-shadow:0 2px 10px -2px rgba(58,134,255,.8); }
+  .card__count{ margin-top:6px; font-size:11.5px; font-weight:700; color:var(--accent-soft); letter-spacing:.02em; }
   .card__media{ position:relative; aspect-ratio:16/9; overflow:hidden; background:#000; }
   .card__media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s,filter .4s; }
   .card:hover .card__media img{ transform:scale(1.04); filter:brightness(.9); }
@@ -779,10 +781,10 @@
 
   /* 마이옥션 - 대표 재생목록 (hover = 각 재생목록의 첫 영상) */
   const MYA = [
+    { title:"왕초보 경매강의", sub:"부동산 경매 강의 콘텐츠 / 기획·촬영·편집 기여도 100%", views:"누적 110만+", videoId:"MiJYm5g2HaY", listId:"PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c" },
+    { title:"문지성의 토킹투더문", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"POEzKz_Dp6Y", listId:"PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8" },
     { title:"이진영의 핫초이스", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"n7oe8HwXLpA", listId:"PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk" },
     { title:"안중현의 키포인트", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"RuoOPgJsgjI", listId:"PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig" },
-    { title:"문지성의 토킹투더문", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"POEzKz_Dp6Y", listId:"PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8" },
-    { title:"왕초보 경매강의", sub:"부동산 경매 강의 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"MiJYm5g2HaY", listId:"PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c" },
     { title:"제주도 경매특집", sub:"제주도 경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"6O_sobj1HNc", listId:"PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA" },
     { title:"경매의품격", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 90%", videoId:"ZNoeu5VYxa8", listId:"PLeDgow7nj3iJi2_7FcCqGiRCGO79LS83i" },
     { title:"육형경매", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"-OGXEeE135k", listId:"PLeDgow7nj3iJls8BEkhJpRUtW8mP-A5m7" },
@@ -794,7 +796,7 @@
     { title:"정민준의 경매쇼", sub:"경매사건 소개 콘텐츠 / 기획·촬영·편집 기여도 70%", videoId:"LUyO-xmtj2M", listId:"PLeDgow7nj3iLFwdGQIwW3f-D9fsfLu9cy" },
     { title:"미스터명도왕", sub:"부동산경매 명도 콘텐츠 / 기획·촬영·편집 기여도 90%", videoId:"REvVhy7s1YI", listId:"PLeDgow7nj3iLzo3XfrVGsY-PVo_kwWRav" },
     { title:"NPL특전사", sub:"경매 NPL 콘텐츠 / 기획·촬영·편집 기여도 100%", videoId:"8_6PrQG6EZU", listId:"PLeDgow7nj3iIdNUS2WxBv_hCDef2hxeLi" },
-  ].map(p=>({ title:p.title, sub:p.sub, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
+  ].map(p=>({ title:p.title, sub:p.sub, views:p.views, videoId:p.videoId, url:plu(p.listId), badge:'재생목록' }));
 
   /* 체대친구들 (hover = 첫 영상, 클릭 = 재생목록) */
   const CDF = [
@@ -830,14 +832,14 @@
     ['LOG','조회수를 <b>기록</b>한다'],
     ['LOG','실패한 커버는 <b>원인을 남긴다</b>'],
     ['LOG','실측 결과를 <b>규칙으로 승격</b>한다'],
-    ['VER','v7.1 — 규격서는 <b>계속 개정된다</b>'],
+    ['VER','v7.3 — 규격서는 <b>계속 개정된다</b>'],
   ];
   const INSTA_URL = 'https://www.instagram.com/myauction_official/';
   const INSTA = [
-    { views:'57만' },  { views:'50만' },  { views:'50만' },
-    { views:'16만' },  { views:'15만' },  { views:'5만' },
-    { views:'3.3만' }, { views:'1.7만' }, { views:'1.6만' },
-    { views:'1.3만' }, { views:'NEW' },   { views:'NEW' },
+    { views:'62만' },  { views:'56만' },  { views:'53만' },
+    { views:'20만' },  { views:'19만' },  { views:'17만' },
+    { views:'14만' },  { views:'8.7만' }, { views:'5.5만' },
+    { views:'4.1만' }, { views:'3.8만' }, { views:'2만' },
   ];
   const KMONG_BASE = "image/";
   const KMONG_MORE = "https://kmong.com/@SKIPPWORKS/portfolios";
@@ -860,16 +862,16 @@
           { type:'cards', items:MYA, more:{label:'마이옥션 유튜브 채널 →', url:'https://www.youtube.com/@myauction_official'} },
         ] },
       { id:'instagram', label:'INSTAGRAM', icon:I.play,
-        hero:{ eyebrow:'인스타그램 릴스 · 마이옥션 공식 · 2026.08.21 ~ 운영 중',
+        hero:{ eyebrow:'인스타그램 · 공식 계정 · 26.08.21 – 09.13 · 단독 기획 및 운영',
           title:'그냥 터진 게 아니라,<br><em>터지도록</em> 설계했습니다.',
-          desc:'물건 선정 기준부터 후킹·커버 공식, 톤 프리셋, 검증 절차까지<br><em>숏폼 제작 전 과정을 규격서로 문서화</em>했습니다.<br><br>팔로워 80명 · 광고비 0원으로 시작해,<br><em>2주 만에 누적 조회수 205만</em>을 오가닉으로 달성했습니다.<br>기획 · 대본 · 편집 · 폰트 · BGM · TTS 보이스까지 직접 선정했으며,<br>실측 데이터로 규칙을 개정하며 지금도 매일 업로드하고 있습니다.',
-          stats:[['All','직접 기획 · 제작'],['205만+','2주간 누적 조회수'],['v7.1','지속 개발 중인 제작 규격서']] },
+          desc:'물건 선정 기준부터 후킹·커버 공식, 톤 프리셋, 검증 절차까지<br><em>숏폼 제작 전 과정을 규격서로 문서화</em>했습니다.<br><br>팔로워 80명 · 광고비 0원에서 시작해,<br>3주 만에 <em>누적 조회수 277만+, 팔로워 6,000명+</em>을<br>오가닉으로 달성했습니다.<br>기획 · 대본 · 편집 · 폰트 · BGM · TTS 보이스까지 단독 수행했으며,<br>실측 데이터로 규칙을 개정하며 규격서를 v7.3까지 고도화했습니다.',
+          stats:[['277만+','3주 만에, 누적 조회수'],['80 → 6,000+','팔로워 성장'],['v7.3','단독 기획 · 제작 규격서']] },
         blocks:[
           { type:'sysnote', text:'숏폼 제작의 모든 규칙을 문서로 만들고,<br>그 문서대로 직접 제작했습니다.' },
           { type:'credits' },
           { type:'divider' },
           { type:'heading', title:'인스타그램 아카이브',
-            desc:'매일 오후 5시 45분 정기 업로드.<br>릴스와 유튜브 쇼츠에 원소스 멀티유즈로 배포하고 있습니다.' },
+            desc:'3주간 매일 오후 5시 45분 정기 업로드, 총 22편을 제작했습니다.<br>릴스와 유튜브 쇼츠에 원소스 멀티유즈로 배포했습니다.' },
           { type:'insta' },
         ] },
       { id:'web', label:'WEB', icon:I.web,
@@ -1083,7 +1085,7 @@
       <div class="badge">${I.layers}<span>${it.badge||'재생목록'}</span></div>
       ${(it.videoId||it.plist)?`<div class="hint">${I.play12}<span>보기</span></div>`:''}
       <div class="card__media"${ratio?` style="aspect-ratio:${ratio}"`:''}>${media}<div class="card__shade"></div></div>
-      <div class="card__body"><div class="card__title">${it.title||''}</div>${it.sub?`<div class="card__sub">${it.sub}</div>`:''}</div>
+      <div class="card__body"><div class="card__title">${it.title||''}${it.views?`<span class="card__vbadge">${it.views}</span>`:''}</div>${it.sub?`<div class="card__sub">${it.sub}</div>`:''}${it.count?`<div class="card__count">${it.count}</div>`:''}</div>
     </${tag}>`;
   }
 
@@ -1098,7 +1100,7 @@
     if(b.type==='note')  return `<div class="note">${b.text}</div>`;
     if(b.type==='album') return `<div class="album-grid">${Array.from({length:20},(_,i)=>{const n=i+1;return `<div class="album"><span class="album__ph">ALBUM ${n}</span><img src="${KMONG_BASE}album${n}.jpg" alt="앨범 아트워크 ${n}" loading="lazy" onerror="this.style.display='none'"></div>`;}).join('')}</div>` + moreBtn({label:'더 많은 앨범 아트워크 보러가기 →', url:KMONG_MORE});
     if(b.type==='sysnote') return `<p class="sysnote">${b.text}</p>`;
-    if(b.type==='credits') return `<div class="credits"><div class="credits-bar"><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-title">myauction_shortform_format.md — v7.1</span></div><div class="credits-view"><div class="credits-roll"></div></div></div>`;
+    if(b.type==='credits') return `<div class="credits"><div class="credits-bar"><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-dot"></span><span class="cb-title">myauction_shortform_format.md — v7.3</span></div><div class="credits-view"><div class="credits-roll"></div></div></div>`;
     if(b.type==='insta') return `<div class="insta-grid">${INSTA.map((it,i)=>`<a class="insta-card" href="${INSTA_URL}" target="_blank" rel="noopener"><div class="insta-fig"><span class="ph-label">REELS ${i+1}</span><img src="insta/insta${i+1}.jpg" alt="마이옥션 인스타그램 릴스 ${i+1}" loading="lazy" onerror="this.style.display='none'"><span class="insta-views">▶ ${it.views}${it.views==='NEW'?'':'+'}</span></div></a>`).join('')}</div>` + moreBtn({label:'마이옥션 인스타그램 바로가기 →', url:INSTA_URL});
     if(b.type==='empty') return emptyBox(b.text||'준비 중입니다');
     return '';
