@@ -387,6 +387,13 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
 @media (max-width:860px),(orientation:portrait){.sp-back .btn{padding:0 12px}}
 .bgword{position:absolute;left:-3%;top:16%;z-index:1;font-family:"Mr Dafoe","Brush Script MT",cursive;font-size:calc(var(--v)*19);line-height:1;white-space:nowrap;color:rgba(29,14,3,.17);filter:blur(calc(var(--v)*.42));transform:rotate(-9deg);transform-origin:left center;pointer-events:none;user-select:none}
 @media (max-width:860px),(orientation:portrait){.bgword{top:14%;font-size:calc(var(--v)*17)}}
+.toc video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.5) brightness(.6);transition:filter .3s,transform .5s;pointer-events:none}
+.toc button:hover video{filter:none;transform:scale(1.04)}
+.ytw .ytbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(22px) brightness(.45);transform:scale(1.15)}
+.ytw .ytf{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:16/9;overflow:hidden;background:#0c0b0a}
+.ytw .ytf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ytw .ytf iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;opacity:0;transition:opacity .5s}
+.ytw .ytf iframe.on{opacity:1}
 
 </style>
 </head>
@@ -466,20 +473,21 @@ function koreaSvg(){
   const K=MAPS.korea, nm={gangnam:'강남',nonsan:'논산',daegu:'대구',ulsan:'울산',suncheon:'순천'}, off={gangnam:[14,-8],nonsan:[-14,6,'end'],daegu:[-14,-8,'end'],ulsan:[14,6],suncheon:[14,20]};
   return `<svg viewBox="12 28 252 268" role="img" aria-label="촬영지: 강남, 논산, 대구, 울산, 순천"><path class="land" d="${K.d}"/>${Object.entries(K.pts).map(([k,[x,y]],i)=>`<circle class="rg" style="--i:${i}" cx="${x}" cy="${y}" r="6"/><circle class="c" cx="${x}" cy="${y}" r="6"/><text x="${x+off[k][0]}" y="${y+off[k][1]}" text-anchor="${off[k][2]||'start'}">${nm[k]}</text>`).join('')}</svg>`;
 }
+const CDF_STILL=3; // 체대친구들 차례 썸네일로 쓸 video/cdf.mp4 장면의 초
 const lfFig=(cls,inner,cap,p)=>`<figure class="${cls}" data-gal="myauction">${src(p)}${inner}<figcaption>${cap}</figcaption></figure>`;
 const BR=[
  {id:'myauction',n:'마이옥션',what:'경매 사이트, 경매 컨설팅',m:'콘텐츠기획 팀장, 2022.10부터 현재',th:'t-dark',rt:'t-black',cls:'sp-lf',noplay:1,
   x:'복잡한 경매를 보고 싶은 콘텐츠로.',st:[['1,800 → 26,000+','유튜브 구독자'],['280만+','릴스 3주 조회수'],['80 → 6,300+','인스타 팔로워, 광고비 0원']],
-  r:`<div class="lf"><div class="lf-h"><b>롱폼 3</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['6rCalbp-NMw','듣고보자 GO'],['XmVKtqeiiNw','경매썰전']].map(v=>lfFig('lg',ytImg(v[0]),v[1],'유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 3</b><span>릴스, 쇼츠</span></div><div class="lf-row">${[[1,63],[2,57],[3,55]].map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[1]+'만 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'insta/insta1.jpg'},
+  r:`<div class="lf"><div class="lf-h"><b>롱폼 3</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['RuoOPgJsgjI','안중현의 키포인트'],['n7oe8HwXLpA','이진영의 핫초이스']].map(v=>lfFig('lg',ytImg(v[0]),v[1],'유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 3</b><span>릴스, 쇼츠</span></div><div class="lf-row">${[[1,63],[2,57],[3,55]].map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[1]+'만 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'', cv:'유튜브 쇼츠 썸네일', tile:`<img src="https://i.ytimg.com/vi/CsPpGpDewbQ/oar2.jpg" alt="" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/CsPpGpDewbQ/hqdefault.jpg'">`},
  {id:'cdf',n:'체대친구들',what:'체대입시, 공무원체력 교육',m:'콘텐츠 총괄 PD, 2019.09 – 2022.01',th:'t-paper',rt:'t-black',
   x:'유튜브 채널에서, 대치동 오프라인 센터까지.',flow:['유튜브 채널','대치동 <i>오프라인&nbsp;</i>센터','클래스 20회 <i>모두&nbsp;</i>마감'],st:[['17,000 → 33,000','유튜브 구독자'],['7종','콘텐츠 포맷'],['약 150명','오프라인 클래스 참가']],
-  r:`<div class="fill">${src('video/cdf.mp4','대치동 오프라인센터 홍보영상')}<video muted loop playsinline preload="none"><source src="video/cdf.mp4" type="video/mp4"></video></div><span class="vlabel">대치동 오프라인 센터</span>`, cover:yt('9m2aFWBfEMw'), cv:'유튜브 썸네일'},
+  r:`<div class="fill">${src('video/cdf.mp4','대치동 오프라인센터 홍보영상')}<video muted loop playsinline preload="none"><source src="video/cdf.mp4" type="video/mp4"></video></div><span class="vlabel">대치동 오프라인 센터</span>`, cover:'', cv:'video/cdf.mp4 장면', tile:`<video data-still muted playsinline preload="metadata" src="video/cdf.mp4#t=${CDF_STILL}"></video>`},
  {id:'arun',n:'에이런컴퍼니',what:'브레이킹(비보이) 문화 기반',m:'프리랜서 콘텐츠 디렉터, 2022.05 – 2026.03',th:'t-amber',rt:'t-black',
   x:'낯선 브레이킹을 가보고 싶은 행사로.',st:[['3년 연속','WBC 국가대표 선발전 총괄'],['숏폼','릴스, 쇼츠 중심'],['매진','객석']],
-  r:`<div class="fill">${src('유튜브 썸네일 (자동)','WA:ZAK 거리예술 홍보영상')}${ytImg('8fNJkbhj0B0')}</div>`, cover:yt('8fNJkbhj0B0'), cv:'유튜브 썸네일'},
+  r:`<div class="fill ytw" data-yt="8fNJkbhj0B0">${src('유튜브 영상 (자동 재생, 음소거)','WA:ZAK 거리예술 홍보영상')}<img class="ytbg" src="${yt('8fNJkbhj0B0')}" alt="" onerror="this.remove()"><div class="ytf">${ytImg('8fNJkbhj0B0')}</div></div><span class="vlabel">WA:ZAK 거리예술 홍보영상</span>`, cover:yt('8fNJkbhj0B0'), cv:'유튜브 썸네일'},
  {id:'batontouch',n:'배턴터치',what:'체육대학 입시 교육업',m:'영상 PD, 2019.06 – 2019.09',th:'t-dark',rt:'t-paper',cls:'sp-map',
   x:'체대입시생의 꿈을 다큐로.',st:[['5개 도시','직접 돌며 촬영'],['1인','기획, 촬영, 편집, 음악'],['100%','제작 기여도']],
-  r:`<div class="kmap">${koreaSvg()}</div>`, cover:yt('IVnsAM8fyoc'), cv:'유튜브 썸네일'},
+  r:`<div class="kmap">${koreaSvg()}</div>`, cover:yt('Afy54zR10uY'), cv:'유튜브 썸네일'},
  {id:'kmong',n:'크몽',sub:'(앨범아트 디자이너)',what:'앨범커버 아트 디자인',m:'프리랜서, 2022.08 – 2026.07',th:'t-paper',rt:'t-black',
   x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['6개 장르','트로트부터 힙합까지'],['100%','컨셉부터 아트워크']],
   r:`<div class="mos">${src('image/album1.jpg ~ album9.jpg','앨범 커버 9장')}${Array.from({length:9},(_,i)=>img(`image/album${i+1}.jpg`)).join('')}</div>`, cover:'image/album1.jpg'},
@@ -530,7 +538,7 @@ add('표지','sp-cover',
 // 1 toc
 add('차례','sp-media',
   pg('l','t-dark',`${tag('차례','')}<div class="blk"><h2 class="ttl">7개 브랜드,<br>골라서 보기.</h2><p class="keys"><kbd>←</kbd><kbd>→</kbd> 방향키나 화면 옆 화살표로 넘깁니다</p></div>`),
-  pg('r','t-black',`<div class="toc">${BR.map((b,i)=>`<button type="button" data-brand="${b.id}">${src(b.cv||b.cover)}${img(b.cover)}<span><i>${i+1}</i>${b.n}<small>${b.what}</small></span></button>`).join('')}</div>`));
+  pg('r','t-black',`<div class="toc">${BR.map((b,i)=>`<button type="button" data-brand="${b.id}">${src(b.cv||b.cover)}${b.tile||img(b.cover)}<span><i>${i+1}</i>${b.n}<small>${b.what}</small></span></button>`).join('')}</div>`));
 // 2-5 numbers
 add('숫자','sp-num',
   pg('l','t-amber',`${tag('마이옥션TV 유튜브 구독자','시작')}<div class="blk"><div class="huge">1,800</div><p class="cap">맡았을 때<small>2022년 10월</small></p></div>`),
@@ -595,8 +603,8 @@ function countUp(el){
   const t0=performance.now(), D=1100;
   (function f(t){const p=Math.min(1,(t-t0)/D), e=1-Math.pow(1-p,3); el.innerHTML=Math.round(from+(to-from)*e).toLocaleString('ko-KR')+suf; if(p<1) requestAnimationFrame(f);})(t0);
 }
-function enter(sp){ sp.classList.add('live'); sp.setAttribute('aria-hidden','false'); $$('video',sp).forEach(v=>{const p=v.play(); if(p&&p.catch) p.catch(()=>{});}); $$('[data-count]',sp).forEach(countUp); if($('#loopcap',sp)) loopStart(); }
-function leave(sp){ sp.classList.remove('live'); sp.setAttribute('aria-hidden','true'); $$('video',sp).forEach(v=>v.pause()); if($('#loopcap',sp)) loopStop(); }
+function enter(sp){ sp.classList.add('live'); sp.setAttribute('aria-hidden','false'); $$('video:not([data-still])',sp).forEach(v=>{const p=v.play(); if(p&&p.catch) p.catch(()=>{});}); $$('[data-yt]',sp).forEach(w=>{ if(reduce||$('iframe',w)) return; const v=w.dataset.yt, f=document.createElement('iframe'); f.allow='autoplay; encrypted-media'; f.tabIndex=-1; f.title=''; f.setAttribute('aria-hidden','true'); f.src=`https://www.youtube-nocookie.com/embed/${v}?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&loop=1&playlist=${v}&modestbranding=1&disablekb=1&fs=0`; $('.ytf',w).appendChild(f); setTimeout(()=>{ if(f.isConnected) f.classList.add('on'); },900); }); $$('[data-count]',sp).forEach(countUp); if($('#loopcap',sp)) loopStart(); }
+function leave(sp){ sp.classList.remove('live'); sp.setAttribute('aria-hidden','true'); $$('video',sp).forEach(v=>v.pause()); $$('[data-yt] iframe',sp).forEach(f=>f.remove()); if($('#loopcap',sp)) loopStop(); }
 
 /* ── flip ── */
 let cur=0, busy=false;
