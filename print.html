@@ -427,6 +427,8 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
   .sp-slot .dots{grid-template-columns:repeat(35,1fr);gap:2px}
 }
 .g-t em.solo{margin-left:0}
+.plb{font-style:normal;font-weight:500;opacity:.72;margin-left:.35em}
+.lf figcaption .plb{display:block;margin:0;font-size:.8em;opacity:.8;line-height:1.15}
 
 /* ── PDF(인쇄) 전용 ── */
 @page{size:1920px 1080px;margin:0}
@@ -554,6 +556,7 @@ a.ytf{display:block}
 .gp .hist.htop li{font-size:20px;padding:14px 0;grid-template-columns:3.4em 1fr;line-height:1.4}
 .steps5 strong{font-weight:800;color:var(--ac);margin-right:14px;letter-spacing:-.02em}
 .pc em.solo{margin-left:0}
+.pc .plb{font-style:normal;font-weight:500;opacity:.75;margin-left:6px}
 
 </style>
 </head>
@@ -574,13 +577,13 @@ const isM=()=>matchMedia('screen and (max-width:860px),screen and (orientation:p
 const img=(src,alt='')=>`<img src="${src}" alt="${alt}" onerror="this.remove()">`;
 
 /* ── gallery data ── */
-const MYA=[['왕초보 경매강의','MiJYm5g2HaY','PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c','누적 110만+'],['문지성의 토킹투더문','POEzKz_Dp6Y','PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8'],['이진영의 핫초이스','n7oe8HwXLpA','PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk'],['안중현의 키포인트','RuoOPgJsgjI','PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig'],['제주도 경매특집','6O_sobj1HNc','PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA'],['경매의품격','ZNoeu5VYxa8','PLeDgow7nj3iJi2_7FcCqGiRCGO79LS83i'],['육형경매','-OGXEeE135k','PLeDgow7nj3iJls8BEkhJpRUtW8mP-A5m7'],['찐의시선','zqa3h1hON8k','PLeDgow7nj3iI38THA9SxScQ2OH0S_F7Tz'],['푸근한경매','N7FXl0y9xEk','PLeDgow7nj3iJ8O2gUNE0PbTIA8ISVWf5F'],['돈추남','4rXaE80EPeo','PLeDgow7nj3iLKJX2DlX_Xe9Aig-KkM-Wp'],['태강경매','NZ0agkvbSeo','PLeDgow7nj3iKS017medzLlwHh88b5j05f'],['그곳','fCbLnwh1OPA','PLeDgow7nj3iJLCZUk2WLHPMVo5E80PY0M'],['정민준의 경매쇼','LUyO-xmtj2M','PLeDgow7nj3iLFwdGQIwW3f-D9fsfLu9cy'],['미스터명도왕','REvVhy7s1YI','PLeDgow7nj3iLzo3XfrVGsY-PVo_kwWRav'],['NPL특전사','8_6PrQG6EZU','PLeDgow7nj3iIdNUS2WxBv_hCDef2hxeLi']].map(r=>({t:r[0],v:r[1],url:plu(r[2]),e:r[3]}));
-const MYA_EXP=[['듣고보자 GO','6rCalbp-NMw','PLeDgow7nj3iL7s74A949g6hsez00vqfV8'],['꼬꼬무 경매이야기','rSgZmH7VVZg','PLeDgow7nj3iI7kYVsNWuaKzoeYgWToGw5'],['경매썰전','XmVKtqeiiNw','PLeDgow7nj3iJuKhmxc3WZquF4aICypeL3']].map(r=>({t:r[0],v:r[1],url:plu(r[2])}));
+const MYA=[['왕초보 경매강의','MiJYm5g2HaY','PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c','누적 110만+'],['문지성의 토킹투더문','POEzKz_Dp6Y','PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8'],['이진영의 핫초이스','n7oe8HwXLpA','PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk'],['안중현의 키포인트','RuoOPgJsgjI','PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig'],['제주도 경매특집','6O_sobj1HNc','PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA'],['경매의품격','ZNoeu5VYxa8','PLeDgow7nj3iJi2_7FcCqGiRCGO79LS83i'],['육형경매','-OGXEeE135k','PLeDgow7nj3iJls8BEkhJpRUtW8mP-A5m7'],['찐의시선','zqa3h1hON8k','PLeDgow7nj3iI38THA9SxScQ2OH0S_F7Tz'],['푸근한경매','N7FXl0y9xEk','PLeDgow7nj3iJ8O2gUNE0PbTIA8ISVWf5F'],['돈추남','4rXaE80EPeo','PLeDgow7nj3iLKJX2DlX_Xe9Aig-KkM-Wp'],['태강경매','NZ0agkvbSeo','PLeDgow7nj3iKS017medzLlwHh88b5j05f'],['그곳','fCbLnwh1OPA','PLeDgow7nj3iJLCZUk2WLHPMVo5E80PY0M'],['정민준의 경매쇼','LUyO-xmtj2M','PLeDgow7nj3iLFwdGQIwW3f-D9fsfLu9cy'],['미스터명도왕','REvVhy7s1YI','PLeDgow7nj3iLzo3XfrVGsY-PVo_kwWRav'],['NPL특전사','8_6PrQG6EZU','PLeDgow7nj3iIdNUS2WxBv_hCDef2hxeLi']].map(r=>({t:r[0],v:r[1],url:plu(r[2]),e:r[3],pl:1}));
+const MYA_EXP=[['듣고보자 GO','6rCalbp-NMw','PLeDgow7nj3iL7s74A949g6hsez00vqfV8'],['꼬꼬무 경매이야기','rSgZmH7VVZg','PLeDgow7nj3iI7kYVsNWuaKzoeYgWToGw5'],['경매썰전','XmVKtqeiiNw','PLeDgow7nj3iJuKhmxc3WZquF4aICypeL3']].map(r=>({t:r[0],v:r[1],url:plu(r[2]),pl:1}));
 // [insta 파일 번호, 조회수(만), 표기]
 const INSTA=[[3,70,'70만+'],[1,64,'64만+'],[2,59,'59만+'],[4,24,'24만+'],[5,19,'19만+'],[6,17,'17만+'],[7,14,'14만+'],[8,8.8,'8.8만+'],[9,5.5,'5.5만+'],[10,4.2,'4.2만+']];
 const INSTA_MAX=Math.max(...INSTA.map(r=>r[1]));
 const INSTA_URL='https://www.instagram.com/myauction_official/';
-const CDF=[['체터뷰','9m2aFWBfEMw','PLxytJQTYF-QVttLq5q3dWb0lYI29LZvYX'],['체대파일러','tvw-8xtJ1ME','PLxytJQTYF-QU9sKyzLaSxkVyd6_m4Lwna'],['제이슨로그','tcVeKEPXrtk','PLxytJQTYF-QUaLupi6-87PydkUhpyJ46E'],['공무원체력 강의','QWNB-H4euhA','PLxytJQTYF-QX5-oW51xByVBf9gVSh9yLZ'],['꿀팁정보통','-N8OhkDXvQM','PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv'],['김피디 탐구생활','oBKIJuey7ck','PLxytJQTYF-QXSDu1jxJK3OnmQei2mZeVL'],['운동리액션','NnCPtlnREXM','PLxytJQTYF-QVPDoCyx-JQS8nghia18eKg'],['에어클래스','KvQqDUUnbso','PLxytJQTYF-QVFmmnipmsYIYQTB8sNmaA5']].map(r=>({t:r[0],v:r[1],url:plu(r[2])}));
+const CDF=[['체터뷰','9m2aFWBfEMw','PLxytJQTYF-QVttLq5q3dWb0lYI29LZvYX'],['체대파일러','tvw-8xtJ1ME','PLxytJQTYF-QU9sKyzLaSxkVyd6_m4Lwna'],['제이슨로그','tcVeKEPXrtk','PLxytJQTYF-QUaLupi6-87PydkUhpyJ46E'],['공무원체력 강의','QWNB-H4euhA','PLxytJQTYF-QX5-oW51xByVBf9gVSh9yLZ'],['꿀팁정보통','-N8OhkDXvQM','PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv'],['김피디 탐구생활','oBKIJuey7ck','PLxytJQTYF-QXSDu1jxJK3OnmQei2mZeVL'],['운동리액션','NnCPtlnREXM','PLxytJQTYF-QVPDoCyx-JQS8nghia18eKg'],['에어클래스','KvQqDUUnbso','PLxytJQTYF-QVFmmnipmsYIYQTB8sNmaA5']].map(r=>({t:r[0],v:r[1],url:plu(r[2]),pl:1}));
 const WBC=[['2023 JUDGE 5','0tTuod982EA'],['2023 JUDGE 4','02EBC3NK_l8'],['2023 JUDGE 3','2ZOKnq49IlQ'],['2023 JUDGE 2','umsh3M_1_1g'],['2023 JUDGE 1','VIDS_OATNlA'],['2023 MUSIC','cuTNOXbyfoc'],['2023 GUEST SHOWCASE','lYMrWtMnaUc'],['What is WBC?','Lkno1KBQowM'],['2022 Great 8','dxXroACRaso'],['2022 참가자모집','_-UgfZRnh88'],['2022 미국대표','bRS8AlK5pXI'],['2022 유럽대표','faUs-SKPfts'],['2022 네덜란드 대표','C-zwbPxiy6g'],['2022 MUSIC (DJ)','YjMYI6SzZ5s'],['2022 JUDGE 3','n-REpB7OKx4'],['2022 JUDGE 2','aFYnB0uifzI'],['2022 JUDGE 1','7bwdlHnFs8c'],['2022 CHAMPS FLOW XL','SMCaQ4t0Ve0'],['2022 디펜딩챔피언','slhmklBQlbY']].map(r=>({t:r[0],v:r[1],url:vurl(r[1]),r:'9/16'}));
 const BATON=[['종합본','IVnsAM8fyoc'],['대구','Afy54zR10uY'],['순천','jnF_LRvk72M'],['논산','Gvo69s7GebU'],['울산','WUALzMa3ZZ8'],['실기능력평가 현장스케치','R-TXIL2F4FA']].map(r=>({t:r[0],v:r[1],url:plu('PLxytJQTYF-QUpvPpislNriB4tKBVV2O4N')}));
 const VVF=[['자켓 #1','X4oN7xJiyIs'],['자켓 #2','j0PysRsTaLw'],['자켓 #3','2z919iV3XDw'],['자켓 #4','p6XOGbOS2Jc'],['팬츠 #1','u483J3DAaWY'],['팬츠 #2','UBP9wsHLOmE'],['팬츠 #3','THf_oM8aefU'],['팬츠 #4','Y5H3Emz8vqg'],['팬츠 #5','yW9Xvgz5DMA'],['팬츠 #6','Mo9R1dwagnA']].map(r=>({t:'피팅가이드 '+r[0],v:r[1],url:vurl(r[1])}));
@@ -628,7 +631,7 @@ const lfFig=(cls,inner,cap,p)=>`<figure class="${cls}" data-gal="myauction">${sr
 const BR=[
  {id:'myauction',n:'마이옥션',what:'경매 사이트, 경매 컨설팅',m:'콘텐츠기획 팀장, 2022.10부터 현재',th:'t-dark',rt:'t-black',cls:'sp-lf',noplay:1,
   x:'복잡한 경매를 보고 싶은 콘텐츠로.',st:[['1,800 → 26,000+','유튜브 구독자'],['280만+','릴스 3주 조회수'],['80 → 6,300+','인스타 팔로워, 광고비 0원']],
-  r:`<div class="lf"><div class="lf-h"><b>롱폼 Top3 List</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['RuoOPgJsgjI','안중현의 키포인트'],['n7oe8HwXLpA','이진영의 핫초이스']].map(v=>lfFig('lg',ytImg(v[0]),v[1],'유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 Top3 List</b><span>릴스, 쇼츠</span></div><div class="lf-row">${INSTA.slice(0,3).map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[2]+' 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'', cv:'유튜브 썸네일', tile:ytImg('8616FShkPkc')},
+  r:`<div class="lf"><div class="lf-h"><b>롱폼 Top3 List</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['RuoOPgJsgjI','안중현의 키포인트'],['n7oe8HwXLpA','이진영의 핫초이스']].map(v=>lfFig('lg',ytImg(v[0]),v[1]+'<i class="plb">재생목록</i>','유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 Top3 List</b><span>릴스, 쇼츠</span></div><div class="lf-row">${INSTA.slice(0,3).map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[2]+' 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'', cv:'유튜브 썸네일', tile:ytImg('8616FShkPkc')},
  {id:'cdf',n:'체대친구들',what:'체대입시, 공무원체력 교육',m:'콘텐츠 총괄 PD, 2019.09 – 2022.01',th:'t-paper',rt:'t-black',
   x:'유튜브 채널에서, 대치동 오프라인 센터까지.',flow:['유튜브 채널','대치동&nbsp;<i>오프라인&nbsp;</i>센터','클래스 20회&nbsp;<i>모두&nbsp;</i>마감'],st:[['17,000 → 33,000','유튜브 구독자'],['7종','콘텐츠 포맷'],['약 150명','오프라인 클래스 참가']],
   r:`<div class="fill">${src('video/cdf.mp4','대치동 오프라인센터 홍보영상')}<video muted loop playsinline preload="none"><source src="video/cdf.mp4" type="video/mp4"></video></div><span class="vlabel">대치동 오프라인 센터</span>`, cover:'', cv:'video/cdf.mp4 장면', tile:`<video data-still muted playsinline preload="metadata" src="video/cdf.mp4#t=${CDF_STILL}"></video>`},
@@ -736,7 +739,7 @@ function pItem(it,extra){
   const r=it.r||'16/9', rn=(([w,h])=>(+w/+h).toFixed(4))(r.split('/'));
   const fig=it.v?ytImg(it.v):`<img src="${it.img}" alt=""${it.contain?' style="object-fit:contain"':''} onerror="this.remove()">`;
   const e=extra||it.e;
-  const cap=(it.t||e)?`<span class="pc">${it.t||''}${e?`<em${it.t?'':' class="solo"'}>${e}</em>`:''}</span>`:'';
+  const cap=(it.t||e)?`<span class="pc">${it.t||''}${it.pl?'<i class="plb">재생목록</i>':''}${e?`<em${it.t?'':' class="solo"'}>${e}</em>`:''}</span>`:'';
   const inner=`<span class="pf${TALL.includes(r)?' ptop':''}${it.contain?' doc':''}">${fig}${cap}${it.v?`<span class="pl">${PLAY}</span>`:''}</span>`;
   const url=it.url||(it.v?vurl(it.v):'');
   return url?`<a class="pi" href="${url}" target="_blank" rel="noopener" style="--r:${r};--rn:${rn}">${inner}</a>`:`<div class="pi" style="--r:${r};--rn:${rn}">${inner}</div>`;
@@ -921,7 +924,7 @@ function gItem(it){
   if(it.spec) return `<div class="spec"><h5><span>숏폼 제작 규격서</span><span class="num">v7.3</span></h5><ol>${['물건 점수 <b>3.0 이하</b>는 쓰지 않는다','후킹은 <b>개념 하나</b>','커버는 숫자를 주되 <b>이유는 감춘다</b>','1줄은 <b>멈추게</b>, 2줄은 <b>누르게</b>','영상 <b>2분 초과 금지</b>','출력 전 <b>팩트체크 3회</b>','실측 결과를 <b>규칙으로 승격</b>'].map(r=>`<li><span>${r}</span></li>`).join('')}</ol></div>`;
   const r=it.r?` style="--r:${it.r}"`:'';
   const fig=src(it.mp4||(it.v?'유튜브 썸네일':it.img))+(it.mp4?`<video autoplay muted loop playsinline><source src="${it.mp4}" type="video/mp4"></video>`:it.v?`<img src="${yt(it.v)}" alt="" loading="lazy" onerror="this.remove()">`:`<img src="${it.img}" alt="${it.t||''}" loading="lazy"${it.contain?' style="object-fit:contain"':''} onerror="this.remove()">`);
-  const t=(it.t||it.e)?`<div class="g-t">${it.t||''}${it.e?`<em${it.t?'':' class="solo"'}>${it.e}</em>`:''}</div>`:'';
+  const t=(it.t||it.e)?`<div class="g-t">${it.t||''}${it.pl?'<i class="plb">재생목록</i>':''}${it.e?`<em${it.t?'':' class="solo"'}>${it.e}</em>`:''}</div>`:'';
   if(it.zoom) return `<button type="button" class="g zoom" data-src="${it.img}"${it.fit?' data-fit="1"':''} aria-label="${it.t||'이미지'} 크게 보기"><div class="g-f"${r}>${fig}</div>${t}</button>`;
   if(it.url) return `<a class="g" href="${it.url}" target="_blank" rel="noopener"${it.v?` data-video="${it.v}"`:''}><div class="g-f"${r}>${fig}${it.v?`<span class="pl">${PLAY}</span>`:''}</div>${t}</a>`;
   return `<div class="g"><div class="g-f"${r}>${fig}</div>${t}</div>`;
