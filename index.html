@@ -54,11 +54,20 @@ img,video,svg{display:block}
 .tbtn.ghost[aria-pressed="true"]{color:#ece5da;border-color:var(--amber)}
 .tbtn.cta{background:var(--amber);color:#1d0e03}
 .bot{position:fixed;left:0;right:0;bottom:0;height:var(--bot);display:flex;align-items:center;gap:18px;padding:0 var(--side);z-index:50}
-.chap{display:flex;gap:4px;flex:1;min-width:0}
-.chap button{flex:var(--n) 1 0;min-width:0;text-align:left;padding:10px 0 0;border-top:3px solid #2c2825;font-size:12.5px;color:#6c655e;font-weight:600;white-space:nowrap;overflow:hidden;transition:color .2s,border-color .2s}
+.chap{display:flex;gap:6px;flex:1;min-width:0}
+.chap button{flex:var(--n) 1 0;min-width:0;text-align:left;padding:8px 0 10px;font-size:12px;color:#6c655e;font-weight:600;white-space:nowrap;overflow:hidden;transition:color .2s}
+.chap .tk{display:flex;gap:2px;margin-bottom:7px}
+.chap .tk i{flex:1;height:4px;border-radius:2px;background:#2c2825;transition:background .25s,height .2s}
+.chap .tk i.past{background:#5c2a0a}
+.chap .tk i.on{background:var(--amber)}
+.chap button:hover .tk i{background:#4a433c}
+.chap button:hover .tk i.on{background:var(--amber)}
+.chap .nm{display:block;overflow:hidden;text-overflow:ellipsis}
 .chap button:hover{color:#ece5da}
-.chap button.on{border-color:var(--amber);color:#ece5da}
-.pgno{font-size:15px;font-weight:700;color:#a39a90;min-width:64px;text-align:right}
+.chap button.on{color:#ece5da;font-weight:800}
+.chap button.done{color:#8b837a}
+.pgno{font-size:15px;font-weight:700;color:#a39a90;min-width:64px;text-align:right;white-space:nowrap}
+#cn{display:none;color:#ece5da;font-weight:800;margin-right:10px}
 .pgno b{color:#ece5da}
 .arw{position:fixed;top:50%;z-index:40;width:48px;height:48px;margin-top:-24px;border-radius:50%;background:#1a1816;border:1px solid #3a3530;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,opacity .2s}
 .arw:hover{background:var(--amber);border-color:var(--amber);color:#1d0e03}
@@ -394,6 +403,28 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
 .ytw .ytf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ytw .ytf iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;opacity:0;transition:opacity .5s}
 .ytw .ytf iframe.on{opacity:1}
+/* media slot above the number */
+.slot{position:relative;z-index:3;flex:0 1 auto;min-height:0;width:100%;aspect-ratio:16/9;margin:calc(var(--v)*1.6) 0;border-radius:4px;overflow:hidden;background:#211e1b;isolation:isolate}
+.slot>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot .ytf{position:absolute;inset:0}
+[data-yt] .ytf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+[data-yt] .ytf iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;opacity:0;transition:opacity .5s}
+[data-yt] .ytf iframe.on{opacity:1}
+.sp-slot .pg.l .blk{flex:none}
+/* video behind the map */
+.ytcover .ytf{position:absolute;top:50%;left:50%;height:100%;aspect-ratio:16/9;transform:translate(-50%,-50%)}
+.ytcover::after{content:"";position:absolute;inset:0;background:rgba(12,11,10,.38)}
+.kmap.over .land{fill:#efe9df;opacity:.8}
+.kmap.over text{fill:#1b1917;paint-order:stroke;stroke:#efe9df;stroke-width:5px;stroke-linejoin:round}
+.kmap.over .c{fill:#e2610a}.kmap.over .rg{stroke:#e2610a}
+@media (max-width:860px),(orientation:portrait){
+  #cn{display:inline}
+  .sp-slot .pg.l{flex:0 0 62%}
+  .sp-slot .slot{margin:calc(var(--v)*1) 0}
+  .sp-slot .sq{grid-template-columns:repeat(10,1fr);gap:4px}
+  .sp-slot .sq i{font-size:calc(var(--v)*1.25);border-width:1.5px}
+  .sp-slot .dots{grid-template-columns:repeat(35,1fr);gap:2px}
+}
 
 </style>
 </head>
@@ -408,7 +439,7 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
 <main class="book" id="book" aria-live="polite"></main>
 <footer class="bot">
   <nav class="chap" id="chap" aria-label="장 이동"></nav>
-  <div class="pgno num"><b id="pn">1</b> / <span id="pt"></span></div>
+  <button class="pgno num" type="button" data-go="1" aria-label="차례로 이동"><span id="cn"></span><b id="pn">1</b> / <span id="pt"></span></button>
 </footer>
 <div id="gal" role="dialog" aria-modal="true" aria-label="작업 모아보기"></div>
 <div id="lb" role="dialog" aria-modal="true" aria-label="이미지 크게 보기"><button type="button" aria-label="닫기">×</button><img alt=""></div>
@@ -473,28 +504,28 @@ function koreaSvg(){
   const K=MAPS.korea, nm={gangnam:'강남',nonsan:'논산',daegu:'대구',ulsan:'울산',suncheon:'순천'}, off={gangnam:[14,-8],nonsan:[-14,6,'end'],daegu:[-14,-8,'end'],ulsan:[14,6],suncheon:[14,20]};
   return `<svg viewBox="12 28 252 268" role="img" aria-label="촬영지: 강남, 논산, 대구, 울산, 순천"><path class="land" d="${K.d}"/>${Object.entries(K.pts).map(([k,[x,y]],i)=>`<circle class="rg" style="--i:${i}" cx="${x}" cy="${y}" r="6"/><circle class="c" cx="${x}" cy="${y}" r="6"/><text x="${x+off[k][0]}" y="${y+off[k][1]}" text-anchor="${off[k][2]||'start'}">${nm[k]}</text>`).join('')}</svg>`;
 }
-const CDF_STILL=3; // 체대친구들 차례 썸네일로 쓸 video/cdf.mp4 장면의 초
+const CDF_STILL=1.5; // 체대친구들 차례 썸네일로 쓸 video/cdf.mp4 장면의 초
 const lfFig=(cls,inner,cap,p)=>`<figure class="${cls}" data-gal="myauction">${src(p)}${inner}<figcaption>${cap}</figcaption></figure>`;
 const BR=[
  {id:'myauction',n:'마이옥션',what:'경매 사이트, 경매 컨설팅',m:'콘텐츠기획 팀장, 2022.10부터 현재',th:'t-dark',rt:'t-black',cls:'sp-lf',noplay:1,
   x:'복잡한 경매를 보고 싶은 콘텐츠로.',st:[['1,800 → 26,000+','유튜브 구독자'],['280만+','릴스 3주 조회수'],['80 → 6,300+','인스타 팔로워, 광고비 0원']],
-  r:`<div class="lf"><div class="lf-h"><b>롱폼 3</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['RuoOPgJsgjI','안중현의 키포인트'],['n7oe8HwXLpA','이진영의 핫초이스']].map(v=>lfFig('lg',ytImg(v[0]),v[1],'유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 3</b><span>릴스, 쇼츠</span></div><div class="lf-row">${[[1,63],[2,57],[3,55]].map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[1]+'만 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'', cv:'유튜브 썸네일', tile:ytImg('8616FShkPkc')},
+  r:`<div class="lf"><div class="lf-h"><b>롱폼 Top3 List</b><span>메인 콘텐츠, 가로형 유튜브</span></div><div class="lf-row">${[['MiJYm5g2HaY','왕초보 경매강의'],['RuoOPgJsgjI','안중현의 키포인트'],['n7oe8HwXLpA','이진영의 핫초이스']].map(v=>lfFig('lg',ytImg(v[0]),v[1],'유튜브 썸네일')).join('')}</div><div class="lf-h"><b>숏폼 Top3 List</b><span>릴스, 쇼츠</span></div><div class="lf-row">${[[1,63],[2,57],[3,55]].map(v=>lfFig('sh',img('insta/insta'+v[0]+'.jpg'),v[1]+'만 조회','insta/insta'+v[0]+'.jpg')).join('')}</div></div>`, cover:'', cv:'유튜브 썸네일', tile:ytImg('8616FShkPkc')},
  {id:'cdf',n:'체대친구들',what:'체대입시, 공무원체력 교육',m:'콘텐츠 총괄 PD, 2019.09 – 2022.01',th:'t-paper',rt:'t-black',
   x:'유튜브 채널에서, 대치동 오프라인 센터까지.',flow:['유튜브 채널','대치동 <i>오프라인&nbsp;</i>센터','클래스 20회 <i>모두&nbsp;</i>마감'],st:[['17,000 → 33,000','유튜브 구독자'],['7종','콘텐츠 포맷'],['약 150명','오프라인 클래스 참가']],
   r:`<div class="fill">${src('video/cdf.mp4','대치동 오프라인센터 홍보영상')}<video muted loop playsinline preload="none"><source src="video/cdf.mp4" type="video/mp4"></video></div><span class="vlabel">대치동 오프라인 센터</span>`, cover:'', cv:'video/cdf.mp4 장면', tile:`<video data-still muted playsinline preload="metadata" src="video/cdf.mp4#t=${CDF_STILL}"></video>`},
- {id:'arun',n:'에이런컴퍼니',what:'브레이킹(비보이) 문화 기반',m:'프리랜서 콘텐츠 디렉터, 2022.05 – 2026.03',th:'t-amber',rt:'t-black',
+ {id:'arun',n:'에이런컴퍼니',short:'에이런',what:'브레이킹(비보이) 문화 기반',m:'프리랜서 콘텐츠 디렉터, 2022.05 – 2026.03',th:'t-amber',rt:'t-black',
   x:'낯선 브레이킹을 가보고 싶은 행사로.',st:[['3년 연속','WBC 국가대표 선발전 총괄'],['숏폼','릴스, 쇼츠 중심'],['매진','객석']],
   r:`<div class="fill ytw" data-yt="8fNJkbhj0B0">${src('유튜브 영상 (자동 재생, 음소거)','WA:ZAK 거리예술 홍보영상')}<img class="ytbg" src="${yt('8fNJkbhj0B0')}" alt="" onerror="this.remove()"><div class="ytf">${ytImg('8fNJkbhj0B0')}</div></div><span class="vlabel">WA:ZAK 거리예술 홍보영상</span>`, cover:yt('8fNJkbhj0B0'), cv:'유튜브 썸네일'},
- {id:'batontouch',n:'배턴터치',what:'체육대학 입시 교육업',m:'영상 PD, 2019.06 – 2019.09',th:'t-dark',rt:'t-paper',cls:'sp-map',
+ {id:'batontouch',n:'배턴터치',what:'체육대학 입시 교육업',m:'영상 PD, 2019.06 – 2019.09',th:'t-dark',rt:'t-black',cls:'sp-map',
   x:'체대입시생의 꿈을 다큐로.',st:[['5개 도시','직접 돌며 촬영'],['1인','기획, 촬영, 편집, 음악'],['100%','제작 기여도']],
-  r:`<div class="kmap">${koreaSvg()}</div>`, cover:yt('Afy54zR10uY'), cv:'유튜브 썸네일'},
+  r:`<div class="fill ytcover" data-yt="R-TXIL2F4FA">${src('유튜브 영상 (자동 재생, 음소거)','실기능력평가 현장스케치')}<div class="ytf"><img src="${yt('R-TXIL2F4FA')}" alt="" onerror="this.remove()"></div></div><div class="kmap over">${koreaSvg()}</div>`, cover:yt('Afy54zR10uY'), cv:'유튜브 썸네일'},
  {id:'kmong',n:'크몽',sub:'(앨범아트 디자이너)',what:'앨범커버 아트 디자인',m:'프리랜서, 2022.08 – 2026.07',th:'t-paper',rt:'t-black',
-  x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['6개 장르','트로트부터 힙합까지'],['100%','컨셉부터 아트워크']],
+  x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['모든 장르','트로트부터 힙합까지'],['50+ 작품','컨셉 기획부터 완성까지']],
   r:`<div class="mos">${src('image/album1.jpg ~ album9.jpg','앨범 커버 9장')}${Array.from({length:9},(_,i)=>img(`image/album${i+1}.jpg`)).join('')}</div>`, cover:'image/album1.jpg'},
  {id:'blackbeast',n:'블랙비스트',what:'데님 전문 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-black',rt:'t-black',
   x:'신규 데님 브랜드를 갖고 싶은 브랜드로.',st:[['런칭','BI와 BX 구축'],['무신사','정식 입점'],['독일','K-전시회 선정']],
   r:`<div class="fill">${src('image/vlackveast.jpg','블랙비스트 룩북')}${img('image/vlackveast.jpg','블랙비스트 룩북')}</div>`, cover:'image/vlackveast.jpg'},
- {id:'williwo',n:'윌리워스튜디오',what:'애슬레저 패션 브랜드',m:'그래픽 디자이너, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
+ {id:'williwo',n:'윌리워스튜디오',short:'윌리워',what:'애슬레저 패션 브랜드',m:'그래픽 디자이너, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
   x:'스트릿 브랜드를 애슬레저 브랜드로.',st:[['리브랜딩','포지션 재정의'],['1인 다역','디자인, 촬영, 웹, CS'],['완판','아울렛 전환 후']],
   r:`<div class="duo">${src('image/ww1.jpg, image/ww2.jpg','윌리워 룩북 2장')}${img('image/ww1.jpg','윌리워 룩북 1')}${img('image/ww2.jpg','윌리워 룩북 2')}</div>`, cover:'image/ww1.jpg'},
 ];
@@ -546,18 +577,18 @@ add('숫자','sp-num',
 add('숫자','sp-num',
   pg('l','t-paper',`${tag('마이옥션 인스타그램','2026.08.21 – 09.13')}<div class="blk"><h2 class="ttl xs wk">단 <u>3주</u> 만에,</h2><div class="huge" data-count="280" data-suf="<small>만+</small>">280<small>만+</small></div><p class="cap">릴스 누적 조회수</p><div class="big2">80 → 6,300+</div><p class="cap">팔로워<small>광고비 0원, 오가닉으로만.</small></p></div>`),
   pg('r','t-paper',`${tag('릴스별 조회수, 상위 10편','')}<div class="bars">${INSTA.map((v,i)=>`<div><b>${v}만</b><i style="--h:${(v/63*100).toFixed(1)}%;--i:${i}"></i></div>`).join('')}</div>`));
-add('숫자','sp-num',
-  pg('l','t-black',`${tag('지금까지 만든 롱폼 영상','')}<div class="blk"><div class="huge" data-count="700" data-suf="<small>편+</small>">700<small>편+</small></div><p class="cap">직접 기획하고 만들었습니다<span class="ast">*숏폼은 세지 않았습니다.</span></p></div>`),
+add('숫자','sp-num sp-slot',
+  pg('l','t-black',`${tag('지금까지 만든 롱폼 영상','')}<div class="slot">${src('number/image1.jpg')}<img src="number/image1.jpg" alt="" onerror="this.remove()"></div><div class="blk"><div class="huge" data-count="700" data-suf="<small>편+</small>">700<small>편+</small></div><p class="cap">직접 기획하고 만들었습니다<span class="ast">*숏폼은 세지 않았습니다.</span></p></div>`),
   pg('r','t-black',`${tag('칸 하나가 영상 한 편','')}<div class="dots">${Array.from({length:700},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div>`));
-add('숫자','sp-num',
-  pg('l','t-dark',`${tag('체대친구들 원데이클래스','')}<div class="blk"><div class="huge">20<small>/20</small></div><p class="cap">오프라인 클래스는 모두 마감<small>유튜브 구독자가 오프라인 수강생이 됐습니다.</small></p></div>`),
+add('숫자','sp-num sp-slot',
+  pg('l','t-dark',`${tag('체대친구들 원데이클래스','')}<div class="slot" data-yt="SYU61ezqz4c">${src('유튜브 영상 (자동 재생, 음소거)','원데이클래스 홍보영상')}<div class="ytf"><img src="${yt('SYU61ezqz4c')}" alt="" onerror="this.remove()"></div></div><div class="blk"><div class="huge">20<small>/20</small></div><p class="cap">오프라인 클래스는 모두 마감<small>유튜브 구독자가 오프라인 수강생이 됐습니다.</small></p></div>`),
   pg('r','t-dark',`${tag('20회차','약 150명 참가')}<div class="sq" role="img" aria-label="20회차 모두 매진">${Array.from({length:20},(_,i)=>`<i style="--i:${i}">${i+1}<b>매진</b></i>`).join('')}</div>`));
 // 6-12 brands
-BR.forEach((b,i)=>{ add('브랜드','sp-media sp-brand '+(b.cls||''),
+BR.forEach((b,i)=>{ add(b.short||b.n,'sp-media sp-brand '+(b.cls||''),
   pg('l',b.th,`${tag('브랜드 '+(i+1)+' / 7','')}<div class="blk"><p class="what">${b.what}</p><p class="meta"><b>${b.m.split(', ')[0]}</b>, ${b.m.split(', ').slice(1).join(', ')}</p><h2 class="ttl${b.n.length>5?' s':''}">${b.n}${b.sub?`<small>${b.sub}</small>`:''}</h2><p class="thesis">${b.x}</p>${b.flow?`<ol class="flow" aria-label="확장 흐름">${b.flow.map(f=>`<li>${f}</li>`).join('')}</ol>`:''}<div class="st">${b.st.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div><div class="btns"><button class="btn" type="button" data-gal="${b.id}">작업 펼쳐 보기</button></div></div>`),
   pg('r',b.rt,`${b.r}${b.noplay?'':`<button class="play" type="button" data-gal="${b.id}" aria-label="${b.n} 작업 펼쳐 보기">${PLAY}</button>`}`));
   SP[SP.length-1].id=b.id;
-  if(b.id==='myauction') add('브랜드','sp-one sp-team',
+  if(b.id==='myauction') add(b.short||b.n,'sp-one sp-team',
     pg('l','t-paper',`${tag('마이옥션, 팀 운영','')}<div class="blk"><p class="meta"><b>콘텐츠기획 팀장</b></p><h2 class="ttl xs">혼자 만드는 채널에서,<br>팀이 만드는 채널로.</h2><p class="cap"><small>후임 PD와 프리랜서 촬영 PD를 디렉팅하고, 제작 기준을 매뉴얼로 만들었습니다.</small></p></div>`),
     pg('r','t-paper',`<div class="org"><div class="bx lead">김영훈<small>콘텐츠기획 팀장. 기획, 디렉팅, 품질 기준</small></div><div class="ln"></div><div class="bx doc">제작 매뉴얼<small>제작 기준과 편집 방향을 문서로 정리</small></div><div class="two"><div class="bx">후임 PD<small>편집 디렉팅</small></div><div class="bx">프리랜서 촬영 PD<small>촬영 디렉팅</small></div></div><div class="join"></div><div class="bx res"><div>콘텐츠 IP 15개+<small>출연자별 재생목록</small></div><div>롱폼 400편+<small>누가 만들어도 같은 품질</small></div></div></div>`));
 });
@@ -583,7 +614,8 @@ book.innerHTML=SP.map((s,i)=>`<div class="spread ${s.cls}" data-i="${i}" aria-hi
 const S=$$('.spread',book);
 $('#pt').textContent=N;
 const CH=[]; SP.forEach((s,i)=>{const c=CH[CH.length-1]; if(c&&c.n===s.chap) c.len++; else CH.push({n:s.chap,at:i,len:1});});
-$('#chap').innerHTML=CH.map(c=>`<button type="button" style="--n:${c.len}" data-go="${c.at}">${c.n}</button>`).join('');
+$('#chap').innerHTML=CH.map((c,k)=>`<button type="button" style="--n:${c.len}" data-ch="${k}" aria-label="${c.n}로 이동"><span class="tk">${'<i></i>'.repeat(c.len)}</span><span class="nm">${c.n}</span></button>`).join('');
+$('#chap').addEventListener('click',e=>{ const b=e.target.closest('button[data-ch]'); if(!b) return; const c=CH[+b.dataset.ch], r=b.getBoundingClientRect(); const k=Math.min(c.len-1,Math.max(0,Math.floor((e.clientX-r.left)/r.width*c.len))); go(c.at+(e.detail===0?0:k)); });
 const brandAt=id=>SP.findIndex(x=>x.id===id);
 
 /* ── sound ── */
@@ -611,7 +643,7 @@ let cur=0, busy=false;
 const P='perspective(2600px) ';
 function ui(){
   $('#pn').textContent=cur+1; $('#prev').disabled=cur===0; $('#next').disabled=cur===N-1;
-  $$('#chap button').forEach((b,i)=>b.classList.toggle('on', cur>=CH[i].at && cur<CH[i].at+CH[i].len));
+  $$('#chap button').forEach((b,i)=>{ const on=cur>=CH[i].at && cur<CH[i].at+CH[i].len; b.classList.toggle('on',on); b.classList.toggle('done',cur>=CH[i].at+CH[i].len); $$('.tk i',b).forEach((t,k)=>{ t.classList.toggle('on',CH[i].at+k===cur); t.classList.toggle('past',CH[i].at+k<cur); }); if(on){ $('#cn').textContent=CH[i].n; } });
   try{ history.replaceState(null,'','#'+(cur+1)); }catch(e){}
 }
 function done(A,B,n){ A.classList.remove('cur','anim'); B.classList.remove('anim'); B.classList.add('cur'); [A,B].forEach(s=>{s.style.zIndex=''; $$('.pg',s).forEach(p=>p.style.visibility='');}); leave(A); cur=n; busy=false; enter(B); ui(); }
