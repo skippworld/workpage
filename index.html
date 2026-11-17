@@ -619,13 +619,13 @@ $('#chap').addEventListener('click',e=>{ const b=e.target.closest('button[data-c
 const brandAt=id=>SP.findIndex(x=>x.id===id);
 
 /* ── sound ── */
-let sndOn=false, actx=null;
+let sndOn=false;
+const FLIP_SRC='audio/flip.mp3'; // 책장 넘기는 효과음 파일
+let flipAudio=null;
 function flipSound(){
   if(!sndOn) return;
-  try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const d=.28,n=actx.sampleRate*d,buf=actx.createBuffer(1,n,actx.sampleRate),ch=buf.getChannelData(0);
-    for(let i=0;i<n;i++){const t=i/n; ch[i]=(Math.random()*2-1)*Math.pow(Math.sin(Math.PI*t),2)*(.5+.5*Math.sin(t*40));}
-    const src=actx.createBufferSource(); src.buffer=buf; const f=actx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2600; f.Q.value=.7; const g=actx.createGain(); g.gain.value=.22;
-    src.connect(f).connect(g).connect(actx.destination); src.start(); }catch(e){}
+  try{ if(!flipAudio){ flipAudio=new Audio(FLIP_SRC); flipAudio.preload='auto'; flipAudio.volume=.6; }
+    flipAudio.currentTime=0; const p=flipAudio.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
 }
 $('#snd').addEventListener('click',e=>{ sndOn=!sndOn; e.currentTarget.setAttribute('aria-pressed',sndOn); e.currentTarget.textContent=sndOn?'넘김 소리 끄기':'넘김 소리 켜기'; flipSound(); });
 
