@@ -503,7 +503,6 @@ a.ytf{display:block}
 /* 표지: 주황 한 장 */
 .pp.cover{background:#ff7a1a;color:#1d0e03;--fg:#1d0e03;--sub:#5c2a0a;padding:var(--pp);display:flex;flex-direction:column;justify-content:space-between}
 .pp.cover .bgword{left:-1%;top:4%;font-size:430px;color:rgba(29,14,3,.16);filter:blur(7px);transform:rotate(-9deg)}
-.pp.cover .bgyr{left:auto;right:5%;top:27%;font-size:360px;transform-origin:right center}
 .pp.cover .tag{font-size:22px}
 .pp.cover .cv-b{position:relative;z-index:3}
 .pp.cover .cv-name{font-size:220px;line-height:.95}
@@ -819,7 +818,7 @@ function historyPage(){
 }
 
 SP.forEach((s,i)=>{
-  if(i===0){ P('cover','<span class="bgword" aria-hidden="true" lang="en">Portfolio</span><span class="bgword bgyr" aria-hidden="true">2026</span><div class="tag"><span>포트폴리오</span><i>2019 – 2026</i></div><div class="cv-b"><h1 class="cv-name">김영훈</h1><p class="cv-role">콘텐츠 PD, 브랜드 디자이너</p></div>'); return; }
+  if(i===0){ P('cover','<span class="bgword" aria-hidden="true" lang="en">Portfolio</span><div class="tag"><span>포트폴리오</span><i>2019 – 2026</i></div><div class="cv-b"><h1 class="cv-name">김영훈</h1><p class="cv-role">콘텐츠 PD, 브랜드 디자이너</p></div>'); return; }
   P('sp '+s.cls,s.l+s.r,s.id?'p-'+s.id:'');
   if(s.cls.includes('sp-team')) brandGalleries('myauction');
   else if(s.id&&s.id!=='myauction') brandGalleries(s.id);
