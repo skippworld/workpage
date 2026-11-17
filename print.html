@@ -290,7 +290,6 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
   .org{font-size:12.5px}
   .org .bx{padding:.55em .6em}
   .sp-team .pg.r{flex:0 0 56%}
-  .sp-team .ttl.xs{font-size:calc(var(--v)*3.4)}
   .org{inset:var(--pp)}
   .ttl{font-size:calc(var(--v)*5)}.ttl.s{font-size:calc(var(--v)*4)}
   .cv-name{font-size:calc(var(--v)*8)}
@@ -429,6 +428,34 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
 .g-t em.solo{margin-left:0}
 .plb{font-style:normal;font-weight:500;opacity:.72;margin-left:.35em}
 .lf figcaption .plb{display:block;margin:0;font-size:.8em;opacity:.8;line-height:1.15}
+@media screen and (max-width:860px),screen and (orientation:portrait){
+  .sp-back .pg.l{flex:0 0 56%}
+  .sp-back .pg.l .tag{display:none}
+  .sp-back .info{gap:8px 14px;margin-top:10px}
+  .sp-back .info h4{font-size:12px;margin-bottom:2px}
+  .sp-back .info p{font-size:11.5px;line-height:1.42}
+  .sp-back .chips{margin-top:4px}
+  .sp-back .chips span{font-size:11.5px;padding:2px 9px}
+  .sp-back .me .ttl.s{font-size:calc(var(--v)*3)}
+}
+@media screen and (max-width:860px),screen and (orientation:portrait){
+  .sp-back .ttl.s.pun{font-size:calc(var(--v)*2.65);line-height:1.12}
+  .sp-back .pg.r .blk>p{margin-top:calc(var(--v)*1.2)!important}
+  .sp-back .mail{font-size:calc(var(--v)*2.55);border-bottom-width:3px}
+  .sp-back .rows{margin-top:calc(var(--v)*.7)}
+  .sp-back .btns{margin-top:calc(var(--v)*.9)}
+  .sp-back .btn{height:38px}
+}
+.rise{display:flex;align-items:center;flex-wrap:wrap;gap:.5em .6em;margin-bottom:calc(var(--v)*1.6);font-size:clamp(14px,calc(var(--v)*1.45),22px);font-weight:700;letter-spacing:-.02em}
+.rise span{color:var(--sub);border:1.5px solid var(--ln);border-radius:999px;padding:.28em .85em}
+.rise i{font-style:normal;color:var(--ac);font-weight:400}
+.rise b{background:var(--ac);color:var(--on);border-radius:999px;padding:.28em .9em;font-weight:800}
+.ttl.team{font-size:calc(var(--v)*5.2)}
+@media screen and (max-width:860px),screen and (orientation:portrait){
+  .ttl.team{font-size:calc(var(--v)*4.1)}
+  .rise{font-size:12.5px;margin-bottom:10px}
+  .sp-team .pg.l{flex:1 1 auto}
+}
 
 /* ── PDF(인쇄) 전용 ── */
 @page{size:1920px 1080px;margin:0}
@@ -711,7 +738,7 @@ BR.forEach((b,i)=>{ add(b.short||b.n,'sp-media sp-brand '+(b.cls||''),
   pg('r',b.rt,`${b.r}${b.noplay?'':`<button class="play" type="button" data-gal="${b.id}" aria-label="${b.n} 작업 펼쳐 보기">${PLAY}</button>`}`));
   SP[SP.length-1].id=b.id;
   if(b.id==='myauction') add(b.short||b.n,'sp-one sp-team',
-    pg('l','t-paper',`${tag('마이옥션, 팀 운영','')}<div class="blk"><p class="meta"><b>콘텐츠기획 팀장</b></p><h2 class="ttl xs">혼자 만드는 채널에서,<br>팀이 만드는 채널로.</h2><p class="cap"><small>후임 PD와 프리랜서 촬영 PD를 디렉팅하고, 제작 기준을 매뉴얼로 만들었습니다.</small></p></div>`),
+    pg('l','t-paper',`${tag('마이옥션, 팀 운영','')}<div class="blk"><p class="rise"><span>1인 체제 PD</span><i>→</i><b>콘텐츠기획 팀장</b></p><h2 class="ttl team">혼자 만드는<br>채널에서,<br>팀이 만드는<br>채널로.</h2><p class="cap"><small>후임 PD와 프리랜서 촬영 PD를 디렉팅하고, 제작 기준을 매뉴얼로 만들었습니다.</small></p></div>`),
     pg('r','t-paper',`<div class="org"><div class="bx lead">김영훈<small>콘텐츠기획 팀장. 기획, 디렉팅, 품질 기준</small></div><div class="ln"></div><div class="bx doc">제작 매뉴얼<small>제작 기준과 편집 방향을 문서로 정리</small></div><div class="two"><div class="bx">후임 PD<small>편집 디렉팅</small></div><div class="bx">프리랜서 촬영 PD<small>촬영 디렉팅</small></div></div><div class="join"></div><div class="bx res"><div>콘텐츠 IP 15개+<small>출연자별 재생목록</small></div><div>롱폼 400편+<small>누가 만들어도 같은 품질</small></div></div></div>`));
 });
 // method
@@ -727,7 +754,7 @@ add('무대','sp-one',
   pg('r','t-dark',`<div class="wmap">${worldSvg()}</div>`));
 // back
 add('연락','sp-back',
-  pg('l','t-dark',`${tag('이력','')}<div class="blk"><div class="me"><figure>${src('image/profile.jpg')}${img('image/profile.jpg','김영훈 프로필 사진')}</figure><div><h2 class="ttl s">김영훈</h2><p class="meta" style="margin:6px 0 0">콘텐츠 기획/제작 PD</p></div></div><div class="info"><div><h4>학력</h4><p>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</p></div><div><h4>자격</h4><p>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</p></div><div class="w2"><h4>도구</h4><p>Premiere Pro, Photoshop, Illustrator</p><div class="chips" aria-label="이 외 AI 툴"><span>GPT</span><span>Gemini</span><span>Claude</span></div></div></div></div>`),
+  pg('l','t-dark',`${tag('이력','')}<div class="blk"><div class="me"><figure>${src('image/profile.jpg')}${img('image/profile.jpg','김영훈 프로필 사진')}</figure><div><h2 class="ttl s">김영훈</h2><p class="meta" style="margin:6px 0 0">콘텐츠 기획/제작 PD</p></div></div><div class="info"><div><h4>학력</h4><p>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</p></div><div><h4>자격</h4><p>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</p></div><div class="w2"><h4>병역</h4><p>대한민국 공군 병 749기 병장 만기전역<br>(공군사관학교 정훈공보실 복무, 총무특기)</p></div><div class="w2"><h4>도구</h4><p>Premiere Pro, Photoshop, Illustrator</p><div class="chips" aria-label="이 외 AI 툴"><span>GPT</span><span>Gemini</span><span>Claude</span></div></div></div></div>`),
   pg('r','t-amber',`${tag('연락','')}<div class="blk"><h2 class="ttl s pun">아직 끝나지 않은<br>이 책의 다음 <u>장</u>은<br>늘 그렇듯 성<u>장</u>으로<br>채우겠습니다.</h2><p style="margin-top:calc(var(--v)*2)"><a class="mail" href="mailto:skippkim@naver.com">skippkim@naver.com</a></p><div class="rows"><a href="tel:+821039297375"><span>전화</span>010-3929-7375</a></div><div class="btns"><a class="btn" href="mailto:skippkim@naver.com">메일 보내기</a><a class="btn line" href="SkippCV.pdf" download>이력서 PDF 받기</a><span class="thx">감사합니다.</span></div></div>`));
 
 if(window.PRINT_MODE){ /* ── PDF(인쇄) 전용 페이지: print.html에서만 실행 ── */
