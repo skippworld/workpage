@@ -284,6 +284,7 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
   .pg.r .tag>*:not(:empty),.onimg .cap,.lf-h b{position:relative;z-index:5;text-shadow:0 0 6px var(--bg),0 0 12px var(--bg)}
   .pg.r .tag>*:not(:empty)::before,.onimg .cap::before,.toc span::before{content:"";position:absolute;inset:-6px -12px;z-index:-1;background:var(--bg);opacity:.82;filter:blur(9px);border-radius:12px}
   .toc span::before,.onimg .cap::before{background:#0c0b0a}
+  .onimg .cap{width:fit-content;max-width:100%}
   .toc span{text-shadow:0 0 8px #000}
   .pg.r .tag{z-index:5}
   .org{font-size:12.5px}
@@ -425,6 +426,7 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
   .sp-slot .sq i{font-size:calc(var(--v)*1.25);border-width:1.5px}
   .sp-slot .dots{grid-template-columns:repeat(35,1fr);gap:2px}
 }
+.g-t em.solo{margin-left:0}
 
 /* ── PDF(인쇄) 전용 ── */
 @page{size:1920px 1080px;margin:0}
@@ -469,31 +471,89 @@ a.ytf{display:block}
 .pp .loopw{gap:18px}
 .pp .loopw svg{max-height:440px}
 
+/* 표지: 주황 한 장 */
+.pp.cover{background:#ff7a1a;color:#1d0e03;--fg:#1d0e03;--sub:#5c2a0a;padding:var(--pp);display:flex;flex-direction:column;justify-content:space-between}
+.pp.cover .bgword{left:-1%;top:4%;font-size:430px;color:rgba(29,14,3,.16);filter:blur(7px);transform:rotate(-9deg)}
+.pp.cover .bgyr{left:auto;right:5%;top:27%;font-size:360px;transform-origin:right center}
+.pp.cover .tag{font-size:22px}
+.pp.cover .cv-b{position:relative;z-index:3}
+.pp.cover .cv-name{font-size:220px;line-height:.95}
+.pp.cover .cv-role{font-size:46px;margin-top:28px}
+
+/* 책 가운데 접힘 그림자는 PDF에서 뺌 */
+.pp .pg.l::after,.pp .pg.r::after{display:none}
+
+/* 영상 대신 넣은 썸네일이 칸을 꽉 채우게 */
+.pp a.ytf img,.slot .ytf img,.ytw .ytf img,.ytcover .ytf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot a.ytf{position:absolute;inset:0}
+
 /* 작업 페이지 */
-.gp{padding:56px 64px;display:flex;flex-direction:column;gap:24px}
-.ghd{display:flex;align-items:baseline;gap:18px;border-bottom:2px solid #2c2825;padding-bottom:16px}
+.gp{padding:52px 64px;display:flex;flex-direction:column;gap:22px}
+.ghd{display:flex;align-items:baseline;gap:18px;border-bottom:2px solid #2c2825;padding-bottom:14px;flex:none}
 .ghd span{color:var(--amber);font-weight:800;font-size:20px}
-.ghd h3{font-size:44px;font-weight:800;letter-spacing:-.045em;line-height:1.1}
+.ghd h3{font-size:42px;font-weight:800;letter-spacing:-.045em;line-height:1.1}
 .ghd p{font-size:19px;color:#a39a90;font-weight:500}
-.prow h4{font-size:19px;font-weight:800;margin-bottom:12px;display:flex;gap:12px;align-items:baseline}
-.prow h4 small{font-size:15px;color:#a39a90;font-weight:500}
-.pgrid{display:flex;flex-wrap:wrap;gap:14px}
-.pi{display:block;position:relative;text-decoration:none}
-.pf{position:relative;height:var(--h);aspect-ratio:var(--r);background:#211e1b;border-radius:4px;overflow:hidden}
+.gbody{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.gbody>*{flex:none}
+.pi{display:block;position:relative;text-decoration:none;color:#fff}
+.pf{position:relative;display:block;width:100%;aspect-ratio:var(--r);background:#211e1b;border-radius:4px;overflow:hidden}
 .pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.pf.top img{object-position:top}
-.pc{width:0;min-width:100%;margin-top:7px;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pc em{font-style:normal;color:var(--amber);margin-left:6px}
-.plinks{margin-top:auto;display:flex;gap:12px;flex-wrap:wrap}
+.pf.ptop img{object-position:top}
+.pf.doc img{object-fit:contain;padding:14px}
+.pc{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:26px 12px 9px;background:linear-gradient(transparent,rgba(8,7,6,.82));font-size:15px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc em{font-style:normal;color:var(--amber);margin-left:8px}
+.pi .pl{right:8px;bottom:auto;top:8px}
+.pcols{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.pcols>.pi{width:calc((100% - (var(--n) - 1)*14px)/var(--n))}
+.pjrow{display:flex;gap:14px}
+.pjrow>.pi{flex:var(--rn) 1 0;min-width:0}
+.pjrow>.pi .pf{aspect-ratio:var(--r)}
+.pdocs .pf{background:#1a1816}
+.plinks{flex:none;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
 .plinks a{height:46px;padding:0 20px;border:1.5px solid #3a3530;border-radius:4px;display:inline-flex;align-items:center;font-size:16px;font-weight:700;text-decoration:none}
-.ins{display:grid;grid-template-columns:500px 1fr;gap:60px;flex:1;min-height:0}
+.ins{display:grid;grid-template-columns:500px 1fr;gap:56px;align-items:center}
 .ins-l{display:flex;flex-direction:column;gap:22px}
 .in-n b{display:block;font-size:64px;font-weight:900;letter-spacing:-.045em;line-height:1}
 .in-n span{display:block;font-size:17px;color:#a39a90;font-weight:600;margin-top:6px}
 .ins .spec{width:100%;height:auto;transform:rotate(-.6deg);font-size:15px;margin-top:6px}
+.pbb{display:grid;grid-template-columns:auto 1fr;gap:14px;height:100%;max-height:860px}
+.pbb-l .pi,.pbb-l .pf{height:100%}
+.pbb-l .pf{aspect-ratio:2/3;width:auto}
+.pbb-r{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:14px;min-height:0}
+.pbb-r .pi,.pbb-r .pf{height:100%;aspect-ratio:auto}
 .gp .hist{overflow:visible;padding:0;grid-template-columns:repeat(4,1fr);gap:44px;flex:none}
 .gp .hist h4{font-size:22px}
 .gp .hist li{font-size:16px;padding:9px 0}
+
+/* 블랙비스트 메인 영상 */
+.pmain{display:flex;justify-content:center}
+.pmain>.pi{width:700px}
+.pmain .pc{font-size:20px;padding:40px 18px 14px}
+/* 윌리워: 룩북 2편 + 상세 3x2 */
+.pww{display:grid;grid-template-columns:auto 1fr;gap:14px;height:860px}
+.pww-l{display:flex;gap:14px;height:100%}
+.pww-l .pi,.pww-l .pf{height:100%}
+.pww-l .pf{aspect-ratio:2/3;width:auto}
+/* 윌리워: 브랜드 영상 2편(세로로 쌓기) + 숏폼 3편 */
+.pwv{display:grid;grid-template-columns:595px 1fr;gap:14px;height:684px}
+.pwv-l{display:flex;flex-direction:column;gap:14px}
+.pwv-r{display:flex;gap:14px}
+.pwv-r>.pi{flex:1;min-width:0}
+.pwv-r .pf{height:684px;aspect-ratio:auto}
+/* 팀 운영 도식: 오른쪽 면을 위아래로 꽉 채우게, 연결선 길이는 모두 같게 */
+.pp.sp-team .org{inset:var(--pp);font-size:27px;justify-content:space-between}
+.pp.sp-team .org .bx{padding:1.05em 1.1em}
+.pp.sp-team .org .bx small{font-size:.7em;margin-top:6px}
+.pp.sp-team .org .ln,.pp.sp-team .org .join{flex:1;height:auto;min-height:40px}
+.pp.sp-team .org .two{padding-top:0}
+.pp.sp-team .org .two .bx::before{display:none}
+.pp.sp-team .org .bx.res>div{padding:1.05em 1.1em}
+.gp .gbody:has(.hist.htop){justify-content:flex-start;padding-top:20px}
+.gp .hist.htop{gap:48px}
+.gp .hist.htop h4{font-size:28px;padding-bottom:12px;margin-bottom:10px}
+.gp .hist.htop li{font-size:20px;padding:14px 0;grid-template-columns:3.4em 1fr;line-height:1.4}
+.steps5 strong{font-weight:800;color:var(--ac);margin-right:14px;letter-spacing:-.02em}
+.pc em.solo{margin-left:0}
 
 </style>
 </head>
@@ -517,7 +577,7 @@ const img=(src,alt='')=>`<img src="${src}" alt="${alt}" onerror="this.remove()">
 const MYA=[['왕초보 경매강의','MiJYm5g2HaY','PLeDgow7nj3iKKzVSkbInhm7zRd48STK9c','누적 110만+'],['문지성의 토킹투더문','POEzKz_Dp6Y','PLeDgow7nj3iIn-wOsFGy55mV7X87wQxq8'],['이진영의 핫초이스','n7oe8HwXLpA','PLeDgow7nj3iKmwtIuCRi0Nbb645V9plnk'],['안중현의 키포인트','RuoOPgJsgjI','PLeDgow7nj3iJMV6hJRr3npxW8GnxqD_ig'],['제주도 경매특집','6O_sobj1HNc','PLeDgow7nj3iKBPssPrZjUKfwK0KdHx9RA'],['경매의품격','ZNoeu5VYxa8','PLeDgow7nj3iJi2_7FcCqGiRCGO79LS83i'],['육형경매','-OGXEeE135k','PLeDgow7nj3iJls8BEkhJpRUtW8mP-A5m7'],['찐의시선','zqa3h1hON8k','PLeDgow7nj3iI38THA9SxScQ2OH0S_F7Tz'],['푸근한경매','N7FXl0y9xEk','PLeDgow7nj3iJ8O2gUNE0PbTIA8ISVWf5F'],['돈추남','4rXaE80EPeo','PLeDgow7nj3iLKJX2DlX_Xe9Aig-KkM-Wp'],['태강경매','NZ0agkvbSeo','PLeDgow7nj3iKS017medzLlwHh88b5j05f'],['그곳','fCbLnwh1OPA','PLeDgow7nj3iJLCZUk2WLHPMVo5E80PY0M'],['정민준의 경매쇼','LUyO-xmtj2M','PLeDgow7nj3iLFwdGQIwW3f-D9fsfLu9cy'],['미스터명도왕','REvVhy7s1YI','PLeDgow7nj3iLzo3XfrVGsY-PVo_kwWRav'],['NPL특전사','8_6PrQG6EZU','PLeDgow7nj3iIdNUS2WxBv_hCDef2hxeLi']].map(r=>({t:r[0],v:r[1],url:plu(r[2]),e:r[3]}));
 const MYA_EXP=[['듣고보자 GO','6rCalbp-NMw','PLeDgow7nj3iL7s74A949g6hsez00vqfV8'],['꼬꼬무 경매이야기','rSgZmH7VVZg','PLeDgow7nj3iI7kYVsNWuaKzoeYgWToGw5'],['경매썰전','XmVKtqeiiNw','PLeDgow7nj3iJuKhmxc3WZquF4aICypeL3']].map(r=>({t:r[0],v:r[1],url:plu(r[2])}));
 // [insta 파일 번호, 조회수(만), 표기]
-const INSTA=[[3,70,'70만+'],[1,64,'64만'],[2,59,'59만'],[4,24,'24만'],[5,19,'19만'],[6,17,'17만'],[7,14,'14만'],[8,8.8,'8.8만'],[9,5.5,'5.5만'],[10,4.2,'4.2만']];
+const INSTA=[[3,70,'70만+'],[1,64,'64만+'],[2,59,'59만+'],[4,24,'24만+'],[5,19,'19만+'],[6,17,'17만+'],[7,14,'14만+'],[8,8.8,'8.8만+'],[9,5.5,'5.5만+'],[10,4.2,'4.2만+']];
 const INSTA_MAX=Math.max(...INSTA.map(r=>r[1]));
 const INSTA_URL='https://www.instagram.com/myauction_official/';
 const CDF=[['체터뷰','9m2aFWBfEMw','PLxytJQTYF-QVttLq5q3dWb0lYI29LZvYX'],['체대파일러','tvw-8xtJ1ME','PLxytJQTYF-QU9sKyzLaSxkVyd6_m4Lwna'],['제이슨로그','tcVeKEPXrtk','PLxytJQTYF-QUaLupi6-87PydkUhpyJ46E'],['공무원체력 강의','QWNB-H4euhA','PLxytJQTYF-QX5-oW51xByVBf9gVSh9yLZ'],['꿀팁정보통','-N8OhkDXvQM','PLxytJQTYF-QVmtX7Re1gpjN2aQkGV7znv'],['김피디 탐구생활','oBKIJuey7ck','PLxytJQTYF-QXSDu1jxJK3OnmQei2mZeVL'],['운동리액션','NnCPtlnREXM','PLxytJQTYF-QVPDoCyx-JQS8nghia18eKg'],['에어클래스','KvQqDUUnbso','PLxytJQTYF-QVFmmnipmsYIYQTB8sNmaA5']].map(r=>({t:r[0],v:r[1],url:plu(r[2])}));
@@ -529,8 +589,8 @@ const tall=(p,n,t)=>Array.from({length:n},(_,i)=>({img:`image/${p}${i+1}.jpg`,t:
 const GAL={
  myauction:[
   {l:'유튜브',s:'출연자별 콘텐츠 IP 15개',items:MYA},
-  {l:'실험형 콘텐츠',s:'1인 단독 제작',items:MYA_EXP},
-  {l:'인스타그램',s:'3주, 조회수 280만+, 팔로워 6,300+',items:[{spec:1},...INSTA.map((r,i)=>({img:`insta/insta${r[0]}.jpg`,t:`릴스 ${i+1}위`,e:r[2],r:'9/16',url:INSTA_URL}))]},
+  {l:'기획 콘텐츠',s:'현장 임장, 역사, 추천 배틀',items:MYA_EXP},
+  {l:'인스타그램',s:'3주, 조회수 280만+, 팔로워 6,300+',items:[{spec:1},...INSTA.map((r,i)=>({img:`insta/insta${r[0]}.jpg`,t:'',e:r[2]+' 조회',r:'9/16',url:INSTA_URL}))]},
   {l:'웹 리뉴얼',s:'전과 후',items:[{img:'image/web_before.jpg',t:'리뉴얼 전',r:'450/845',zoom:1},{img:'image/web_after.jpg',t:'리뉴얼 후',r:'450/845',zoom:1},{t:'올인원서비스 소개영상',v:'0VIqWcYyHcI',url:vurl('0VIqWcYyHcI')},...[1,2,3].map(n=>({img:`image/web_service${n}.jpg`,t:`올인원서비스 상세 #${n}`,r:'426/756',zoom:1}))]},
   {l:'문서 디자인',s:'보고서, 소개서, 제안서',items:[{img:'image/docu1.png',t:'경매사건 브리핑 보고서',r:'4/3',zoom:1,fit:1,contain:1},{img:'image/docu2.png',t:'회사소개서',r:'4/3',zoom:1,fit:1,contain:1},{img:'image/docu3.png',t:'광고 협업 제안서',r:'4/3',zoom:1,fit:1,contain:1}]},
   {links:[['마이옥션 유튜브','https://www.youtube.com/@myauction_official'],['마이옥션 인스타그램',INSTA_URL],['올인원서비스 페이지','https://www.my-auction.co.kr/counsel/report03.php']]}],
@@ -578,7 +638,7 @@ const BR=[
  {id:'batontouch',n:'배턴터치',what:'체육대학 입시 교육업',m:'영상 PD, 2019.06 – 2019.09',th:'t-dark',rt:'t-black',cls:'sp-map',
   x:'체대입시생의 꿈을 다큐로.',st:[['5개 도시','직접 돌며 촬영'],['1인','기획, 촬영, 편집, 음악'],['100%','제작 기여도']],
   r:`<div class="fill ytcover" data-yt="R-TXIL2F4FA">${src('유튜브 영상 (자동 재생, 음소거)','실기능력평가 현장스케치')}<div class="ytf"><img src="${yt('R-TXIL2F4FA')}" alt="" onerror="this.remove()"></div></div><div class="kmap over">${koreaSvg()}</div>`, cover:yt('Afy54zR10uY'), cv:'유튜브 썸네일'},
- {id:'kmong',n:'크몽',sub:'(앨범아트 디자이너)',what:'앨범커버 아트 디자인',m:'프리랜서, 2022.08 – 2026.07',th:'t-paper',rt:'t-black',
+ {id:'kmong',n:'크몽',sub:'(SKWS, 앨범아트 디자이너)',what:'앨범커버 아트 디자인',m:'프리랜서, 2022.08 – 2026.07',th:'t-paper',rt:'t-black',
   x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['모든 장르','트로트부터 힙합까지'],['50+ 작품','컨셉 기획부터 완성까지']],
   r:`<div class="mos">${src('image/album1.jpg ~ album9.jpg','앨범 커버 9장')}${Array.from({length:9},(_,i)=>img(`image/album${i+1}.jpg`)).join('')}</div>`, cover:'image/album1.jpg'},
  {id:'blackbeast',n:'블랙비스트',what:'데님 전문 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-black',rt:'t-black',
@@ -627,7 +687,7 @@ add('표지','sp-cover',
   pg('r','t-black',`<div class="fill shade">${src('video/hero.mp4 (대체 이미지: number/image2.jpg)','대표 영상')}<video muted loop playsinline preload="auto" poster="number/image2.jpg"><source src="video/hero.mp4" type="video/mp4"></video></div>${tag('','')}<div class="blk onimg"><p class="cap">8년, 7개 브랜드.<small>한 장씩 넘겨 보세요.</small></p><div class="btns"><button class="btn" type="button" data-go="1" style="--ac:#ff7a1a;--on:#1d0e03">책 펼치기</button></div></div>`));
 // 1 toc
 add('차례','sp-media',
-  pg('l','t-dark',`${tag('차례','')}<div class="blk"><h2 class="ttl">7개 브랜드,<br>골라서 보기.</h2><p class="keys"><kbd>←</kbd><kbd>→</kbd> 방향키나 화면 옆 화살표로 넘깁니다</p></div>`),
+  pg('l','t-dark',`${tag('차례','')}<div class="blk"><h2 class="ttl">함께 성장한<br>7개의 브랜드.</h2><p class="keys"><kbd>←</kbd><kbd>→</kbd> 방향키나 화면 옆 화살표로 넘깁니다</p></div>`),
   pg('r','t-black',`<div class="toc">${BR.map((b,i)=>`<button type="button" data-brand="${b.id}">${src(b.cv||b.cover)}${b.tile||img(b.cover)}<span><i>${i+1}</i>${b.n}<small>${b.what}</small></span></button>`).join('')}</div>`));
 // 2-5 numbers
 add('숫자','sp-num',
@@ -671,51 +731,65 @@ if(window.PRINT_MODE){ /* ── PDF(인쇄) 전용 페이지: print.html에서�
 const PR=$('#print'), PAGES=[];
 const P=(cls,html,id)=>PAGES.push(`<section class="pp ${cls}"${id?` id="${id}"`:''}>${html}</section>`);
 const TALL=['426/756','450/845','800/1200'];
-function pItem(it){
+function pItem(it,extra){
   if(it.spec||it.mp4) return '';
-  const r=it.r||'16/9';
+  const r=it.r||'16/9', rn=(([w,h])=>(+w/+h).toFixed(4))(r.split('/'));
   const fig=it.v?ytImg(it.v):`<img src="${it.img}" alt=""${it.contain?' style="object-fit:contain"':''} onerror="this.remove()">`;
-  const cap=(it.t||it.e)?`<div class="pc">${it.t||''}${it.e?`<em>${it.e}</em>`:''}</div>`:'';
-  const inner=`<div class="pf${TALL.includes(r)?' top':''}" style="--r:${r}">${fig}${it.v?`<span class="pl">${PLAY}</span>`:''}</div>${cap}`;
+  const e=extra||it.e;
+  const cap=(it.t||e)?`<span class="pc">${it.t||''}${e?`<em${it.t?'':' class="solo"'}>${e}</em>`:''}</span>`:'';
+  const inner=`<span class="pf${TALL.includes(r)?' ptop':''}${it.contain?' doc':''}">${fig}${cap}${it.v?`<span class="pl">${PLAY}</span>`:''}</span>`;
   const url=it.url||(it.v?vurl(it.v):'');
-  return url?`<a class="pi" href="${url}" target="_blank" rel="noopener">${inner}</a>`:`<div class="pi">${inner}</div>`;
+  return url?`<a class="pi" href="${url}" target="_blank" rel="noopener" style="--r:${r};--rn:${rn}">${inner}</a>`:`<div class="pi" style="--r:${r};--rn:${rn}">${inner}</div>`;
 }
-const prow=(items,h,label,sub)=>`<div class="prow">${label?`<h4>${label}${sub?`<small>${sub}</small>`:''}</h4>`:''}<div class="pgrid" style="--h:${h}px">${items.map(pItem).join('')}</div></div>`;
+/* N열 그리드: 모든 칸 같은 폭, 덜 찬 마지막 줄은 가운데 */
+const cols=(items,n)=>`<div class="pcols" style="--n:${n}">${items.map(it=>pItem(it)).join('')}</div>`;
+/* 한 줄을 좌우 끝까지 꽉 채우는 줄: 각 칸의 폭이 비율에 맞게 나뉨 */
+const jrow=items=>`<div class="pjrow">${items.map(it=>pItem(it)).join('')}</div>`;
 const plinks=arr=>arr&&arr.length?`<div class="plinks">${arr.map(([l,u])=>`<a href="${u}" target="_blank" rel="noopener">${l} ↗</a>`).join('')}</div>`:'';
-const gpage=(brand,title,sub,body)=>P('gp',`<header class="ghd"><span>${brand}</span><h3>${title}</h3>${sub?`<p>${sub}</p>`:''}</header>${body}`);
+const gpage=(brand,title,sub,body)=>P('gp',`<header class="ghd"><span>${brand}</span><h3>${title}</h3>${sub?`<p>${sub}</p>`:''}</header><div class="gbody">${body}</div>`);
 const galLinks=id=>{ const g=GAL[id].find(x=>x.links); return g?g.links:[]; };
 const galSec=(id,k)=>GAL[id].filter(x=>!x.links)[k].items;
+const tag1=(arr,label)=>arr.map(x=>({...x,e:label}));
 
 function brandGalleries(id){
   if(id==='myauction'){
-    gpage('마이옥션','유튜브','마이옥션TV, 출연자별 콘텐츠 IP와 1인 단독 제작',
-      prow(MYA,155,'출연자별 콘텐츠 IP','재생목록 15개')+prow(MYA_EXP,155,'1인 단독 제작','기획, 촬영, 편집, 더빙'));
-    const reels=INSTA.map((r,i)=>({img:`insta/insta${r[0]}.jpg`,t:`${i+1}위`,e:r[2]+' 조회',r:'9/16',url:INSTA_URL}));
+    gpage('마이옥션','유튜브','출연자별 콘텐츠 IP 15개와 기획 콘텐츠 3편',
+      cols([...MYA,...MYA_EXP],5));
+    const reels=INSTA.map((r,i)=>({img:`insta/insta${r[0]}.jpg`,t:'',e:r[2]+' 조회',r:'9/16',url:INSTA_URL}));
     gpage('마이옥션','인스타그램','2026.08.21 – 09.13, 광고비 0원',
-      `<div class="ins"><div class="ins-l"><div class="in-n"><b>280만+</b><span>릴스 3주 누적 조회수</span></div><div class="in-n"><b>80 → 6,300+</b><span>팔로워, 오가닉으로만</span></div>${gItem({spec:1})}</div><div class="ins-r">${prow(reels,360,'릴스 조회수 상위 10편')}</div></div>`);
+      `<div class="ins"><div class="ins-l"><div class="in-n"><b>280만+</b><span>릴스 3주 누적 조회수</span></div><div class="in-n"><b>80 → 6,300+</b><span>팔로워, 오가닉으로만</span></div>${gItem({spec:1})}</div><div class="ins-r">${cols(reels,5)}</div></div>`);
     const web=galSec('myauction',3), docs=galSec('myauction',4);
     gpage('마이옥션','웹 리뉴얼과 문서','홈페이지 UI/UX 리뉴얼, 사내 문서와 보고서 디자인',
-      prow(web,360,'웹 리뉴얼','리뉴얼 전과 후, 올인원서비스')+prow(docs,230,'문서 디자인','보고서, 회사소개서, 제안서')+plinks(galLinks('myauction')));
+      jrow(web)+`<div class="pdocs">${cols(docs.map(d=>({...d,r:'16/9'})),3)}</div>`+plinks(galLinks('myauction')));
   }
   if(id==='cdf') gpage('체대친구들','작업 모음','유튜브 채널에서 대치동 오프라인 센터까지',
-    prow(galSec('cdf',0),180,'유튜브','포맷별 재생목록 8개')+prow(galSec('cdf',1),180,'오프라인','원데이클래스와 입시 결과')+plinks(galLinks('cdf')));
-  if(id==='arun') gpage('에이런컴퍼니','작업 모음','WBC 국가대표 선발전 콘텐츠와 행사장 영상',
-    prow([...galSec('arun',0),...galSec('arun',1)],200,'홍보영상과 백월 미디어아트')+prow(galSec('arun',2),205,'WBC 국가대표 선발전 숏폼','2022 – 2023')+plinks(galLinks('arun')));
-  if(id==='batontouch') gpage('배턴터치','체대입시생의 꿈','전국 5개 도시 브랜드 다큐 6편',prow(galSec('batontouch',0),250));
-  if(id==='kmong') gpage('크몽','앨범 커버','트로트부터 힙합까지',prow(galSec('kmong',0),205)+plinks(galLinks('kmong')));
+    cols([...galSec('cdf',0),...galSec('cdf',1).filter(x=>!x.mp4).map(x=>({...x,e:'오프라인'}))],4)+plinks(galLinks('cdf')));
+  if(id==='arun') gpage('에이런컴퍼니','작업 모음','WBC 국가대표 선발전 숏폼 19편, 홍보영상과 백월 미디어아트',
+    cols([...galSec('arun',0),...galSec('arun',1)],4)+cols(galSec('arun',2),12)+plinks(galLinks('arun')));
+  if(id==='batontouch') gpage('배턴터치','체대입시생의 꿈','전국 5개 도시 브랜드 다큐 6편',cols(galSec('batontouch',0),3));
+  if(id==='kmong') gpage('크몽','앨범 커버','트로트부터 힙합까지',cols(galSec('kmong',0),7)+plinks(galLinks('kmong')));
   if(id==='blackbeast'){
-    gpage('블랙비스트','룩북과 상세페이지','무신사 매거진 룩북, 상세페이지 6장',prow([...galSec('blackbeast',0),...galSec('blackbeast',1)],410));
-    gpage('블랙비스트','영상','브랜드 비주얼 영상과 신제품 피팅가이드',prow(galSec('blackbeast',2),190)+plinks(galLinks('blackbeast')));
+    const lb=galSec('blackbeast',0)[0], det=galSec('blackbeast',1);
+    gpage('블랙비스트','룩북과 상세페이지','무신사 매거진 룩북, 상세페이지 6장',
+      `<div class="pbb"><div class="pbb-l">${pItem(lb)}</div><div class="pbb-r">${det.map(d=>pItem(d)).join('')}</div></div>`);
+    const bv=galSec('blackbeast',2);
+    gpage('블랙비스트','영상','브랜드 비주얼 영상과 신제품 피팅가이드',`<div class="pmain">${pItem(bv[0])}</div>`+cols(bv.slice(1),5)+plinks(galLinks('blackbeast')));
   }
-  if(id==='williwo') gpage('윌리워스튜디오','작업 모음','룩북, 상세페이지, 브랜드 영상',
-    prow([...galSec('williwo',0),...galSec('williwo',1)],330,'룩북과 상세페이지')+prow(galSec('williwo',2),270,'영상','브랜드 영상과 숏폼')+plinks(galLinks('williwo')));
+  if(id==='williwo'){
+    const lb=galSec('williwo',0), det=galSec('williwo',1), vv=galSec('williwo',2);
+    gpage('윌리워스튜디오','룩북과 상세페이지','무신사 매거진 룩북 2편, 상세페이지 6장',
+      `<div class="pww"><div class="pww-l">${lb.map(x=>pItem(x)).join('')}</div><div class="pbb-r">${det.map(d=>pItem(d)).join('')}</div></div>`);
+    gpage('윌리워스튜디오','영상','브랜드 영상과 숏폼',
+      `<div class="pwv"><div class="pwv-l">${vv.filter(x=>x.r!=='9/16').map(x=>pItem(x)).join('')}</div><div class="pwv-r">${vv.filter(x=>x.r==='9/16').map(x=>pItem(x)).join('')}</div></div>`+plinks(galLinks('williwo')));
+  }
 }
 function historyPage(){
   const T={해외:'해외 활동',수상:'수상',방송:'방송',공연:'주요 공연'};
-  gpage('무대','이력 전체','비보이 18년',`<div class="hist">${['해외','수상','방송','공연'].map(c=>`<section><h4>${T[c]}</h4><ul>${EVENTS.filter(e=>e[0]===c).map(e=>`<li><b>${e[1]}</b><span>${e[2]}</span></li>`).join('')}</ul></section>`).join('')}</div>`);
+  gpage('무대','무대 경력 및 이력','비보이 18년',`<div class="hist htop">${['해외','수상','방송','공연'].map(c=>`<section><h4>${T[c]}</h4><ul>${EVENTS.filter(e=>e[0]===c).map(e=>`<li><b>${e[1]}</b><span>${e[2]}</span></li>`).join('')}</ul></section>`).join('')}</div>`);
 }
 
-SP.forEach(s=>{
+SP.forEach((s,i)=>{
+  if(i===0){ P('cover','<span class="bgword" aria-hidden="true" lang="en">Portfolio</span><span class="bgword bgyr" aria-hidden="true">2026</span><div class="tag"><span>포트폴리오</span><i>2019 – 2026</i></div><div class="cv-b"><h1 class="cv-name">김영훈</h1><p class="cv-role">콘텐츠 PD, 브랜드 디자이너</p></div>'); return; }
   P('sp '+s.cls,s.l+s.r,s.id?'p-'+s.id:'');
   if(s.cls.includes('sp-team')) brandGalleries('myauction');
   else if(s.id&&s.id!=='myauction') brandGalleries(s.id);
@@ -729,7 +803,6 @@ $$('.btns',PR).forEach(b=>{ const t=$('.thx',b); if(t) b.after(t); b.remove(); }
 $$('.play,.keys,.src',PR).forEach(e=>e.remove());
 $$('.onimg .cap small',PR).forEach(e=>e.remove());
 $$('button[data-brand]',PR).forEach(b=>{ const a=document.createElement('a'); a.href='#p-'+b.dataset.brand; a.innerHTML=b.innerHTML; b.replaceWith(a); });
-swap($('.sp-cover .fill video',PR),'<img src="number/image2.jpg" alt="" onerror="this.remove()">');
 swap($('#p-cdf .pg.r .fill video',PR),`<a class="fl" href="https://youtube.com/@cdf_jason" target="_blank" rel="noopener">${ytImg('9m2aFWBfEMw')}</a>`);
 $$('#p-cdf .vlabel',PR).forEach(e=>e.remove());
 $$('.toc video',PR).forEach(v=>swap(v,ytImg('9m2aFWBfEMw')));
@@ -740,8 +813,9 @@ $$('#p-myauction .lf figure',PR).forEach(f=>{ const im=$('img',f); const m=im&&i
   const a=document.createElement('a'); a.href=m?vurl(m[1]):INSTA_URL; a.target='_blank'; a.rel='noopener'; a.className=f.className; a.innerHTML=f.innerHTML; f.replaceWith(a); });
 const cap=$('#loopcap',PR);
 if(cap){ $$('.node',PR).forEach(n=>n.classList.remove('on'));
-  swap(cap,`<ol class="steps5">${STEPS.map((s,i)=>`<li><b>${i+1}</b><span>${s[1]}<small>${s[2]}</small></span></li>`).join('')}</ol>`);
+  swap(cap,`<ol class="steps5">${STEPS.map((s,i)=>`<li><b>${i+1}</b><span><strong>${s[0]}</strong>${s[1]}<small>${s[2]}</small></span></li>`).join('')}</ol>`);
   $$('.sp-loop .cap small',PR).forEach(e=>e.remove()); }
+$$('.sp-team .org .two',PR).forEach(two=>{ const d=document.createElement('div'); d.className='join'; two.before(d); });
 $$('.pp',PR).forEach(p=>p.classList.add('live'));
 document.title='김영훈 포트폴리오';
  return; }
@@ -847,7 +921,7 @@ function gItem(it){
   if(it.spec) return `<div class="spec"><h5><span>숏폼 제작 규격서</span><span class="num">v7.3</span></h5><ol>${['물건 점수 <b>3.0 이하</b>는 쓰지 않는다','후킹은 <b>개념 하나</b>','커버는 숫자를 주되 <b>이유는 감춘다</b>','1줄은 <b>멈추게</b>, 2줄은 <b>누르게</b>','영상 <b>2분 초과 금지</b>','출력 전 <b>팩트체크 3회</b>','실측 결과를 <b>규칙으로 승격</b>'].map(r=>`<li><span>${r}</span></li>`).join('')}</ol></div>`;
   const r=it.r?` style="--r:${it.r}"`:'';
   const fig=src(it.mp4||(it.v?'유튜브 썸네일':it.img))+(it.mp4?`<video autoplay muted loop playsinline><source src="${it.mp4}" type="video/mp4"></video>`:it.v?`<img src="${yt(it.v)}" alt="" loading="lazy" onerror="this.remove()">`:`<img src="${it.img}" alt="${it.t||''}" loading="lazy"${it.contain?' style="object-fit:contain"':''} onerror="this.remove()">`);
-  const t=(it.t||it.e)?`<div class="g-t">${it.t||''}${it.e?`<em>${it.e}</em>`:''}</div>`:'';
+  const t=(it.t||it.e)?`<div class="g-t">${it.t||''}${it.e?`<em${it.t?'':' class="solo"'}>${it.e}</em>`:''}</div>`:'';
   if(it.zoom) return `<button type="button" class="g zoom" data-src="${it.img}"${it.fit?' data-fit="1"':''} aria-label="${it.t||'이미지'} 크게 보기"><div class="g-f"${r}>${fig}</div>${t}</button>`;
   if(it.url) return `<a class="g" href="${it.url}" target="_blank" rel="noopener"${it.v?` data-video="${it.v}"`:''}><div class="g-f"${r}>${fig}${it.v?`<span class="pl">${PLAY}</span>`:''}</div>${t}</a>`;
   return `<div class="g"><div class="g-f"${r}>${fig}</div>${t}</div>`;
@@ -862,7 +936,7 @@ function openGal(id){
 }
 function openHist(){
   const el=$('#gal'), T={해외:'해외 활동',수상:'수상',방송:'방송',공연:'주요 공연'}; galFrom=document.activeElement;
-  el.innerHTML=`<div class="gal-h"><h3>무대 이력</h3><span>비보이 18년</span><button class="gal-x" type="button" aria-label="닫기">×</button></div><div class="hist">${['해외','수상','방송','공연'].map(c=>`<section><h4>${T[c]}</h4><ul>${EVENTS.filter(e=>e[0]===c).map(e=>`<li><b>${e[1]}</b><span>${e[2]}</span></li>`).join('')}</ul></section>`).join('')}</div>`;
+  el.innerHTML=`<div class="gal-h"><h3>무대 경력 및 이력</h3><span>비보이 18년</span><button class="gal-x" type="button" aria-label="닫기">×</button></div><div class="hist">${['해외','수상','방송','공연'].map(c=>`<section><h4>${T[c]}</h4><ul>${EVENTS.filter(e=>e[0]===c).map(e=>`<li><b>${e[1]}</b><span>${e[2]}</span></li>`).join('')}</ul></section>`).join('')}</div>`;
   el.classList.add('open'); galOpen=true; $('.gal-x',el).focus(); $('.gal-x',el).addEventListener('click',closeGal);
 }
 function closeGal(){ const el=$('#gal'); el.classList.remove('open'); el.innerHTML=''; galOpen=false; if(galFrom) galFrom.focus(); }
