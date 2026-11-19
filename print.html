@@ -456,6 +456,7 @@ a.g:hover .pl{background:var(--amber)}a.g:hover .pl svg{fill:#1d0e03}
   .rise{font-size:12.5px;margin-bottom:10px}
   .sp-team .pg.l{flex:1 1 auto}
 }
+.spec h5 .ai{font-size:.72em;font-weight:600;color:#6d665e;margin-left:4px}
 
 /* ── PDF(인쇄) 전용 ── */
 @page{size:1920px 1080px;margin:0}
@@ -720,7 +721,7 @@ add('차례','sp-media',
   pg('r','t-black',`<div class="toc">${BR.map((b,i)=>`<button type="button" data-brand="${b.id}">${src(b.cv||b.cover)}${b.tile||img(b.cover)}<span><i>${i+1}</i>${b.n}<small>${b.what}</small></span></button>`).join('')}</div>`));
 // 2-5 numbers
 add('숫자','sp-num',
-  pg('l','t-amber',`${tag('마이옥션TV 유튜브 구독자','시작')}<div class="blk"><div class="huge">1,800</div><p class="cap">맡았을 때<small>2022년 10월</small></p></div>`),
+  pg('l','t-amber',`${tag('마이옥션TV 유튜브 구독자','시작')}<div class="blk"><div class="huge hfrom">1,800</div><p class="cap">맡았을 때<small>2022년 10월</small></p></div>`),
   pg('r','t-amber',`${tag('','지금')}<div class="blk"><div class="arrow-big">→</div><div class="huge" data-count="26000" data-from="1800" data-suf="+">26,000+</div><p class="cap">지금<small>다양한 콘텐츠, 포맷 다각화로 만든 성장</small></p></div>`));
 add('숫자','sp-num',
   pg('l','t-paper',`${tag('마이옥션 인스타그램','2026.08.21 – 09.13')}<div class="blk"><h2 class="ttl xs wk">단 <u>3주</u> 만에,</h2><div class="huge" data-count="280" data-suf="<small>만+</small>">280<small>만+</small></div><p class="cap">릴스 누적 조회수</p><div class="big2">80 → 6,300+</div><p class="cap">팔로워<small>광고비 0원, 오가닉으로만.</small></p></div>`),
@@ -729,7 +730,7 @@ add('숫자','sp-num sp-slot',
   pg('l','t-black',`${tag('지금까지 만든 롱폼 영상','')}<div class="slot">${src('number/image1.jpg')}<img src="number/image1.jpg" alt="" onerror="this.remove()"></div><div class="blk"><div class="huge" data-count="700" data-suf="<small>편+</small>">700<small>편+</small></div><p class="cap">직접 기획하고 만들었습니다<span class="ast">*숏폼은 세지 않았습니다.</span></p></div>`),
   pg('r','t-black',`${tag('칸 하나가 영상 한 편','')}<div class="dots">${Array.from({length:700},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div>`));
 add('숫자','sp-num sp-slot',
-  pg('l','t-dark',`${tag('체대친구들 원데이클래스','')}<div class="slot" data-yt="SYU61ezqz4c">${src('유튜브 영상 (자동 재생, 음소거)','원데이클래스 홍보영상')}<div class="ytf"><img src="${yt('SYU61ezqz4c')}" alt="" onerror="this.remove()"></div></div><div class="blk"><div class="huge">20<small>/20</small></div><p class="cap">오프라인 클래스는 모두 마감<small>유튜브 구독자가 오프라인 수강생이 됐습니다.</small></p></div>`),
+  pg('l','t-dark',`${tag('체대친구들 원데이클래스','')}<div class="slot" data-yt="SYU61ezqz4c">${src('유튜브 영상 (자동 재생, 음소거)','원데이클래스 홍보영상')}<div class="ytf"><img src="${yt('SYU61ezqz4c')}" alt="" onerror="this.remove()"></div></div><div class="blk"><div class="huge h2020">20<small>/20</small></div><p class="cap">오프라인 클래스는 모두 마감<small>유튜브 구독자가 오프라인 수강생이 됐습니다.</small></p></div>`),
   pg('r','t-dark',`${tag('20회차','약 150명 참가')}<div class="sq" role="img" aria-label="20회차 모두 매진">${Array.from({length:20},(_,i)=>`<i style="--i:${i}">${i+1}<b>매진</b></i>`).join('')}</div>`));
 // 6-12 brands
 BR.forEach((b,i)=>{ add(b.short||b.n,'sp-media sp-brand '+(b.cls||''),
@@ -754,7 +755,7 @@ add('무대','sp-one',
 // back
 add('연락','sp-back',
   pg('l','t-dark',`${tag('이력','')}<div class="blk"><div class="me"><figure>${src('image/profile.jpg')}${img('image/profile.jpg','김영훈 프로필 사진')}</figure><div><h2 class="ttl s">김영훈</h2><p class="meta" style="margin:6px 0 0">콘텐츠 기획/제작 PD</p></div></div><div class="info"><div><h4>학력</h4><p>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</p></div><div><h4>자격</h4><p>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</p></div><div class="w2"><h4>병역</h4><p>대한민국 공군 병 749기 병장 만기전역<br>(공군사관학교 정훈공보실 복무, 총무특기)</p></div><div class="w2"><h4>도구</h4><p>Premiere Pro, Photoshop, Illustrator</p><div class="chips" aria-label="이 외 AI 툴"><span>GPT</span><span>Gemini</span><span>Claude</span></div></div></div></div>`),
-  pg('r','t-amber',`${tag('연락','')}<div class="blk"><h2 class="ttl s pun">아직 끝나지 않은<br>이 책의 다음 <u>장</u>은<br>늘 그렇듯 성<u>장</u>으로<br>채우겠습니다.</h2><p style="margin-top:calc(var(--v)*2)"><a class="mail" href="mailto:skippkim@naver.com">skippkim@naver.com</a></p><div class="rows"><a href="tel:+821039297375"><span>전화</span>010-3929-7375</a></div><div class="btns"><a class="btn" href="mailto:skippkim@naver.com">메일 보내기</a><a class="btn line" href="SkippCV.pdf" download>이력서 PDF 받기</a><span class="thx">감사합니다.</span></div></div>`));
+  pg('r','t-amber',`${tag('연락','')}<div class="blk"><h2 class="ttl s pun">아직 끝나지 않은<br><span class="pmid">이 책의 다음 <u>장</u>은<br>늘 그렇듯 성<u>장</u>으로</span><br>채우겠습니다.</h2><p style="margin-top:calc(var(--v)*2)"><a class="mail" href="mailto:skippkim@naver.com">skippkim@naver.com</a></p><div class="rows"><a href="tel:+821039297375"><span>전화</span>010-3929-7375</a></div><div class="btns"><a class="btn" href="mailto:skippkim@naver.com">메일 보내기</a><a class="btn line" href="SkippCV.pdf" download>이력서 PDF 받기</a><span class="thx">감사합니다.</span></div></div>`));
 
 if(window.PRINT_MODE){ /* ── PDF(인쇄) 전용 페이지: print.html에서만 실행 ── */
 const PR=$('#print'), PAGES=[];
@@ -947,7 +948,7 @@ setStep(0);
 /* ── gallery ── */
 let galOpen=false, galFrom=null;
 function gItem(it){
-  if(it.spec) return `<div class="spec"><h5><span>숏폼 제작 규격서</span><span class="num">v7.3</span></h5><ol>${['물건 점수 <b>3.0 이하</b>는 쓰지 않는다','후킹은 <b>개념 하나</b>','커버는 숫자를 주되 <b>이유는 감춘다</b>','1줄은 <b>멈추게</b>, 2줄은 <b>누르게</b>','영상 <b>2분 초과 금지</b>','출력 전 <b>팩트체크 3회</b>','실측 결과를 <b>규칙으로 승격</b>'].map(r=>`<li><span>${r}</span></li>`).join('')}</ol></div>`;
+  if(it.spec) return `<div class="spec"><h5><span>숏폼 제작 규격서 <small class="ai">(AI Claude 활용)</small></span><span class="num">v7.3</span></h5><ol>${['물건 점수 <b>3.0 이하</b>는 쓰지 않는다','후킹은 <b>개념 하나</b>','커버는 숫자를 주되 <b>이유는 감춘다</b>','1줄은 <b>멈추게</b>, 2줄은 <b>누르게</b>','영상 <b>2분 초과 금지</b>','출력 전 <b>팩트체크 3회</b>','실측 결과를 <b>규칙으로 승격</b>'].map(r=>`<li><span>${r}</span></li>`).join('')}</ol></div>`;
   const r=it.r?` style="--r:${it.r}"`:'';
   const fig=src(it.mp4||(it.v?'유튜브 썸네일':it.img))+(it.mp4?`<video autoplay muted loop playsinline><source src="${it.mp4}" type="video/mp4"></video>`:it.v?`<img src="${yt(it.v)}" alt="" loading="lazy" onerror="this.remove()">`:`<img src="${it.img}" alt="${it.t||''}" loading="lazy"${it.contain?' style="object-fit:contain"':''} onerror="this.remove()">`);
   const t=(it.t||it.e)?`<div class="g-t">${it.t||''}${it.pl?'<i class="plb">재생목록</i>':''}${it.e?`<em${it.t?'':' class="solo"'}>${it.e}</em>`:''}</div>`:'';
