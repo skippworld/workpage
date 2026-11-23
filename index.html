@@ -977,6 +977,7 @@ const flipSound=()=>{};
 const media=(p,html,lab)=>`<div class="m">${src(p,lab||'')}${html}</div>`;
 const pic=(p,alt='',lab)=>media(p,`<img src="${p}" alt="${alt}" loading="lazy" onerror="this.remove()">`,lab);
 const vid=(p,poster,lab)=>media(p,`<video muted loop playsinline preload="none"${poster?` poster="${poster}"`:''} data-auto><source src="${p}" type="video/mp4"></video>`,lab);
+const still=(p,t)=>media(p,`<video muted playsinline preload="auto" data-still="${t}" src="${p}#t=${t}"></video>`,p);
 const ytPic=(id,lab='유튜브 썸네일')=>media(lab,ytImg(id));
 const S_=(k,html,tag='div',cls='')=>`<${tag} class="st ${cls}" data-s="${k}">${html}</${tag}>`;
 const O_=(k,html,tag='div',cls='')=>`<${tag} class="st only ${cls}" data-o="${k}">${html}</${tag}>`;
@@ -992,14 +993,14 @@ const MANUALS=[
 const IND=[
  ['패션','윌리워스튜디오 · 블랙비스트',pic('image/ww1.jpg'),'아울렛 전환 후 완판,<br>신규 브랜드는 독일 K-전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄, 객석 매진','arun'],
- ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):vid('video/cdf.mp4','','video/cdf.mp4'),'유튜브 17,000 → 33,000,<br>대치동 센터 오픈, 클래스 20회 마감','cdf'],
+ ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):still('video/cdf.mp4',1.5),'유튜브 17,000 → 33,000,<br>대치동 센터 오픈, 클래스 20회 마감','cdf'],
  ['체대입시 교육','배턴터치',ytPic('Afy54zR10uY'),'전국 5개 도시를 돌며<br>브랜드 다큐 6편, 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',pic('image/album1.jpg'),'앨범 커버 50+ 작품,<br>평균 별점 4.9','kmong'],
- ['부동산 경매','마이옥션',ytPic('MiJYm5g2HaY'),'유튜브 1,800 → 26,000+,<br>인스타 광고비 0원으로 6,300+','myauction'],
+ ['부동산 경매','마이옥션',ytPic('lHm_fDfUPi8'),'유튜브 1,800 → 26,000+,<br>인스타 광고비 0원으로 6,300+','myauction'],
 ];
 
 const TOUCH=[
- ['유튜브','출연자별 콘텐츠 IP 15개, 구독자 1,800 → 26,000+',`<div class="tp3">${['MiJYm5g2HaY','RuoOPgJsgjI','n7oe8HwXLpA'].map(v=>ytPic(v)).join('')}</div>`],
+ ['유튜브','출연자별 콘텐츠 IP 15개, 구독자 1,800 → 26,000+',`<div class="tp3">${['lHm_fDfUPi8','RuoOPgJsgjI','n7oe8HwXLpA'].map(v=>ytPic(v)).join('')}</div>`],
  ['인스타그램','광고비 0원, 3주 만에 팔로워 80 → 6,300+, 릴스 280만+',`<div class="tp3 tall">${INSTA.slice(0,3).map(r=>pic(`insta/insta${r[0]}.jpg`)+'').join('')}</div>`],
  ['웹사이트','홈페이지 UI/UX 전면 리뉴얼',`<div class="tp2"><figure>${pic('image/web_before.jpg')}<figcaption>리뉴얼 전</figcaption></figure><figure class="aft">${pic('image/web_after.jpg')}<figcaption>리뉴얼 후</figcaption></figure></div>`],
  ['상세페이지','올인원서비스 상세페이지와 소개영상',`<div class="tp3 tall">${[1,2,3].map(n=>pic(`image/web_service${n}.jpg`)).join('')}</div>`],
@@ -1008,7 +1009,7 @@ const TOUCH=[
 
 const DAYS=[['30일','진단','채널과 고객 접점의 데이터, 제작 흐름, 팀의 역할부터 파악합니다.'],['60일','기준','포맷과 제작 규격서를 세워 누가 만들어도 같은 품질이 나오게 합니다.'],['90일','운영','성과 지표와 회고 루틴을 정착시켜 잘된 것은 다시 잘되게 만듭니다.']];
 
-const brandCover=b=>b.id==='myauction'?ytPic('MiJYm5g2HaY'):b.id==='cdf'?vid('video/cdf.mp4','','video/cdf.mp4'):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
+const brandCover=b=>b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
 
 const FIT=[
@@ -1228,6 +1229,8 @@ const pio=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) r
 if(innerWidth>860) pio.observe($('.pw')); else PV.forEach(e=>pio.observe(e));
 const vio=new IntersectionObserver(es=>es.forEach(en=>{ const v=en.target; if(en.isIntersecting&&!v.closest('.only:not(.on)')) play(v); else v.pause(); }),{threshold:.2});
 $$('video[data-auto]').forEach(v=>vio.observe(v));
+// 정지 화면 영상: 지정한 초에서 멈춘 한 장면으로
+$$('video[data-still]').forEach(v=>{ const t=+v.dataset.still; const go=()=>{ try{ if(Math.abs(v.currentTime-t)>.05) v.currentTime=t; }catch(e){} v.pause(); }; v.addEventListener('loadedmetadata',go); v.addEventListener('play',()=>v.pause()); if(v.readyState>=1) go(); });
 
 /* 열기 */
 document.addEventListener('click',e=>{
