@@ -47,7 +47,7 @@ img,video{display:block}
 :focus-visible{outline:2px solid var(--o);outline-offset:3px}
 
 /* top */
-.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:50;display:flex;align-items:center;gap:10px;padding:0 var(--pad);background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:50;transition:transform .35s var(--E);display:flex;align-items:center;gap:10px;padding:0 var(--pad);background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .top>b{font-size:17px;font-weight:800;letter-spacing:-.01em}
 .top>b span{font-weight:500;font-size:12.5px;color:var(--mute);margin-left:8px;letter-spacing:.04em}
 .top nav{flex:1;display:flex;justify-content:center;gap:4px}
@@ -57,7 +57,8 @@ img,video{display:block}
 .tbtn.pdf2{border:1px solid var(--o);color:var(--o)}
 .tbtn.pdf2:hover{background:rgba(255,106,19,.08)}
 .tbtn.cta{background:var(--o);color:#1d0e03}
-#prog{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)}
+#prog{position:fixed;left:0;right:0;top:0;height:3px;z-index:51;background:var(--ink);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+.top.hide{transform:translateY(-100%)}
 
 /* media placeholder */
 .m{position:relative;overflow:hidden;background:#e9e5e0;isolation:isolate;width:100%;height:100%}
@@ -66,9 +67,14 @@ img,video{display:block}
 .src b{font-weight:700;color:#7d756d}
 
 /* scene engine */
-.sc{position:relative;height:calc(var(--len) * 1vh)}
-.stk{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;padding:calc(var(--top) + 3vh) var(--pad) 5vh}
-.st{opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .75s var(--E)}
+:root{--sh:100vh}
+@supports (height:100svh){:root{--sh:100svh}}
+html.snapon{scroll-snap-type:y mandatory}
+.sc{position:relative;height:calc(var(--len) / 100 * var(--sh))}
+.snap{position:absolute;left:0;width:1px;height:var(--sh);scroll-snap-align:start;scroll-snap-stop:always;pointer-events:none;opacity:0}
+#proof{scroll-snap-align:start}
+.stk{position:sticky;top:0;height:var(--sh);overflow:hidden;padding:calc(var(--top) + 2.5vh) var(--pad) 4vh}
+.st{opacity:0;transform:translateY(26px);transition:opacity .5s ease var(--d,0s),transform .75s var(--E) var(--d,0s)}
 .st.on{opacity:1;transform:none}
 .only{pointer-events:none}
 .only.on{pointer-events:auto}
@@ -77,7 +83,7 @@ img,video{display:block}
 h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 
 /* ① hook */
-.hook{--f:clamp(0, calc((var(--p) - .28) / .62), 1)}
+.hook{--f:clamp(0, calc((var(--p) - .3) / .6), 1)}
 .hook .stk{display:flex;flex-direction:column;justify-content:center}
 .hk{position:relative;display:grid}
 .hk>*{grid-area:1/1}
@@ -91,8 +97,8 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .hk-big .hit .plus{color:#fff;transform:scale(1.25) translateY(-4%)}
 .hk-big>span.hit{animation:hitp .7s var(--E)}
 @keyframes hitp{40%{transform:scale(1.03)}}
-.hook[data-step="2"] .hk-big>span:nth-child(3) i{color:var(--ink)}
-.hook[data-step="3"] .hk-big{opacity:0;transform:translateY(-40px)}
+.hook[data-step="1"] .hk-big>span:nth-child(3) i{color:var(--ink)}
+.hook[data-step="2"] .hk-big{opacity:0;transform:translateY(-40px)}
 .hk-end{align-self:center;font-size:min(8.4vw,14vh);font-weight:800;letter-spacing:-.05em;line-height:1.04}
 .hk-me{align-self:end;justify-self:start;font-size:clamp(16px,1.6vw,22px);font-weight:600;margin-top:2em;transform:translateY(calc(100% + 3vh))}
 .hk-me.on{transform:translateY(calc(100% + 3vh))}
@@ -100,12 +106,15 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .cue i{width:1px;height:46px;background:var(--line);position:relative;overflow:hidden}
 .cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--ink);animation:cue 1.8s var(--E) infinite}
 @keyframes cue{to{top:100%}}
-.hook[data-step="1"] .cue,.hook[data-step="2"] .cue,.hook[data-step="3"] .cue{opacity:0}
+.hook[data-step="1"] .cue,.hook[data-step="2"] .cue{opacity:0}
 
 /* ② hello */
 .hello .stk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,90px);align-items:center}
-.drain{position:absolute;left:0;right:0;top:0;height:120%;z-index:3;pointer-events:none;background:linear-gradient(to bottom,var(--o) 0,var(--o) 80%,rgba(255,106,19,0) 100%);transform:translateY(calc(clamp(0, var(--p) / .14, 1) * 100%))}
-.hl-m{position:relative;height:min(74vh,62vw);display:grid}
+.drain{position:absolute;left:0;right:0;top:0;height:120%;z-index:3;pointer-events:none;background:linear-gradient(to bottom,var(--o) 0,var(--o) 80%,rgba(255,106,19,0) 100%);transform:translateY(100%)}
+.hello[data-step="0"] .drain{animation:drain 1.1s var(--E) both}
+@keyframes drain{from{transform:translateY(0)}to{transform:translateY(100%)}}
+.hl-m{position:relative;height:min(78vh,62vw);display:grid;overflow:hidden}
+.hl-m>.only{height:100%;min-height:0}
 .hl-m>.only{grid-area:1/1;opacity:0;transform:scale(1.04);transition:opacity .7s ease,transform 1.1s var(--E)}
 .hl-m>.only.on{opacity:1;transform:none}
 .hl-t{display:grid;align-items:center}
@@ -116,7 +125,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .chips span{font-size:14px;font-weight:700;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 13px;background:#fff}
 .dots4{position:absolute;right:var(--pad);bottom:5vh;display:flex;gap:6px;list-style:none}
 .dots4 li{width:22px;height:3px;background:var(--line);transition:background .4s}
-.hello[data-step="0"] .dots4 li:nth-child(-n+1),.hello[data-step="1"] .dots4 li:nth-child(-n+2),.hello[data-step="2"] .dots4 li:nth-child(-n+3),.hello[data-step="3"] .dots4 li{background:var(--o)}
+.hello[data-step="0"] .dots4 li:nth-child(-n+1),.hello[data-step="1"] .dots4 li:nth-child(-n+2),.hello[data-step="2"] .dots4 li{background:var(--o)}
 
 /* ③ industries */
 .ind{--f:calc(clamp(0, var(--p), 1) * .22)}
@@ -124,7 +133,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .sh{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
 .sh>.sw{display:none}
 .sh h2{font-size:clamp(30px,3.6vw,60px)}
-.ind:not([data-step="6"]) .sh>.sw:first-child,.ind[data-step="6"] .sh>.sw:nth-child(2){display:block}
+.ind:not([data-step="6"]) .sh>.sw.first,.ind[data-step="6"] .sh>.sw:nth-child(2){display:block}
 .sh .sh-k{font-size:15px;color:var(--mute);font-weight:600}
 .cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;transition:opacity .5s,transform .6s var(--E)}
 
@@ -160,7 +169,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .ind[data-step="6"] .cards{opacity:.12;filter:grayscale(1);transform:translateY(-6px) scale(.97)}
 
 /* ④ system */
-.sys{--f:clamp(0, calc((var(--p) - .45) / .5), 1)}
+.sys{--f:clamp(0, calc((var(--p) - .5) / .4), 1)}
 .sys .stk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,5vw,90px);align-items:center}
 .sy-t{position:relative;z-index:1;display:grid;grid-template-rows:auto auto auto}
 .sy-t>.sh-k,.sy-t>h2{grid-column:1}
@@ -169,7 +178,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .docs{position:relative;display:grid;align-items:center}
 .docs>*{grid-area:1/1}
 .spec{transition:transform .9s var(--E),opacity .6s,filter .6s}
-.sys[data-step="1"] .spec,.sys[data-step="2"] .spec{transform:rotate(-4deg) translate(-6%,-10%) scale(.82);opacity:.45;filter:blur(1px)}
+.sys[data-step="1"] .spec{transform:rotate(-4deg) translate(-6%,-10%) scale(.82);opacity:.45;filter:blur(1px)}
 .mans{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-self:end;margin-bottom:-2vh;pointer-events:none}
 .man{background:#fff;border:1px solid var(--line);border-top:5px solid var(--ink);padding:18px 16px 14px;box-shadow:0 30px 60px -30px rgba(20,18,16,.45);display:flex;flex-direction:column;gap:12px;min-height:min(42vh,360px);transform:translateY(60px) rotate(var(--rt,0deg));transition:opacity .5s,transform .9s var(--E)}
 .man.on{transform:rotate(var(--rt,0deg))}
@@ -182,7 +191,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .man li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;background:var(--o)}
 .mp{font-size:11.5px;color:var(--mute);border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;gap:6px}
 .mp em{font-style:normal;font-weight:800;color:var(--ink)}
-.sy-t h2{font-size:clamp(40px,5.6vw,96px);margin-top:.3em}
+.sy-t h2{font-size:clamp(34px,4.2vw,72px);margin-top:.3em}
 .sy-t p:not(.sh-k){max-width:30em;margin-top:1.4em;font-size:clamp(15px,1.25vw,19px);line-height:1.7;color:var(--ink)}
 .spec{position:relative;z-index:1;background:#fff;color:var(--ink);padding:clamp(22px,2.6vw,44px);box-shadow:0 1px 0 var(--line),0 40px 80px -40px rgba(20,18,16,.35);border:1px solid var(--line);transform:rotate(-1.2deg)}
 .spec h5{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:clamp(17px,1.5vw,24px);font-weight:800;border-bottom:2px solid var(--ink);padding-bottom:12px}
@@ -220,7 +229,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .bx.res small{color:var(--ink)}
 
 /* ⑥ touchpoints */
-.touch{--f:clamp(0, calc((var(--p) - .82) / .14), 1)}
+.touch{--f:clamp(0, calc((var(--p) - .82) / .16), 1)}
 .touch .stk{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,90px);align-items:center}
 .to-t{position:relative;z-index:1}
 .to-t h2{font-size:clamp(30px,3.6vw,60px);margin-top:.35em}
@@ -231,7 +240,10 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .path li i{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:#fff;transition:background .4s,border-color .4s}
 .path li.on i{background:var(--o);border-color:var(--o)}
 .path li b{font-size:clamp(16px,1.4vw,22px);font-weight:800}
-.to-m{position:relative;z-index:1;display:grid;height:min(70vh,48vw)}
+.to-m{position:relative;z-index:1;display:grid;height:min(76vh,48vw)}
+.to-m>.only{min-height:0;overflow:hidden}
+.tp3 .m,.tp2 .m{max-height:52vh}
+.tp3.tall .m,.tp2 .m{width:auto;max-width:100%}
 .to-m>.only{grid-area:1/1;display:flex;flex-direction:column;justify-content:center;gap:14px;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .7s var(--E)}
 .to-m>.only.on{opacity:1;transform:none}
 .to-m>.only>p{font-size:clamp(14px,1.15vw,18px);color:var(--mute)}
@@ -292,14 +304,14 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 .pv.in .b10 i{height:var(--h)}
 .b10 b{font-size:clamp(9px,.75vw,12px);font-weight:700;color:var(--mute);white-space:nowrap}
 
+.bc:hover{box-shadow:0 30px 60px -36px rgba(20,18,16,.45)}
 .arch{background:var(--wash)}
 .bgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,28px);margin-top:7vh}
 .bc{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);opacity:0;transform:translateY(30px);transition:opacity .6s,transform .8s var(--E),box-shadow .3s}
 .bc.in{opacity:1;transform:none}
-.bc:hover{box-shadow:0 30px 60px -36px rgba(20,18,16,.45)}
 .bc:first-child{grid-column:span 2}
-.bc-m{display:block;aspect-ratio:16/9;overflow:hidden}
 .bc:first-child .bc-m{aspect-ratio:21/9}
+.bc-m{display:block;aspect-ratio:16/9;overflow:hidden}
 .bc-m .m{transition:transform .8s var(--E)}
 .bc:hover .bc-m .m{transform:scale(1.035)}
 .bc-t{display:flex;flex-direction:column;padding:20px 22px 22px;flex:1}
@@ -376,18 +388,21 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
 #gal{--fg:#ece5da;--ac:var(--o);--sub:#8c847a;--ln:#2a2623;--bg:#0f0d0c}
 
 @media (max-width:1100px){
+  .bgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
   .card .m{aspect-ratio:16/10}
   .ind .stk{gap:2vh}
-  .bgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media screen and (max-width:860px),screen and (orientation:portrait){
   :root{--top:56px}
-  .top nav{display:none}
+  .top nav{display:flex;flex:none;justify-content:flex-end}
+  .top nav a{display:none;font-size:13px;padding:6px 8px}
+  .top nav a[href="#work"]{display:block;color:var(--ink)}
   .top>b{flex:1}
   .top>b span{display:none}
   .tbtn{height:34px;padding:0 11px;font-size:12.5px}
   .stk{padding:calc(var(--top) + 2.4vh) var(--pad) 3.5vh}
+  .top.hide{transform:none}
   .hk-big{font-size:min(14.5vw,9.6vh)}
   .hk-end{font-size:min(13vw,8.6vh)}
   .hk-l{font-size:14px}
@@ -404,12 +419,15 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
   .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 10px}
   .card{display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto auto auto;column-gap:10px;row-gap:0;align-items:start}
   .card .m{grid-row:1/4;aspect-ratio:1;height:auto}
-  .ck{margin-top:0;font-size:11.5px}
+  .ck{margin-top:0;font-size:12px}
   .card>b{font-size:14px}
-  .cr{font-size:11.5px;line-height:1.4}
+  .cr{font-size:12px;line-height:1.4}
   .cr br{display:none}
   .ind[data-step="6"] .cards{opacity:0}
-  .ind .formula{position:absolute;left:var(--pad);right:var(--pad);top:calc(var(--top) + 2.4vh + min(7.6vw,4.2vh)*2.4 + 3vh);grid-template-columns:1fr;border-top-width:2px}
+  .ind .fwrap{position:absolute;left:var(--pad);right:var(--pad);top:calc(var(--top) + 2.5vh + min(7.6vw,4.2vh)*2.4 + 3vh);transform:none!important}
+  .ind .formula{grid-template-columns:1fr;border-top-width:2px}
+  .ind .formula li{transform:none!important}
+  .ind .formula li i{transition:transform .4s ease calc(var(--i) * .16s + .3s)!important}
   .formula li{display:grid;grid-template-columns:44px 1fr;padding:10px 0;border-bottom:1px solid var(--line)}
   .formula li i{width:30px;height:30px;grid-row:1/3}
   .formula li::after{display:none}
@@ -419,7 +437,7 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
   .sy-t h2{font-size:min(9vw,5vh)}
   .sy-t p:not(.sh-k){font-size:13.5px;margin-top:.8em}
   .spec{padding:18px;transform:none}
-  .sys[data-step="1"] .spec,.sys[data-step="2"] .spec{opacity:0;transform:scale(.9)}
+  .sys[data-step="1"] .spec{opacity:0;transform:scale(.9)}
   .mans{grid-template-columns:1fr;gap:8px;align-self:start;margin:0}
   .man{min-height:0;padding:12px 14px;gap:6px;transform:translateY(40px);border-top-width:4px}
   .man.on{transform:none}
@@ -466,6 +484,145 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
   .st,.ph,.bc,.sg-t,.end-in,.hl-m>.only,.to-m>.only{transition:opacity .3s!important;transform:none!important}
   .btn.glow::before{animation:none;background:none;border:2px solid #fff}.btn.glow::after{display:none}
   .cue i::after{animation:none}
+}
+#gal .gp .hist{display:grid}
+#gal .gp .hist ul{list-style:none}
+#gal .gp .hist h4{font-weight:800;border-bottom:3px solid var(--o)}
+#gal .gp .hist li{display:grid;gap:8px;border-bottom:1px solid #2c2825;color:#cfc6b8}
+#gal .gp .hist li b{color:var(--o);font-weight:800}
+
+.hl-note{color:var(--ink)!important;font-weight:700;border-left:3px solid var(--o);padding-left:12px}
+.path li{opacity:.35;transition:opacity .4s}
+.path li.on{opacity:1}
+.path li.cur b{color:var(--o)}
+.to-m>.tc{grid-area:1/1;display:flex;flex-direction:column;justify-content:center;gap:14px;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .7s var(--E);pointer-events:none}
+.to-m>.tc.on{opacity:1;transform:none;pointer-events:auto}
+.to-m>.tc>p{font-size:clamp(14px,1.15vw,18px);color:var(--mute)}
+.to-m>.tc>p b{display:block;color:var(--ink);font-size:clamp(18px,1.6vw,26px);font-weight:800}
+/* 자동 재생 */
+.auto{position:fixed;right:max(18px,calc(var(--pad) - 20px));bottom:22px;z-index:55;display:flex;align-items:center;gap:10px;height:50px;padding:0 20px 0 8px;border-radius:999px;background:var(--ink);color:#fff;font-size:15px;font-weight:800;box-shadow:0 14px 30px -14px rgba(20,18,16,.6);transition:transform .25s,background .25s}
+.auto:hover{transform:translateY(-2px)}
+.auto .ai{position:relative;width:36px;height:36px;border-radius:50%;background:var(--o);display:flex;align-items:center;justify-content:center}
+.auto .ai svg{width:13px;fill:#1d0e03}
+.auto .ai .pz{display:none}
+.auto.on .ai .pl0{display:none}
+.auto.on .ai .pz{display:block}
+.auto .ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(#fff calc(var(--ap,0) * 1turn),transparent 0);-webkit-mask:radial-gradient(circle,transparent 17px,#000 18px);mask:radial-gradient(circle,transparent 17px,#000 18px);opacity:0}
+.auto.on .ring{opacity:1}
+html.lock .auto{display:none}
+@media screen and (max-width:860px),screen and (orientation:portrait){.auto{bottom:12px;right:12px;height:44px;width:44px;padding:0;justify-content:center;background:rgba(20,18,16,.85)}.auto .al{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.auto .ai{width:34px;height:34px}}
+
+/* 업종 카드 등장 */
+.cards{position:relative}
+.card{transform-origin:0 0;transition:transform .95s var(--E),opacity .6s ease,box-shadow .6s}
+.card.wait{opacity:0;transform:var(--fx0);pointer-events:none}
+.card.feat{transform:var(--fx);z-index:5;box-shadow:0 50px 100px -40px rgba(20,18,16,.45)}
+.card.placed{transform:none;opacity:1}
+.ind:not(.all) .card.placed{opacity:.5}
+.card .m{transition:none}
+
+/* 인사 장면: 부드러운 전환 */
+.hello .hl-m>.only{transition:opacity 1.2s ease,transform 1.6s var(--E);transform:scale(1.06)}
+.hello .hl-m>.only.on{transform:none}
+.hello .hl-m .m img,.hello .hl-m .m video{transform:scale(calc(1.02 + var(--p) * .1));transition:transform .2s linear}
+.hello .hl-t>.only{opacity:1;transform:none;transition:none;pointer-events:none}
+.hello .hl-t>.only.on{pointer-events:auto}
+.hl-t .hln{display:block;overflow:hidden;padding-bottom:.06em}
+.hl-t .hln>span{display:block;transform:translateY(110%);transition:transform .55s cubic-bezier(.5,0,.75,0)}
+.hl-t .only.on .hln>span{transform:none;transition:transform 1s var(--E) calc(.35s + var(--i) * .11s)}
+.hl-t .only:not(.on) .hln>span{transform:translateY(-110%)}
+.hl-t .only>p{opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s}
+.hl-t .only.on>p{opacity:1;transform:none;transition:opacity .8s ease .75s,transform 1s var(--E) .75s}
+.hl-t .only.on>p.hl-note{transition-delay:1s}
+/* 업종 카드 안쪽 여백 (데스크톱) */
+@media screen and (min-width:861px) and (orientation:landscape){
+  .card{padding-bottom:16px;border:1px solid var(--line)}
+  .card>.ck,.card>b,.card>.cr{padding:0 16px}
+  .card>.ck{margin-top:12px}
+}
+
+/* 팀: 아래에서 위로 */
+.org>.st{transform:translateY(60px)}
+.org>.st.on{transform:none}
+/* 접점: 목록 강조 */
+.path li.st{opacity:0;transform:translateX(-14px)}
+.path li.st.on{opacity:.4;transform:none}
+.path li.st.on.past{opacity:.75}
+.path li.st.on.cur{opacity:1}
+.path li.cur i{background:var(--o);border-color:var(--o)}
+.path li.past i{background:var(--ink);border-color:var(--ink)}
+.path li.cur b{color:var(--o)}
+.touch .to-m>.tc{display:flex}
+/* 무대: 줄 단위 등장 */
+.sg-t{opacity:1!important;transform:none!important}
+.sg-t .hm{display:block;overflow:hidden;padding-bottom:.05em}
+.sg-t .hm>span{display:block;transform:translateY(110%);transition:transform 1s var(--E)}
+.stage.in .sg-t .hm>span{transform:none}
+.stage.in .sg-t .hm:nth-child(2)>span{transition-delay:.15s}
+.stage.in .sg-t .hm:nth-child(3)>span{transition-delay:.27s}
+.sg-t>*:not(h2){opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform 1s var(--E)}
+.stage.in .sg-t>.sh-k{opacity:1;transform:none}
+.stage.in .sg-t>.trio{opacity:1;transform:none;transition-delay:.6s}
+.stage.in .sg-t>.wmap{opacity:1;transform:none;transition-delay:.85s}
+.stage.in .sg-t>.btn{opacity:1;transform:none;transition-delay:1.1s}
+/* 숫자 기록: 팔로워 */
+.pv-n .fol{display:block;margin-top:10px;font-size:15px;font-weight:700;color:var(--mute)}
+.pv-n .fol b{display:inline;font-size:1.25em;color:var(--o);letter-spacing:-.02em;font-weight:800}
+/* 마지막 장 */
+.end h2{color:var(--ink)}
+.end h2 .wh{color:#fff}
+.end h2 mark{color:inherit;background:linear-gradient(transparent 58%,rgba(20,18,16,.9) 58%,rgba(20,18,16,.9) 92%,transparent 92%) no-repeat 0 0/0% 100%;transition:background-size .7s var(--E)}
+.end.in h2 mark{background-size:100% 100%}
+.end.in h2 mark:first-of-type{transition-delay:1.1s}
+.end.in h2 mark:last-of-type{transition-delay:1.6s}
+.ct-k{font-size:15px;font-weight:800;letter-spacing:.02em;color:var(--ink)}
+.ct{display:flex;flex-direction:column;gap:6px;border-top:2px solid var(--ink);padding-top:12px}
+.ct>div{display:grid;grid-template-columns:72px 1fr;align-items:baseline}
+.ct dt{font-size:15px;font-weight:700;color:rgba(20,18,16,.65)}
+.ct dd{font-size:clamp(20px,1.8vw,28px);font-weight:800;letter-spacing:-.01em}
+
+/* 이런 팀이라면 */
+.fit .stk{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(24px,5vw,90px);align-items:center;background:var(--wash)}
+.fi-t h2{font-size:clamp(40px,4.8vw,80px);margin-top:.35em}
+.fi-n{margin-top:1.4em;font-size:clamp(18px,1.5vw,24px);font-weight:800;color:var(--mute);font-variant-numeric:tabular-nums;transition:opacity .4s}
+.fi-n b{color:var(--o)}
+.fit.done .fi-n{opacity:0}
+.fits{list-style:none;display:flex;flex-direction:column;gap:10px;transition:opacity .5s,transform .7s var(--E)}
+.fc{background:#fff;border:1px solid var(--line);border-left:4px solid var(--line);padding:14px 22px;opacity:0;transform:translateY(40px);transition:opacity .5s,transform .8s var(--E),border-color .4s,padding .5s}
+.fc.show{opacity:1;transform:none}
+.fc.cur{border-left-color:var(--o);padding:22px 26px;box-shadow:0 30px 60px -36px rgba(20,18,16,.35)}
+.fc.past{opacity:.55}
+.fh{display:flex;align-items:baseline;gap:12px}
+.fh i{font-style:normal;font-size:14px;font-weight:800;color:var(--o);flex:none}
+.fh b{font-size:clamp(15px,1.25vw,19px);font-weight:800;letter-spacing:-.02em;line-height:1.35}
+.fc.cur .fh b{font-size:clamp(19px,1.7vw,28px)}
+.fb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--E)}
+.fb>div{overflow:hidden;min-height:0}
+.fc.cur .fb{grid-template-rows:1fr}
+.fb{overflow:hidden}
+.fl{font-size:clamp(14px,1.1vw,17px);color:var(--mute);margin-top:10px}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.fc ul li{font-size:clamp(14px,1.15vw,18px);font-weight:700;padding-left:14px;position:relative}
+.fc ul li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;background:var(--o)}
+.fc em{font-style:normal;color:var(--o);font-weight:800}
+.fi-end{position:absolute;left:0;right:0;bottom:0;top:0;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);background:var(--o);opacity:0;pointer-events:none;transition:opacity .7s}
+.fi-end p{font-size:clamp(20px,2vw,32px);font-weight:700}
+.fi-end strong{font-size:clamp(40px,5.2vw,92px);font-weight:800;letter-spacing:-.045em;line-height:1.06;margin-top:.35em;color:#fff}
+.fit.done .fi-end{opacity:1}
+@media screen and (max-width:860px),screen and (orientation:portrait){
+  .fit .stk{grid-template-columns:1fr;align-content:start;gap:2.4vh}
+  .fi-t h2{font-size:min(8.6vw,4.8vh)}
+  .fi-n{margin-top:.4em;font-size:15px}
+  .fits{gap:6px}
+  .fc{padding:9px 12px}
+  .fc.cur{padding:14px 14px}
+  .fh b{font-size:13.5px}
+  .fc.cur .fh b{font-size:16px}
+  .fl{font-size:13px;margin-top:6px}
+  .fc ul{margin-top:8px;gap:4px}
+  .fc ul li{font-size:13px}
+  .fi-end strong{font-size:min(10vw,6vh)}
+  .fi-end p{font-size:17px}
 }
 
 #lb{position:fixed;inset:0;z-index:90;background:rgba(8,7,6,.96);display:none;overflow:auto}
@@ -575,9 +732,10 @@ h2{font-weight:800;letter-spacing:-.035em;line-height:1.08}
   <b>김영훈<span>SKIPP</span></b>
   <nav aria-label="바로가기"><a href="#work">작업</a><a href="#stage">무대</a><a href="#me">프로필</a><a href="#contact">연락</a></nav>
   <a class="tbtn pdf2" href="kimyounghoon_portfolio.pdf" download>출력용 PDF</a><a class="tbtn cta" href="SkippCV.pdf" download>이력서 PDF</a>
-  <i id="prog" aria-hidden="true"></i>
 </header>
+<i id="prog" aria-hidden="true"></i>
 <main id="main"></main>
+<button id="auto" class="auto" type="button" aria-label="포트폴리오 자동 재생"><span class="ai"><span class="ring"></span><svg class="pl0" viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z"/></svg><svg class="pz" viewBox="0 0 10 12"><path d="M0 0h3.5v12H0zM6.5 0H10v12H6.5z"/></svg></span><span class="al">자동 재생</span></button>
 <div id="gal" role="dialog" aria-modal="true" aria-label="작업 모아보기"></div>
 <div id="lb" role="dialog" aria-modal="true" aria-label="이미지 크게 보기"><button type="button" aria-label="닫기">×</button><img alt=""></div>
 <script>
@@ -834,7 +992,7 @@ const MANUALS=[
 const IND=[
  ['패션','윌리워스튜디오 · 블랙비스트',pic('image/ww1.jpg'),'아울렛 전환 후 완판,<br>신규 브랜드는 독일 K-전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄, 객석 매진','arun'],
- ['체대입시 교육','체대친구들',vid('video/cdf.mp4','','video/cdf.mp4'),'유튜브 17,000 → 33,000,<br>대치동 센터 오픈, 클래스 20회 마감','cdf'],
+ ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):vid('video/cdf.mp4','','video/cdf.mp4'),'유튜브 17,000 → 33,000,<br>대치동 센터 오픈, 클래스 20회 마감','cdf'],
  ['체대입시 교육','배턴터치',ytPic('Afy54zR10uY'),'전국 5개 도시를 돌며<br>브랜드 다큐 6편, 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',pic('image/album1.jpg'),'앨범 커버 50+ 작품,<br>평균 별점 4.9','kmong'],
  ['부동산 경매','마이옥션',ytPic('MiJYm5g2HaY'),'유튜브 1,800 → 26,000+,<br>인스타 광고비 0원으로 6,300+','myauction'],
@@ -852,57 +1010,63 @@ const DAYS=[['30일','진단','채널과 고객 접점의 데이터, 제작 흐�
 
 const brandCover=b=>b.id==='myauction'?ytPic('MiJYm5g2HaY'):b.id==='cdf'?vid('video/cdf.mp4','','video/cdf.mp4'):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
+
+const FIT=[
+ ['낯선 분야라 아무도 보지 않던 채널을, 보게 만들어야 할 때','부동산 경매, 체대입시처럼 대중적이지 않은 분야에서도 기획으로 채널을 키웠습니다.',['부동산 경매 유튜브 <em>1,800 → 26,000+</em> (약 1,300%)','체대입시 유튜브 <em>17,000 → 33,000</em>']],
+ ['새 채널을 처음부터 시작해야 할 때','처음 맡은 인스타그램도, 광고비 0원으로 3주 만에.',['팔로워 <em>80 → 6,300+</em>, 릴스 조회수 <em>280만+</em>','무엇이 통했는지는 제작 규칙으로 남겼습니다']],
+ ['사람에 따라 품질이 흔들리는 제작팀을, 시스템으로 바꿔야 할 때','담당자 개인 역량에 기대지 않는 제작 파이프라인을 만들었습니다.',['인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 작업 흐름 총괄, 제작 가이드라인과 품질 점검 기준(QC) 표준화','편당 제작 기간 단축, 팀 체제 롱폼 <em>400편+</em>']],
+ ['출연자가 많아 콘텐츠가 흩어질 때','출연자마다 다른 캐릭터를, 각자의 콘텐츠 IP로 기획했습니다.',['출연진 <em>20여 명</em>의 IP 기획과 관리','출연자별 콘텐츠 IP <em>15개+</em>']],
+ ['콘텐츠가 회원과 매출로 이어져야 할 때','조회수에서 끝나지 않고, 사업 성과로 연결했습니다.',['부동산 경매 회사: 업계 최대 규모 <em>회원 50만+</em> 달성에 기여','체대입시 채널: 대치동 센터 오픈, 오프라인 클래스 <em>20회 전석 매진</em>']],
+];
+const SD=(k,d,html,tag='div',cls='')=>`<${tag} class="st ${cls}" data-s="${k}" style="--d:${d}s">${html}</${tag}>`;
 const HTML=[
-// ① 훅
-scene('hook',4,380,`
+// ① 훅 (3동작)
+scene('hook',3,300,`
  <div class="rise"></div>
  <div class="hk">
   ${S_(0,'마이옥션 인스타그램 운영 기록','p','hk-l')}
-  <h1 class="hk-big">${S_(0,'광고비 0원.','span')}${S_(1,'3주.','span')}${S_(2,'팔로워 80<i>→</i><b class="cnt" data-cnt="80,6300" data-at="2">80</b><em class="plus">+</em>','span')}</h1>
-  ${S_(3,'운이 아니라,<br>설계였습니다.','p','hk-end')}
-  ${S_(3,'콘텐츠 총괄 PD 김영훈의 포트폴리오','p','hk-me')}
+  <h1 class="hk-big">${S_(0,'광고비 0원.','span')}${SD(0,.7,'3주.','span')}${S_(1,'팔로워 80<i>→</i><b class="cnt" data-cnt="80,6300" data-at="1">80</b><em class="plus">+</em>','span')}</h1>
+  ${S_(2,'운이 아니라,<br>설계였습니다.','p','hk-end')}
+  ${SD(2,.4,'콘텐츠 총괄 PD 김영훈의 포트폴리오','p','hk-me')}
  </div>
  <div class="cue" aria-hidden="true"><span>내려서 보기</span><i></i></div>`),
 
-// ② 인사
-scene('hello',4,420,`
+// ② 인사 (3동작)
+scene('hello',3,300,`
  <div class="drain"></div>
  <div class="hl-m">
   ${O_(0,pic('image/profile.jpg','김영훈 프로필 사진'))}
   ${O_(1,pic('image/performer.jpg','비보이 공연 사진'))}
   ${O_(2,vid('video/hero.mp4','number/image2.jpg','대표 작업 영상'))}
-  ${O_(3,pic('number/image2.jpg'))}
  </div>
  <div class="hl-t">
-  ${O_(0,'<h2>안녕하세요,<br>김영훈입니다.</h2><p>콘텐츠 총괄 PD.<br>지금은 마이옥션에서 콘텐츠기획 팀장으로 일합니다.</p>')}
-  ${O_(1,'<h2>무대에서 18년,<br>관객의 시선을<br>붙잡았습니다.</h2><p>비보이팀 맨오브펑키즈 창단과 리더.<br>6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</p>')}
-  ${O_(2,`<h2>그 감각으로 8년,<br>7개 브랜드의 채널과<br>비주얼을 만들었습니다.</h2><p class="chips">${BR.map(b=>`<span>${b.short||b.n}</span>`).join('')}</p>`)}
-  ${O_(3,'<h2>지금부터 보실 장면은<br>모두 제가 기획하고<br>만든 것입니다.</h2><p>기획, 촬영, 편집, 디자인, 그리고 팀 운영까지.</p>')}
+  ${O_(0,'<h2><span class="hln" style="--i:0"><span>숫자로 증명하는</span></span><span class="hln" style="--i:1"><span>콘텐츠 PD,</span></span><span class="hln" style="--i:2"><span>김영훈입니다.</span></span></h2><p>콘텐츠 총괄 PD.<br>지금은 마이옥션에서 콘텐츠기획 팀장으로 일합니다.</p>')}
+  ${O_(1,'<h2><span class="hln" style="--i:0"><span>무대에서 18년,</span></span><span class="hln" style="--i:1"><span>관객의 시선을</span></span><span class="hln" style="--i:2"><span>붙잡았습니다.</span></span></h2><p>비보이팀 맨오브펑키즈 창단과 리더.<br>6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</p>')}
+  ${O_(2,`<h2><span class="hln" style="--i:0"><span>그 감각으로 8년,</span></span><span class="hln" style="--i:1"><span>7개 브랜드의 채널과</span></span><span class="hln" style="--i:2"><span>비주얼을 만들었습니다.</span></span></h2><p class="chips">${BR.map(b=>`<span>${b.short||b.n}</span>`).join('')}</p><p class="hl-note">지금부터 보실 장면은 모두 제가 기획하고 만든 것입니다.</p>`)}
  </div>
- <ol class="dots4" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>`),
+ <ol class="dots4" aria-hidden="true"><li></li><li></li><li></li></ol>`),
 
-// ③ 재현성
-scene('ind',7,560,`
+// ③ 재현성 (2동작)
+scene('ind',7,700,`
  <div class="rise soft"></div>
  <header class="sh">
-  ${O_(0,'<h2>업종이 바뀌어도,<br>성과는 반복됐습니다.</h2>','div','sw')}
+  <div class="sw first"><h2>업종이 바뀌어도,<br>성과는 반복됐습니다.</h2></div>
   ${O_(6,'<h2>업종은 달라도,<br>공식은 하나였습니다.</h2>','div','sw')}
   <p class="sh-k">5개 업종, 7개 브랜드</p>
  </header>
- <div class="cards">${IND.map((c,i)=>S_(i,`<button type="button" class="card" data-gal="${c[4]}" aria-label="${c[1]} 작업 보기">${c[2]}<span class="ck">${c[0]}</span><b>${c[1]}</b><span class="cr">${c[3]}</span></button>`)).join('')}</div>
- ${S_(6,`<ol class="formula">${STEPS.map((s,i)=>`<li style="--i:${i}"><i>${i+1}</i><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}<li class="back" style="--i:5"><i>↺</i><b>다시 처음으로</b><span>잘된 것은 다시 잘되게</span></li></ol>`)}`),
+ <div class="cards">${IND.map((c,i)=>`<button type="button" class="card wait" data-gal="${c[4]}" aria-label="${c[1]} 작업 보기">${c[2]}<span class="ck">${c[0]}</span><b>${c[1]}</b><span class="cr">${c[3]}</span></button>`).join('')}</div>
+ ${S_(6,`<ol class="formula">${STEPS.map((s,i)=>`<li style="--i:${i}"><i>${i+1}</i><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}<li class="back" style="--i:5"><i>↺</i><b>다시 처음으로</b><span>잘된 것은 다시 잘되게</span></li></ol>`,'div','fwrap')}`),
 ].join('');
 
 const HTML2=[
-// ④ 시스템
-scene('sys',3,380,`
+// ④ 시스템 (2동작)
+scene('sys',2,200,`
  <div class="rise"></div>
  <div class="sy-t">
   <p class="sh-k">시스템</p>
-  <h2>감각을<br>문서로<br>만들었습니다.</h2>
-  ${O_(0,'<p>제 감으로만 만들면 저만 잘 만듭니다.<br>그래서 실측 결과가 나올 때마다 규칙으로 올렸고,<br>그 규칙이 제작 규격서 v7.3이 됐습니다.</p>')}
-  ${O_(1,'<p>규칙만으로는 부족해서, 일하는 순서도 문서로 만들었습니다.<br>담당자와 편집자가 나눠 맡아도 같은 결과가 나오도록<br>제작 매뉴얼 3권으로 정리했습니다.</p>')}
-  ${O_(2,'<p class="sum"><b>규격서 1개 + 매뉴얼 3권</b>누가 맡아도, 같은 품질.</p>')}
+  <h2>시청자를 멈추게 하는<br>감각을 공식으로<br>만들었습니다.</h2>
+  ${O_(0,'<p>무엇을 기획하고, 어떻게 만들어야 끝까지 보고 누르는지.<br>현장에서 쌓은 이 감각을 데이터로 확인할 때마다 규칙으로 정리했고,<br>그렇게 쌓인 규칙이 제작 규격서 v7.3이 됐습니다.</p>')}
+  ${O_(1,'<p>일하는 순서도 문서로 만들었습니다.<br>담당자와 편집자가 나눠 맡아도 같은 결과가 나오도록.</p><p class="sum"><b>규격서 1개 + 매뉴얼 3권</b>누가 맡아도, 같은 품질.</p>')}
  </div>
  <div class="docs">
   <div class="spec">
@@ -913,42 +1077,43 @@ scene('sys',3,380,`
   <div class="mans">${MANUALS.map((m,i)=>S_(1,`<span class="mt"><small>${m[1]}</small>${m[0]}</span><ul>${m[3].map(x=>`<li>${x}</li>`).join('')}</ul><span class="mp">PART 1 담당자 · PART 2 편집자<em>${m[2]}</em></span>`,'article',`man man${i}`)).join('')}</div>
  </div>`),
 
-// ⑤ 팀
-scene('team',4,440,`
+// ⑤ 팀 (2동작)
+scene('team',2,200,`
  <div class="tm-t">
   <p class="sh-k">팀 빌딩</p>
-  <p class="up"><span>1인 체제 PD</span><i>→</i>${S_(3,'콘텐츠기획 팀장','b')}</p>
-  <h2>혼자 만드는<br>채널에서,${S_(3,'<br>팀이 만드는<br>채널로.','span')}</h2>
-  ${S_(3,'<p>후임 PD와 프리랜서 촬영 PD를 디렉팅하고,<br>제작 기준을 매뉴얼로 만들었습니다.</p>')}
+  <p class="up"><span>1인 체제 PD</span><i>→</i>${S_(1,'콘텐츠기획 팀장','b')}</p>
+  <h2>혼자 만드는<br>채널에서,${S_(1,'<br>팀이 만드는<br>채널로.','span')}</h2>
+  ${SD(1,1.3,'<p>역할 분담(R&R)과 작업 흐름을 총괄하고,<br>품질 점검 기준(QC)을 매뉴얼로 표준화했습니다.</p>')}
  </div>
  <div class="org">
   ${S_(0,'<div class="bx lead">김영훈<small>기획, 디렉팅, 품질 기준</small></div>')}
-  ${S_(1,'<div class="ln"></div><div class="bx doc">제작 매뉴얼<small>제작 기준과 편집 방향을 문서로</small></div>')}
-  ${S_(2,'<div class="ln"></div><div class="two"><div class="bx">후임 PD<small>편집 디렉팅</small></div><div class="bx">프리랜서 촬영 PD<small>촬영 디렉팅</small></div></div>')}
-  ${S_(3,'<div class="ln"></div><div class="bx res"><div><b>15개+</b><small>출연자별 콘텐츠 IP</small></div><div><b>400편+</b><small>팀 체제 롱폼, 같은 품질</small></div></div>')}
+  ${SD(1,.25,'<div class="ln"></div><div class="bx doc">제작 매뉴얼<small>제작 기준과 편집 방향을 문서로</small></div>')}
+  ${SD(1,.65,'<div class="ln"></div><div class="two"><div class="bx">후임 PD<small>편집 디렉팅</small></div><div class="bx">프리랜서 촬영 PD 3명<small>촬영 디렉팅</small></div></div>')}
+  ${SD(1,1.05,'<div class="ln"></div><div class="bx res"><div><b>15개+</b><small>출연자별 콘텐츠 IP</small></div><div><b>400편+</b><small>팀 체제 롱폼, 같은 품질</small></div></div>')}
  </div>`),
 
-// ⑥ 접점
-scene('touch',6,560,`
+// ⑥ 접점 (6동작: 목록이 차례로 뜨고, 스크롤마다 접점 하나씩)
+scene('touch',6,600,`
  <div class="rise late"></div>
  <div class="to-t">
   <p class="sh-k">마이옥션, 접점 리뉴얼</p>
   <h2>회원이 회사를 만나는<br>모든 접점을<br>다시 만들었습니다.</h2>
-  <ol class="path">${TOUCH.map((t,i)=>S_(i,`<i></i><b>${t[0]}</b>`,'li')).join('')}</ol>
+  <ol class="path">${TOUCH.map((t,i)=>SD(0,.35+i*.12,`<i></i><b>${t[0]}</b>`,'li')).join('')}</ol>
  </div>
  <div class="to-m">
-  ${TOUCH.map((t,i)=>O_(i,`${t[2]}<p><b>${t[0]}</b>${t[1]}</p>`)).join('')}
-  ${O_(5,'<div class="fin"><p>유튜브에서 사내 문서까지,<br>하나의 목소리로.</p><strong>업계 최대 규모<br>회원 수 달성에 기여</strong></div>')}
+  ${TOUCH.map((t,i)=>`<div class="only tc" data-o="${i}">${t[2]}<p><b>${t[0]}</b>${t[1]}</p></div>`).join('')}
+  ${O_(5,'<div class="fin"><p>유튜브에서 사내 문서까지,<br>하나의 목소리로.</p><strong>업계 최대 규모,<br>회원 50만+<br>달성에 기여</strong></div>')}
  </div>`),
 
-// ⑦ 첫 90일
-scene('days',4,380,`
- <div class="dy-t">
-  <p class="sh-k">합류한다면</p>
-  <h2>이렇게<br>시작하겠습니다.</h2>
-  ${S_(3,'<p class="motto">안 된다면 되게끔,<br>잘 된다면 다시 또 잘되게.</p>')}
+// ⑦ 이런 팀이라면 (6동작: 카드 5장 + 마무리)
+scene('fit',6,600,`
+ <div class="fi-t">
+  <p class="sh-k">이런 팀이라면</p>
+  <h2>지금 필요한<br>사람입니다.</h2>
+  <p class="fi-n"><b>1</b> / 5</p>
  </div>
- <ol class="dys">${DAYS.map((d,i)=>S_(i,`<span class="dn">${d[0]}</span><b>${d[1]}</b><p>${d[2]}</p><i class="bar"></i>`,'li')).join('')}</ol>`),
+ <ol class="fits">${FIT.map((f,i)=>`<li class="fc" data-i="${i}"><p class="fh"><i>${i+1}</i><b>${f[0]}</b></p><div class="fb"><div><p class="fl">${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></div></div></li>`).join('')}</ol>
+ <div class="fi-end"><p>기획, 촬영, 편집, 디자인까지<br>직접 할 줄 압니다.</p><strong>그래서 기준을 세우고,<br>가르치고, 맡길 수 있습니다.</strong></div>`),
 ].join('');
 
 /* 숫자 증거 + 작업 보관소 + 무대 + 프로필 + 연락 (일반 스크롤) */
@@ -958,7 +1123,7 @@ const HTML3=`
  <div class="pw">
   <article class="pv"><div class="pv-n"><b data-count="700" data-suf="편+">700편+</b><span>지금까지 만든 롱폼 영상<small>숏폼은 세지 않았습니다</small></span></div><div class="d700">${Array.from({length:700},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div></article>
   <article class="pv"><div class="pv-n"><b class="c20">20<small>/20</small></b><span>체대친구들 오프라인 클래스<small>20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20">${Array.from({length:20},(_,i)=>`<i style="--i:${i}">${i+1}<b>매진</b></i>`).join('')}</div></article>
-  <article class="pv"><div class="pv-n"><b data-count="280" data-suf="만+">280만+</b><span>마이옥션 릴스 3주 누적 조회수<small>상위 10편, 광고비 0원</small></span></div><div class="b10">${INSTA.map((r,i)=>`<div><i style="--h:${(r[1]/INSTA_MAX*100).toFixed(1)}%;--i:${i}"></i><b>${r[2]}</b></div>`).join('')}</div></article>
+  <article class="pv"><div class="pv-n"><b data-count="280" data-suf="만+">280만+</b><span>마이옥션 릴스 3주 누적 조회수<small>상위 10편, 광고비 0원</small></span><span class="fol">팔로워 80명 → <b data-count="6300" data-suf="명+">6,300명+</b></span></div><div class="b10">${INSTA.map((r,i)=>`<div><i style="--h:${(r[1]/INSTA_MAX*100).toFixed(1)}%;--i:${i}"></i><b>${r[2]}</b></div>`).join('')}</div></article>
  </div>
 </section>
 <section class="arch" id="work">
@@ -973,7 +1138,7 @@ const HTML3=`
  <div class="sg-v">${pic('image/performer.jpg','비보이 공연 사진')}</div>
  <div class="sg-t">
   <p class="sh-k">무대</p>
-  <h2><span class="big">18<small>년</small></span>사람을 붙잡는 감각은<br>무대에서 배웠습니다.</h2>
+  <h2><span class="big hm"><span>18<small>년</small></span></span><span class="hm"><span>사람을 붙잡는 감각은</span></span><span class="hm"><span>무대에서 배웠습니다.</span></span></h2>
   <div class="trio"><div><b>6<small>개국</small></b><span>해외 공연과 배틀</span></div><div><b>10<small>회+</small></b><span>배틀 우승</span></div><div><b>6<small>편</small></b><span>tvN, KBS 등 방송</span></div></div>
   <div class="wmap">${worldSvg()}</div>
   <button class="btn line" type="button" data-hist="1">무대 경력 및 이력 전체 보기</button>
@@ -995,10 +1160,10 @@ const HTML3=`
 </section>
 <section class="end" id="contact">
  <div class="end-in">
-  <h2>제 포트폴리오의<br><span>다음 <u>장</u>은<br>늘 그렇듯 성<u>장</u>으로</span><br>채우겠습니다.</h2>
+  <h2>제 포트폴리오의<br><span class="wh">다음 <mark>장</mark>은<br>늘 그렇듯 성<mark>장</mark>으로</span><br>채우겠습니다.</h2>
   <div class="end-c">
-   <a class="mail" href="mailto:skippkim@naver.com">skippkim@naver.com</a>
-   <a class="tel" href="tel:+821039297375">010-3929-7375</a>
+   <p class="ct-k">Contact</p>
+   <dl class="ct"><div><dt>이메일</dt><dd><a href="mailto:skippkim@naver.com">skippkim@naver.com</a></dd></div><div><dt>연락처</dt><dd><a href="tel:+821039297375">010-3929-7375</a></dd></div></dl>
    <div class="end-b"><a class="btn ink" href="mailto:skippkim@naver.com">메일 보내기</a><a class="btn ink line" href="SkippCV.pdf" download>이력서 PDF</a><a class="btn ink line" href="kimyounghoon_portfolio.pdf" download>출력용 PDF</a></div>
    <p class="thx">감사합니다.</p>
   </div>
@@ -1009,7 +1174,7 @@ $('#main').innerHTML=HTML+HTML2+HTML3;
 
 /* ── 스크롤 엔진 ── */
 const SC=$$('.sc');
-SC.forEach(s=>{ s._n=+s.dataset.steps; s._st=-1; s._el=$$('[data-s],[data-o]',s); s._cnt=$$('.cnt',s); });
+SC.forEach(s=>{ s._n=+s.dataset.steps; s._st=-1; s._stk=$('.stk',s); for(let k=0;k<s._n;k++){ const a=document.createElement('i'); a.className='snap'; a.style.top=`calc(${k} * var(--sh))`; s.appendChild(a); } s._el=$$('[data-s],[data-o]',s); s._cnt=$$('.cnt',s); });
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 function setStep(s,k){
   if(s._st===k) return; const prev=s._st; s._st=k; s.dataset.step=k;
@@ -1020,17 +1185,24 @@ function setStep(s,k){
   s._el.forEach(e=>{ const a=e.dataset.s, o=e.dataset.o;
     if(a!==undefined) e.classList.toggle('on',k>=+a);
     if(o!==undefined) e.classList.toggle('on',k===+o); });
+  if(s.classList.contains('touch')) $$('.path li',s).forEach((e,j)=>{ e.classList.toggle('cur',j===k); e.classList.toggle('past',j<k||k>=5); });
+  if(s.classList.contains('ind')) flyStep(s,k,6);
+  if(s.classList.contains('fit')){ $$('.fc',s).forEach((e,i)=>{ e.classList.toggle('show',i<=k); e.classList.toggle('cur',i===k); e.classList.toggle('past',i<k); }); s.classList.toggle('done',k>=5); const n=$('.fi-n b',s); if(n) n.textContent=Math.min(k+1,5); }
   $$('video[data-auto]',s).forEach(v=>{ const vis=v.closest('.only')?v.closest('.only').classList.contains('on'):true; vis?play(v):v.pause(); });
 }
 function play(v){ if(reduce) return; if(v.preload==='none') v.preload='auto'; const p=v.play(); if(p&&p.catch) p.catch(()=>{}); }
 let ticking=false;
+let lastY=0; const TOP=$('.top'); const COARSE=matchMedia('(pointer:coarse)').matches;
 function tick(){
   ticking=false; const vh=innerHeight, y=scrollY;
+  if(COARSE) document.documentElement.classList.toggle('snapon',!galOpen&&y<$('#proof').offsetTop-2);
+  if(y<80) TOP.classList.remove('hide'); else if(y>lastY+3) TOP.classList.add('hide'); else if(y<lastY-3) TOP.classList.remove('hide'); lastY=y;
   $('#prog').style.transform=`scaleX(${clamp(y/(document.documentElement.scrollHeight-vh))})`;
   SC.forEach(s=>{
     const r=s.getBoundingClientRect(); if(r.bottom<-vh||r.top>vh*1.5) return;
-    const p=clamp(-r.top/(r.height-vh)); s.style.setProperty('--p',p.toFixed(4));
-    setStep(s,Math.min(s._n-1,Math.floor(p*s._n)));
+    const sh=s._stk.clientHeight||vh;                       // 규칙: 한 장면 = 화면 한 칸
+    const p=s._n>1?clamp(-r.top/(r.height-sh)):clamp(-r.top/sh); s.style.setProperty('--p',p.toFixed(4));
+    setStep(s,Math.min(s._n-1,Math.max(0,Math.round(-r.top/sh))));
   });
 }
 addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(tick); } },{passive:true});
@@ -1047,7 +1219,13 @@ function count20(el){ if(reduce){ el.classList.add('done'); return; }
   el.innerHTML='0<small>/20</small>'; }
 const io=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; const t=en.target; io.unobserve(t);
   t.classList.add('in'); $$('[data-count]',t).forEach(countUp); const c=$('.c20',t); if(c) count20(c); }),{threshold:.35});
-$$('.pv,.arch .bc,.stage,.me,.end,.ph').forEach(e=>io.observe(e));
+$$('.arch .bc,.stage,.me,.end,.ph').forEach(e=>io.observe(e));
+// 숫자 기록: 700편 → 20/20 → 280만 순서로 (모바일은 각자 보일 때)
+const PV=$$('.pv'), pvOn=t=>{ if(t.classList.contains('in')) return; t.classList.add('in'); $$('[data-count]',t).forEach(countUp); const c=$('.c20',t); if(c) count20(c); };
+const pio=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; pio.unobserve(en.target);
+  if(en.target.classList.contains('pw')){ pvOn(PV[0]); setTimeout(()=>pvOn(PV[1]),reduce?0:2000); setTimeout(()=>pvOn(PV[2]),reduce?0:2000+3500); }
+  else pvOn(en.target); }),{threshold:.35});
+if(innerWidth>860) pio.observe($('.pw')); else PV.forEach(e=>pio.observe(e));
 const vio=new IntersectionObserver(es=>es.forEach(en=>{ const v=en.target; if(en.isIntersecting&&!v.closest('.only:not(.on)')) play(v); else v.pause(); }),{threshold:.2});
 $$('video[data-auto]').forEach(v=>vio.observe(v));
 
@@ -1065,28 +1243,104 @@ addEventListener('wheel',e=>{ if(!galOpen) return;
   e.preventDefault(); const now=Date.now(); if(Math.abs(e.deltaY)<8||now-gLock<900) return; gLock=now; gGo(gI+(e.deltaY>0?1:-1)); },{passive:false});
 $('#lb button').addEventListener('click',closeLb);
 
-/* ── 장면 속도 조절: 한 번 굴리면 한 장면, 멈추면 가장 가까운 장면에 정착 ── */
-const stepTop=(s,k)=>(s===SC[0]&&k===0)?0:Math.round(s.offsetTop+(k+.5)/s._n*(s.offsetHeight-innerHeight));
-const targets=()=>SC.flatMap(s=>Array.from({length:s._n},(_,k)=>stepTop(s,k)));
-let jLock=0, jT=0, jBusy=false;
-function goTo(y){ jBusy=true; scrollTo({top:y,behavior:reduce?'auto':'smooth'}); clearTimeout(jT); jT=setTimeout(()=>{jBusy=false;},950); }
-function stepMove(dir,e){
-  if(galOpen||lb.classList.contains('open')) return false;
-  const T=targets(), last=T[T.length-1], y=scrollY;
-  if(dir>0&&y>=last-6) return false;           // 장면 구간을 지나면 일반 스크롤
-  if(dir<0&&y>last+6) return false;
-  if(e) e.preventDefault();
-  const now=Date.now(); if(now<jLock) return true;
-  jLock=now+850;
-  const nx=dir>0?T.find(t=>t>y+6):[...T].reverse().find(t=>t<y-6);
-  if(nx!==undefined) goTo(nx); return true;
+/* ── 업종 카드: 하나씩 크게 등장했다가 자기 자리로 ── */
+function flyXf(s){
+  const st=$('.stk',s), g=$('.cards',s), sr=st.getBoundingClientRect(), gr=g.getBoundingClientRect(), hd=$('.sh',s).getBoundingClientRect();
+  const cs=getComputedStyle(st), pl=parseFloat(cs.paddingLeft), pr=parseFloat(cs.paddingRight), pb=parseFloat(cs.paddingBottom);
+  const ax=sr.left+pl, aw=sr.width-pl-pr, ay=hd.bottom+12, ah=sr.bottom-pb-ay, mob=innerWidth<700;
+  $$('.card',s).forEach(c=>{
+    const w=c.offsetWidth, h=c.offsetHeight, sc=Math.min(aw*(mob?.9:.4)/w, ah*.9/h, mob?1.6:2.4);
+    const x0=gr.left+c.offsetLeft, y0=gr.top+c.offsetTop;
+    const dx=ax+(aw-w*sc)/2-x0, dy=ay+(ah-h*sc)/2-y0;
+    c.style.setProperty('--fx',`translate(${dx}px,${dy}px) scale(${sc})`);
+    c.style.setProperty('--fx0',`translate(${dx}px,${dy+90}px) scale(${sc*.9})`);
+  });
 }
-addEventListener('wheel',e=>{ if(galOpen||Math.abs(e.deltaY)<2||e.ctrlKey) return; const T=targets(); if(Date.now()<jLock&&scrollY<=T[T.length-1]+6){ e.preventDefault(); jLock=Math.max(jLock,Date.now()+160); return; } stepMove(Math.sign(e.deltaY),e); },{passive:false});
-addEventListener('keydown',e=>{ if(galOpen||e.target.closest&&e.target.closest('button,a,input')&&e.key===' ') return; const d=['ArrowDown','PageDown',' '].includes(e.key)?1:['ArrowUp','PageUp'].includes(e.key)?-1:0; if(d) stepMove(d,e); });
-let settleT=0;
-function settle(){ if(jBusy||galOpen) return; const T=targets(), y=scrollY; if(y>T[T.length-1]+6) return;
-  let best=T[0]; T.forEach(t=>{ if(Math.abs(t-y)<Math.abs(best-y)) best=t; }); if(Math.abs(best-y)>8) goTo(best); }
-if('onscrollend' in window) addEventListener('scrollend',settle); else addEventListener('scroll',()=>{ clearTimeout(settleT); settleT=setTimeout(settle,160); },{passive:true});
+function flyStep(s,k,n){
+  if(!s._xf){ s._xf=1; addEventListener('resize',()=>{ if(s._st>=0) flyXf(s); }); }
+  flyXf(s);
+  $$('.card',s).forEach((c,i)=>{ c.classList.toggle('placed',i<k); c.classList.toggle('feat',i===k&&k<n); c.classList.toggle('wait',i>k); });
+  s.classList.toggle('all',k>=n);
+}
+/* ── 접점 장면: 다섯 접점을 자동으로 차례대로 ── */
+let tcT=null;
+function touchCycle(s,k){
+  clearInterval(tcT); const tc=$$('.tc',s), li=$$('.path li',s);
+  const show=i=>{ tc.forEach((e,j)=>e.classList.toggle('on',j===i)); li.forEach((e,j)=>{ e.classList.toggle('on',j<=i); e.classList.toggle('cur',j===i); }); };
+  if(k>=1){ tc.forEach(e=>e.classList.remove('on')); li.forEach(e=>{ e.classList.add('on'); e.classList.remove('cur'); }); return; }
+  let i=0; show(0); if(reduce) return;
+  tcT=setInterval(()=>{ i++; if(i>=tc.length){ clearInterval(tcT); return; } show(i); },window._autoOn?850:1700);
+}
+
+/* ── 자동 재생용 정지 지점 (스크롤은 브라우저 기본 동작 그대로) ── */
+const stepTop=(s,k)=>Math.round(s.offsetTop+k*(s._stk.clientHeight||innerHeight));
+let AT=[];
+function buildTargets(){
+  const vh=innerHeight, max=document.documentElement.scrollHeight-vh; AT=[];
+  SC.forEach(s=>{ for(let k=0;k<s._n;k++) AT.push({y:stepTop(s,k),s,k}); });
+  $$('#main>section:not(.sc)').forEach(sec=>{
+    const top=sec.offsetTop, end=Math.min(max,top+sec.offsetHeight-vh);
+    AT.push({y:Math.min(top,max),sec}); for(let y=top+Math.round(vh*.75); y<end-120; y+=Math.round(vh*.75)) AT.push({y,sec});
+    if(end>top+120) AT.push({y:end,sec});
+  });
+  AT=AT.filter((t,i,a)=>i===0||t.y-a[i-1].y>60);
+}
+const goY=y=>scrollTo({top:y,behavior:reduce?'auto':'smooth'});
+document.addEventListener('click',e=>{ const a=e.target.closest('a[href^="#"]'); if(!a) return; const t=$(a.getAttribute('href')); if(!t) return; e.preventDefault(); stopAuto(); goY(t.offsetTop); });
+buildTargets(); addEventListener('resize',buildTargets); addEventListener('load',buildTargets);
+
+/* ── 스크롤 규칙 ──
+   공통: 장면 한 단계 = 화면 한 칸.
+   터치(모바일): 브라우저 기본 스냅으로 한 번 밀면 한 칸 (장면 구간에서만).
+   마우스·트랙패드(데스크톱): 장면 구간에서는 한 번의 동작에 한 칸, 그 뒤 섹션은 일반 스크롤. */
+const ST=()=>AT.filter(t=>t.s).map(t=>t.y);
+let pBusy=false, pT=0, lastIn=0, lastMag=0, lastDir=0, lastStep=0;
+function goStep(y){ pBusy=true; goY(y); clearTimeout(pT); pT=setTimeout(()=>{ pBusy=false; },reduce?120:650); lastStep=performance.now(); }
+function stepDir(dir){ const T=ST(), y=scrollY; const n=dir>0?T.find(t=>t>y+4):[...T].reverse().find(t=>t<y-4); if(n===undefined) return false; goStep(n); return true; }
+const inScenes=dir=>{ const T=ST(), L=T[T.length-1], y=scrollY; return dir>0? y<L-4 : y<=L+4; };
+if(!COARSE){
+  addEventListener('wheel',e=>{
+    if(galOpen||lb.classList.contains('open')||e.ctrlKey) return;
+    const dir=Math.sign(e.deltaY); if(!dir) return;
+    // 새 동작 판별: 잠깐 멈췄다 다시 밀었거나, 관성(점점 약해지는 값) 중에 다시 세게 밀었을 때
+    const now=performance.now(), mag=Math.abs(e.deltaY);
+    const fresh=(now-lastIn>160 || dir!==lastDir || (mag>12 && mag>lastMag*1.5)) && now-lastStep>380;
+    lastIn=now; lastMag=mag; lastDir=dir;
+    if(!inScenes(dir)&&!pBusy) return;
+    e.preventDefault();
+    if(fresh&&!pBusy) stepDir(dir);
+  },{passive:false});
+  addEventListener('keydown',e=>{
+    if(galOpen||lb.classList.contains('open')) return; if(e.key===' '&&e.target.closest&&e.target.closest('button,a,input,textarea')) return;
+    const d=['ArrowDown','PageDown',' '].includes(e.key)?1:['ArrowUp','PageUp'].includes(e.key)?-1:0;
+    if(!d||!inScenes(d)) return; e.preventDefault(); if(!pBusy) stepDir(d);
+  });
+}
+// 사용자가 직접 움직이면 자동 재생 멈춤 (버튼 자체는 제외)
+const userMove=e=>{ if(autoOn&&!(e.target&&e.target.closest&&e.target.closest('#auto'))) stopAuto(); };
+addEventListener('wheel',userMove,{passive:true});
+addEventListener('touchstart',userMove,{passive:true});
+addEventListener('keydown',e=>{ if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key)) userMove(e); });
+
+/* ── 자동 재생 ── */
+const AB=$('#auto'); let autoOn=false, aT=0, aI=0, aStart=0, aDur=0, aRaf=0;
+const DWELL={hook:[2600,2800,2600],hello:[3400,3600,4200],ind:[2600,2600,2600,2600,2600,2600,4800],sys:[3800,3800],team:[3400,3600],touch:[3000,2600,2600,2600,2600,3400],fit:[3200,3200,3600,3000,3400,3800]};
+const SPEED=.5;   // 자동 재생 속도 (1 = 기존, .5 = 2배 빠르게)
+const dwell=t=>Math.round((t.s?(DWELL[t.s.className.split(' ')[1]]||[])[t.k]||3200:(t.sec.id==='work'?3200:3800))*SPEED);
+function ring(){ if(!autoOn) return; AB.style.setProperty('--ap',Math.min(1,(performance.now()-aStart)/aDur)); aRaf=requestAnimationFrame(ring); }
+function autoStep(){
+  if(!autoOn) return;
+  if(aI>=AT.length){ stopAuto(); return; }
+  const t=AT[aI]; goY(t.y); aDur=dwell(t)+(aI?450:0); aStart=performance.now(); cancelAnimationFrame(aRaf); ring();
+  aT=setTimeout(()=>{ aI++; autoStep(); },aDur);
+}
+function startAuto(){
+  buildTargets(); autoOn=true; window._autoOn=true; AB.classList.add('on'); AB.querySelector('.al').textContent='멈춤';
+  const y=scrollY; aI=AT.findIndex(t=>t.y>=y-4); if(aI<0||aI>=AT.length-1) aI=0;
+  if(Math.abs(AT[aI].y-y)<6){ aStart=performance.now(); aDur=dwell(AT[aI]); ring(); aT=setTimeout(()=>{ aI++; autoStep(); },aDur); } else autoStep();
+}
+function stopAuto(){ autoOn=false; window._autoOn=false; clearTimeout(aT); cancelAnimationFrame(aRaf); AB.classList.remove('on'); AB.querySelector('.al').textContent='자동 재생'; AB.style.setProperty('--ap',0); }
+AB.addEventListener('click',e=>{ e.stopPropagation(); if(autoOn) stopAuto(); else startAuto(); });
 
 })();
 </script>
