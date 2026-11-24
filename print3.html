@@ -566,7 +566,7 @@ h2{font-weight:800;letter-spacing:-.04em;line-height:1.08}
 .gp .plb3{height:740px;margin-top:10px}
 .card .m.mfit img{transform:scale(1.25) translateX(-1.6%)}
 
-.s20 i{background:rgba(255,255,255,.62);position:relative}
+.s20 i{background:#fff;position:relative}
 .s20bg{gap:7px}
 
 /* 표지: 문장 크기 줄이고 우측 하단에 이름 */
@@ -645,6 +645,13 @@ p,li,dd,span{text-wrap:pretty}
 .pf-n>div{padding-top:12px}
 .pf-a .pf-p{width:170px;height:226px;margin:16px 0 18px}
 .pp.gp .pdet .pf{height:690px}
+/* PDF 뷰어에서 흐린 그림자가 검은 상자로 보이는 문제: 흐린 그림자와 필터를 쓰지 않음 */
+.spec,.man{box-shadow:none!important}
+.spec{border:1.5px solid rgba(20,18,16,.18)}
+.man{border-left:1.5px solid rgba(20,18,16,.12);border-right:1.5px solid rgba(20,18,16,.12);border-bottom:1.5px solid rgba(20,18,16,.12)}
+.s20bg img{filter:none!important}
+.s20bg .m{position:relative}
+.s20bg .m::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:1}
 
 </style>
 </head>
@@ -1012,7 +1019,7 @@ page('o proof',`
  <header class="ph"><div><p class="k">숫자로 남은 기록</p><h2>말보다 먼저, 숫자로 남긴 기록들.</h2></div></header>
  <div class="pw">
   <article><div class="pv-n"><b>700<small>편+</small></b><span>지금까지 만든 롱폼 영상<small>숏폼은 세지 않았습니다</small></span></div><div class="d700">${'<i></i>'.repeat(700)}</div></article>
-  <article><div class="pv-n"><b>20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20"><span class="s20bg">${pic('spot/oneday.png','원데이클래스 현장')}</span>${Array.from({length:20},(_,i)=>`<i>매진</i>`).join('')}</div></article>
+  <article><div class="pv-n"><b>20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20">${Array.from({length:20},(_,i)=>`<i>매진</i>`).join('')}</div></article>
   <article><div class="pv-n"><b>280<small>만+</small></b><span>마이옥션 릴스 3주 누적 조회수<small>상위 10편, 광고비 0원</small></span><span class="fol">팔로워 80명 → <b>6,300명+</b></span></div><div class="b10">${INSTA.map(r=>`<div><i style="--h:${(r[1]/INSTA_MAX*100).toFixed(1)}%"></i><b>${r[2]}</b></div>`).join('')}</div></article>
  </div>`+F());
 
