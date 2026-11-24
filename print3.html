@@ -132,9 +132,30 @@
 .ytg{position:absolute;inset:0;z-index:1;display:grid;grid-template-columns:repeat(var(--c),1fr);gap:2px;background:#141210}
 .ytg>span{position:relative;overflow:hidden}
 .ytg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ytg.fit{display:flex;flex-wrap:wrap;align-content:center;gap:6px;padding:0 40px}
-.ytg.fit>span{flex:0 0 calc(50% - 3px);height:auto;aspect-ratio:16/9}
-.ytg.fit{background:none}
+.ytg.ytfit{display:flex;flex-wrap:wrap;align-content:center;gap:6px;padding:0 40px}
+.ytg.ytfit>span{flex:0 0 calc(50% - 3px);height:auto;aspect-ratio:16/9}
+.ytg.ytfit{background:none}
+
+/* 16:9 로고 이미지를 자르지 않고 어두운 바탕에 */
+.m.mfit{background:linear-gradient(#171717,#070707)}
+.m.mfit img{object-fit:contain}
+.m.mfit .src{display:none}
+
+/* 블랙비스트 룩북 아트워크 3장 */
+.gp .plb3{display:flex;justify-content:center;gap:14px;height:min(860px,72vh)}
+.gp .plb3 .pi,.gp .plb3 .pf{height:100%}
+.gp .plb3 .pf{aspect-ratio:2/3;width:auto}
+@media (max-width:860px){.gp .plb3{flex-direction:column;height:auto;align-items:center}.gp .plb3 .pi{height:auto;width:100%}.gp .plb3 .pf{width:100%;height:auto}}
+
+/* 20/20 매진 칸 뒤에 현장 사진 (위 2줄: 센터, 아래 2줄: 원데이클래스) */
+.s20{position:relative}
+.s20>i{z-index:1}
+.s20bg{position:absolute;inset:0;display:grid;grid-template-rows:1fr 1fr;gap:6px;z-index:0}
+.s20bg .m{height:100%;background:#d9d4ce}
+.s20bg .src{display:none}
+
+.s20bg{grid-template-rows:1fr;gap:0}
+.s20bg img{filter:brightness(.58) saturate(.9)}
 
 @page{size:1920px 1080px;margin:0}
 :root{--o:#ff6a13;--o2:#ff9a52;--ink:#141210;--mute:#6b645c;--line:#e3ded7;--wash:#f6f3ef;--amber:#f06a1c;--ac:#f06a1c;--ko:"Paperlogy","Pretendard",-apple-system,"Apple SD Gothic Neo",sans-serif;--num:var(--ko)}
@@ -527,6 +548,24 @@ h2{font-weight:800;letter-spacing:-.04em;line-height:1.08}
 .cv3-big i{font-style:normal;color:#fff}
 .cv3-big{line-height:1.08;font-size:210px}
 
+/* 마이옥션 소개 쪽: 16:9 이미지를 자르지 않고 어두운 바탕에 */
+.fitimg{width:100%;height:100%}
+.fitimg .m{background:linear-gradient(#171717,#070707)}
+.fitimg .m img{object-fit:contain}
+.m.mfit{background:linear-gradient(#171717,#070707)}.m.mfit img{object-fit:contain}
+.m.mfit img{width:100%;max-width:100%;height:100%}
+
+.bi-p{font-size:21px;font-weight:600;line-height:1.5;color:rgba(20,18,16,.7);margin-top:16px}
+.bi-p+.bi-x{margin-top:6px}
+.bc-p em,.bi-p em,.ep em{font-style:normal;font-weight:800;color:var(--o);margin-right:.5em}
+.ep{font-size:17px;font-weight:600;color:rgba(20,18,16,.7);margin-top:8px}
+.pv-ph1 .m{height:150px;margin-top:12px}
+.gp .plb3{height:740px;margin-top:10px}
+.card .m.mfit img{transform:scale(1.25) translateX(-1.6%)}
+
+.s20 i{background:rgba(255,255,255,.62);position:relative}
+.s20bg{gap:7px}
+
 </style>
 </head>
 <body>
@@ -578,7 +617,7 @@ const GAL={
  batontouch:[{l:'체대입시생의 꿈',s:'브랜드 다큐 6편',items:BATON}],
  kmong:[{l:'앨범 커버',s:'20장',items:Array.from({length:20},(_,i)=>({img:`image/album${i+1}.jpg`,r:'1/1',zoom:1,fit:1}))},{links:[['크몽 포트폴리오','https://kmong.com/@SKIPPWORKS/portfolios']]}],
  blackbeast:[
-  {l:'룩북',s:'무신사 매거진',items:[{img:'image/vlackveast.jpg',t:'블랙비스트 룩북',r:'800/1200',url:'https://www.musinsa.com/content/mz/100102'}]},
+  {l:'룩북',s:'룩북 아트워크 3장',items:[1,2,3].map(n=>({img:`spot/vlackveast${n}.jpg`,t:`룩북 아트워크 #${n}`,r:'800/1200',url:'https://www.musinsa.com/content/mz/100102'}))},
   {l:'상세페이지',s:'누르면 전체 보기',items:tall('vv',6,'상세페이지')},
   {l:'영상',s:'브랜드 영상, 피팅가이드',items:[{t:'나이트 라이딩',v:'dWxOYsZALIQ',url:plu('PLxytJQTYF-QU8iakEjnYusd7G4uFPUocX')},...VVF]},
   {links:[['블랙비스트 홈페이지','https://www.vlackveast.com'],['무신사 브랜드관','https://www.musinsa.com/brand/vlackveast']]}],
@@ -694,9 +733,9 @@ function brandGalleries(id){
   if(id==='batontouch') gpage('배턴터치','체대입시생의 꿈','전국 5개 도시 브랜드 다큐 6편',cols(galSec('batontouch',0),3));
   if(id==='kmong') gpage('크몽','앨범 커버','트로트부터 힙합까지',cols(galSec('kmong',0),7)+plinks(galLinks('kmong')));
   if(id==='blackbeast'){
-    const lb=galSec('blackbeast',0)[0], det=galSec('blackbeast',1);
-    gpage('블랙비스트','룩북과 상세페이지','무신사 매거진 룩북, 상세페이지 6장',
-      `<div class="pbb"><div class="pbb-l">${pItem(lb)}</div><div class="pbb-r">${det.map(d=>pItem(d)).join('')}</div></div>`);
+    const lb=galSec('blackbeast',0), det=galSec('blackbeast',1);
+    gpage('블랙비스트','룩북 아트워크','브랜드 룩북 아트워크 3장',`<div class="plb3">${lb.map(x=>pItem(x)).join('')}</div>`);
+    gpage('블랙비스트','상세페이지','상세페이지 6장',cols(det,6));
     const bv=galSec('blackbeast',2);
     gpage('블랙비스트','영상','브랜드 비주얼 영상과 신제품 피팅가이드',`<div class="pmain">${pItem(bv[0])}</div>`+cols(bv.slice(1),5)+plinks(galLinks('blackbeast')));
   }
@@ -721,6 +760,7 @@ function gItem(it){
 /* ───────── v3: 스크롤 장면 포트폴리오 ───────── */
 const flipSound=()=>{};
 const media=(p,html,lab)=>`<div class="m">${src(p,lab||'')}${html}</div>`;
+const picFit=(p,alt='')=>pic(p,alt).replace('<div class="m">','<div class="m mfit">');
 const pic=(p,alt='',lab)=>media(p,`<img src="${p}" alt="${alt}" loading="lazy" onerror="this.remove()">`,lab);
 const vid=(p,poster,lab)=>media(p,`<video muted loop playsinline preload="none"${poster?` poster="${poster}"`:''} data-auto><source src="${p}" type="video/mp4"></video>`,lab);
 const still=(p,t)=>media(p,`<video muted playsinline preload="auto" data-still="${t}" src="${p}#t=${t}"></video>`,p);
@@ -740,9 +780,9 @@ const IND=[
  ['패션','윌리워스튜디오<br>블랙비스트',pic('image/ww1.jpg'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
  ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):still('video/cdf.mp4',1.5),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
- ['체대입시 교육','배턴터치',ytPic('Afy54zR10uY'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
+ ['체대입시 교육','배턴터치',ytPic('WUALzMa3ZZ8'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',pic('image/album3.jpg'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
- ['부동산 경매','마이옥션',pic('insta/insta3.jpg','마이옥션 릴스 커버'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
+ ['부동산 경매','마이옥션',picFit('logo/myauction.jpg','마이옥션 로고'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
 ];
 
 const TOUCH=[
@@ -757,7 +797,7 @@ const DAYS=[['30일','진단','채널의 데이터와 제작 흐름, 팀의 역�
 
 const YTG={myauction:['MiJYm5g2HaY','POEzKz_Dp6Y','n7oe8HwXLpA','RuoOPgJsgjI','6O_sobj1HNc','ZNoeu5VYxa8'],cdf:['9m2aFWBfEMw','tvw-8xtJ1ME','tcVeKEPXrtk','oBKIJuey7ck']};
 const ytGrid=(ids,c,cls='')=>media('유튜브 썸네일',`<span class="ytg ${cls}" style="--c:${c}">${ids.map(id=>`<span>${ytImg(id)}</span>`).join('')}</span>`);
-const brandCover=b=>b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?pic('image/album3.jpg'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
+const brandCover=b=>b.id==='myauction'?pic('logo/myauction.jpg','마이옥션'):b.id==='cdf'?picFit('logo/cdf.jpg','체대친구들'):b.id==='arun'?picFit('logo/arc.jpg','에이런컴퍼니'):b.id==='williwo'?picFit('logo/ww.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('WUALzMa3ZZ8'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
 
 const FIT=[
@@ -789,7 +829,7 @@ page('hello',`
   <h2>숫자로 증명하는<br>콘텐츠 PD,<br>김영훈입니다.</h2>
   <p class="lead">지금은 마이옥션에서 콘텐츠기획 팀장으로 일합니다. 출연자 20여 명의 캐릭터로 시리즈 15개 이상을 기획했고, 롱폼은 팀과 함께 400편 넘게 만들었습니다.</p>
   <div class="h-rows">
-   <div><figure>${pic('image/performer.jpg')}</figure><div><b>무대에서만 18년, 관객의 시선을 붙잡았습니다.</b><span>비보이팀 맨오브펑키즈 창단과 리더. 6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</span></div></div>
+   <div><figure>${pic('spot/stage.jpg')}</figure><div><b>무대에서만 18년, 관객의 시선을 붙잡았습니다.</b><span>비보이팀 맨오브펑키즈 창단과 리더. 6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</span></div></div>
    <div><figure>${pic('number/image2.jpg')}</figure><div><b>그 감각으로 8년, 7개 브랜드의 채널 성장과 비주얼을 만들었습니다.</b><span class="chips">${BR.map(b=>`<span>${b.short||b.n}</span>`).join('')}</span></div></div>
   </div>
   <p class="h-end">이 문서의 모든 작업은 제가 기획하고 만든 것입니다.<br><small>기획, 촬영, 편집, 디자인, 그리고 팀 운영까지.</small></p>
@@ -882,20 +922,20 @@ page('o proof',`
  <header class="ph"><div><p class="k">숫자로 남은 기록</p><h2>말보다 먼저, 숫자로 남긴 기록들.</h2></div></header>
  <div class="pw">
   <article><div class="pv-n"><b>700<small>편+</small></b><span>지금까지 만든 롱폼 영상<small>숏폼은 세지 않았습니다</small></span></div><div class="d700">${'<i></i>'.repeat(700)}</div></article>
-  <article><div class="pv-n"><b>20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20">${Array.from({length:20},(_,i)=>`<i>매진</i>`).join('')}</div></article>
+  <article><div class="pv-n"><b>20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20"><span class="s20bg">${pic('spot/oneday.png','원데이클래스 현장')}</span>${Array.from({length:20},(_,i)=>`<i>매진</i>`).join('')}</div></article>
   <article><div class="pv-n"><b>280<small>만+</small></b><span>마이옥션 릴스 3주 누적 조회수<small>상위 10편, 광고비 0원</small></span><span class="fol">팔로워 80명 → <b>6,300명+</b></span></div><div class="b10">${INSTA.map(r=>`<div><i style="--h:${(r[1]/INSTA_MAX*100).toFixed(1)}%"></i><b>${r[2]}</b></div>`).join('')}</div></article>
  </div>`+F());
 
 // 9~20. 브랜드별 작업
-const pCover=b=>b.id==='myauction'?ytGrid(YTG.myauction,2,'fit'):b.id==='cdf'?ytGrid(YTG.cdf,2,'fit'):brandCover(b);
+const pCover=b=>b.id==='myauction'?`<div class="fitimg">${pic('logo/myauction.jpg','채널 아이덴티티')}</div>`:brandCover(b);
 const ROLE={
  myauction:['출연진 20여 명의 IP 기획과 관리, 출연자별 콘텐츠 IP 15개+','인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅, 역할 분담(R&R)과 품질 점검 기준(QC) 표준화','홈페이지, 상세페이지, 사내 문서 리뉴얼과 인스타그램 신규 운영'],
- cdf:['체터뷰, 체대파일러 등 콘텐츠 포맷 7종 기획과 제작','유튜브 채널을 키워 대치동 오프라인 센터 오픈까지 이어감','소방공무원 제자리멀리뛰기 특강 기획과 홍보, 20회 전석 매진'],
+ cdf:['실제 체대생 인터뷰(체터뷰), 공무원 체력시험까지 콘텐츠 포맷 7종으로 확장','유튜브 채널을 키워 대치동 오프라인 센터 오픈까지 이어감','소방공무원 제자리멀리뛰기 특강 기획과 홍보, 20회 전석 매진'],
  arun:['WBC 국가대표 선발전 3년 연속 콘텐츠 총괄','행사 기획 참여, 홍보 릴스와 쇼츠 기획과 제작','홍보부터 현장까지 이어 객석 매진'],
  blackbeast:['신규 데님 브랜드의 BI와 BX 구축','원단과 핏을 고려한 의류 디자인 방향, 액세서리 기획 참여','룩북, 상세페이지, Night Riding 영상 제작, 무신사 입점과 독일 K-전시회 선정까지'],
  williwo:['스트릿에서 애슬레저로 브랜드 포지션 재정의','디자인, 촬영, 웹, CS까지 1인 다역','룩북과 영상을 직접 기획하고 촬영해 완판까지'],
 };
-const PICK={myauction:[0,2],cdf:[0],arun:[0],blackbeast:[0],williwo:[0]};
+const PICK={myauction:[0,2],cdf:[0],arun:[0],blackbeast:[0,1],williwo:[0]};
 const MAIN=BR.filter(b=>PICK[b.id]);
 MAIN.forEach((b,bi)=>{
   page('bintro',`
