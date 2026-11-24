@@ -867,6 +867,9 @@ p,li,dd{text-wrap:pretty}
 
 .s20bg{grid-template-rows:1fr;gap:0}
 .s20bg img{filter:brightness(.58) saturate(.9)}
+/* 블랙비스트 상세페이지: 긴 이미지를 위에서부터 크게 */
+.gp .pdet .pf{aspect-ratio:auto;height:min(680px,62vh)}
+.gp .pdet .pf img{object-position:top}
 
 </style>
 </head>
@@ -1046,7 +1049,7 @@ function brandGalleries(id){
   if(id==='blackbeast'){
     const lb=galSec('blackbeast',0), det=galSec('blackbeast',1);
     gpage('블랙비스트','룩북 아트워크','브랜드 룩북 아트워크 3장',`<div class="plb3">${lb.map(x=>pItem(x)).join('')}</div>`);
-    gpage('블랙비스트','상세페이지','상세페이지 6장',cols(det,6));
+    gpage('블랙비스트','상세페이지','상세페이지 6장',`<div class="pdet">${cols(det,6)}</div>`);
     const bv=galSec('blackbeast',2);
     gpage('블랙비스트','영상','브랜드 비주얼 영상과 신제품 피팅가이드',`<div class="pmain">${pItem(bv[0])}</div>`+cols(bv.slice(1),5)+plinks(galLinks('blackbeast')));
   }

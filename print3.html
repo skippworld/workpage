@@ -156,6 +156,9 @@
 
 .s20bg{grid-template-rows:1fr;gap:0}
 .s20bg img{filter:brightness(.58) saturate(.9)}
+/* 블랙비스트 상세페이지: 긴 이미지를 위에서부터 크게 */
+.gp .pdet .pf{aspect-ratio:auto;height:min(680px,62vh)}
+.gp .pdet .pf img{object-position:top}
 
 @page{size:1920px 1080px;margin:0}
 :root{--o:#ff6a13;--o2:#ff9a52;--ink:#141210;--mute:#6b645c;--line:#e3ded7;--wash:#f6f3ef;--amber:#f06a1c;--ac:#f06a1c;--ko:"Paperlogy","Pretendard",-apple-system,"Apple SD Gothic Neo",sans-serif;--num:var(--ko)}
@@ -632,7 +635,16 @@ p,li,dd,span{text-wrap:pretty}
 .eal .m{aspect-ratio:auto;height:100%}
 .me-hi{font-size:30px;font-weight:700;letter-spacing:-.02em;color:var(--mute);margin-top:14px}
 .me-hi+h2{margin-top:2px}
-.pf-a{display:flex;flex-direction:column;justify-content:flex-start;padding-top:24px}
+
+/* 3쪽: 세 단의 윗선을 같은 높이에 */
+.pone{align-items:start}
+.pf-a,.pf-e{border-top:3px solid var(--ink);padding-top:12px}
+.pf-a .k{margin-top:0}
+.pf-e .gl-h{border-bottom:0;padding-bottom:0;font-size:18px;color:var(--o)}
+.pf-e .car{margin-top:4px}
+.pf-n>div{padding-top:12px}
+.pf-a .pf-p{width:170px;height:226px;margin:16px 0 18px}
+.pp.gp .pdet .pf{height:690px}
 
 </style>
 </head>
@@ -803,7 +815,7 @@ function brandGalleries(id){
   if(id==='blackbeast'){
     const lb=galSec('blackbeast',0), det=galSec('blackbeast',1);
     gpage('블랙비스트','룩북 아트워크','브랜드 룩북 아트워크 3장',`<div class="plb3">${lb.map(x=>pItem(x)).join('')}</div>`);
-    gpage('블랙비스트','상세페이지','상세페이지 6장',cols(det,6));
+    gpage('블랙비스트','상세페이지','상세페이지 6장',`<div class="pdet">${cols(det,6)}</div>`);
     const bv=galSec('blackbeast',2);
     gpage('블랙비스트','영상','브랜드 비주얼 영상과 신제품 피팅가이드',`<div class="pmain">${pItem(bv[0])}</div>`+cols(bv.slice(1),5)+plinks(galLinks('blackbeast')));
   }
@@ -916,6 +928,7 @@ const CAREER=[
 page('pone',`
  <div class="pf-a">
   <p class="k">프로필</p>
+  <div class="pf-p">${pic('image/profile.jpg','김영훈 프로필 사진')}</div>
   <h2>김영훈 <small>SKIPP</small></h2>
   <p class="pf-r">콘텐츠 PD, 브랜드 디자이너</p>
   <dl class="pf-c"><div><dt>이메일</dt><dd>skippkim@naver.com</dd></div><div><dt>연락처</dt><dd>010-3929-7375</dd></div><div><dt>웹</dt><dd>skippworks.vercel.app</dd></div><div><dt>입사 가능</dt><dd>협의 가능</dd></div></dl>
@@ -991,7 +1004,7 @@ page('touch',`
 // 7. 이런 팀이라면
 page('fit',`
  <div class="fi-t"><p class="k">이런 고민이 있는 팀이라면</p><h2>지금,<br>제가 필요한<br>팀입니다.</h2></div>
- <ol class="fits">${FIT.map((f,i)=>`<li><p class="fh"><i>${i+1}</i>${f[0].replace('흔들리는 제작팀을','흔들리는<br>제작팀을')}</p><p class="fl">${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></li>`).join('')}</ol>
+ <ol class="fits">${FIT.map((f,i)=>`<li><p class="fh"><i>${i+1}</i>${f[0].replace('제작팀을, 시스템으로','제작팀을,<br>시스템으로')}</p><p class="fl">${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></li>`).join('')}</ol>
  <div class="band"><p>기획, 촬영, 편집, 디자인까지<br>직접 할 줄 압니다.</p><strong>그래서 기준을 세우고, 가르치고, 맡길 수 있습니다.</strong></div>`+F());
 
 // 8. 숫자 증거
