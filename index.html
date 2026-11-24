@@ -718,6 +718,10 @@ html.lock .totop{display:none}
 /* 현장 사진 */
 .pv-ph{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .pv-ph .m{aspect-ratio:4/3;height:auto}
+/* 업종 카드: 마이옥션 로고를 크게 (세로 카드에서 로고 부분 확대) */
+.card .m.mfit img{transform:scale(1.55) translateX(-1.6%)}
+@media (max-width:1100px){.card .m.mfit img{transform:none}}
+@media screen and (max-width:860px),screen and (orientation:portrait){.card .m.mfit img{transform:scale(1.4) translateX(-1.6%)}}
 
 #lb{position:fixed;inset:0;z-index:90;background:rgba(8,7,6,.96);display:none;overflow:auto}
 #lb.open{display:block}
@@ -1115,7 +1119,7 @@ const IND=[
 ];
 
 const TOUCH=[
- ['유튜브','출연자별 콘텐츠 IP 15개, 구독자 1,800 → 26,000+',`<div class="tp3">${pic('logo/myauction.jpg','채널 아이덴티티')+['RuoOPgJsgjI','n7oe8HwXLpA'].map(v=>ytPic(v)).join('')}</div>`],
+ ['유튜브','출연자별 콘텐츠 IP 15개, 구독자 1,800 → 26,000+',`<div class="tp3">${['lHm_fDfUPi8','RuoOPgJsgjI','n7oe8HwXLpA'].map(v=>ytPic(v)).join('')}</div>`],
  ['인스타그램','3주 만에 팔로워 80 → 6,300+, 릴스 280만+',`<div class="tp3 tall">${INSTA.slice(0,3).map(r=>pic(`insta/insta${r[0]}.jpg`)+'').join('')}</div>`],
  ['웹사이트','홈페이지 UI/UX 전면 리뉴얼',`<div class="tp2"><figure>${pic('image/web_before.jpg')}<figcaption>리뉴얼 전</figcaption></figure><figure class="aft">${pic('image/web_after.jpg')}<figcaption>리뉴얼 후</figcaption></figure></div>`],
  ['상세페이지','올인원서비스 상세페이지와 소개영상',`<div class="tp3 tall">${[1,2,3].map(n=>pic(`image/web_service${n}.jpg`)).join('')}</div>`],
