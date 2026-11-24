@@ -1146,7 +1146,7 @@ const DAYS=[['30일','진단','채널의 데이터와 제작 흐름, 팀의 역�
 
 const YTG={myauction:['MiJYm5g2HaY','POEzKz_Dp6Y','n7oe8HwXLpA','RuoOPgJsgjI','6O_sobj1HNc','ZNoeu5VYxa8'],cdf:['9m2aFWBfEMw','tvw-8xtJ1ME','tcVeKEPXrtk','oBKIJuey7ck']};
 const ytGrid=(ids,c,cls='')=>media('유튜브 썸네일',`<span class="ytg ${cls}" style="--c:${c}">${ids.map(id=>`<span>${ytImg(id)}</span>`).join('')}</span>`);
-const brandCover=b=>b.id==='myauction'?pic('logo/myauction.jpg','마이옥션'):b.id==='cdf'?picFit('logo/cdf.jpg','체대친구들'):b.id==='arun'?picFit('logo/arc.jpg','에이런컴퍼니'):b.id==='williwo'?pic('image/ww2.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('WUALzMa3ZZ8'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
+const brandCover=b=>b.id==='myauction'?pic('logo/myauction.jpg','마이옥션'):b.id==='cdf'?picFit('logo/cdf.jpg','체대친구들'):b.id==='arun'?picFit('logo/arc.jpg','에이런컴퍼니'):b.id==='williwo'?picFit('logo/ww.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('WUALzMa3ZZ8'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
 
 const FIT=[
