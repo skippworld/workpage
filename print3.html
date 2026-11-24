@@ -628,6 +628,22 @@ p,li,dd,span{text-wrap:pretty}
 .pf-e .car .ci{top:24px}
 .hello .h-rows figure{height:132px}.hello .h-rows{margin-top:24px}
 
+/* 브랜드 소개 숫자: 한 줄 고정, 칸 너비는 내용만큼 */
+.bi-s{grid-template-columns:repeat(3,auto);justify-content:start;column-gap:64px}
+.bi-s b{white-space:nowrap}
+
+/* 줄바꿈 정리 */
+.pf-d>div:first-child,.pf-d>div:last-child{grid-column:1/-1}
+.gp .hist li{text-wrap:balance}
+.gp .hist li span{text-wrap:balance}
+.pp.gp .pww{height:760px}
+.card .cr{text-wrap:balance}
+
+/* 그 외 작업: 배턴터치와 크몽 이미지 묶음의 위아래를 맞춤 */
+.etc-g article{display:flex;flex-direction:column}
+.eal{grid-template-rows:1fr 1fr;flex:1;max-height:var(--eh,464px)}
+.eal .m{aspect-ratio:auto;height:100%}
+
 </style>
 </head>
 <body>
@@ -715,9 +731,9 @@ const BR=[
   x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['모든 장르','트로트부터 힙합까지'],['50+ 작품','컨셉 기획부터 완성까지']],
   r:`<div class="mos">${src('image/album1.jpg ~ album9.jpg','앨범 커버 9장')}${Array.from({length:9},(_,i)=>img(`image/album${i+1}.jpg`)).join('')}</div>`, cover:'image/album1.jpg'},
  {id:'blackbeast',n:'블랙비스트',what:'데님 전문 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-black',rt:'t-black',
-  x:'신규 데님 브랜드를 갖고 싶은 브랜드로.',st:[['런칭','BI와 BX 구축'],['무신사','정식 입점'],['독일','K-전시회 선정']],
+  x:'신규 데님 브랜드를 갖고 싶은 브랜드로.',st:[['런칭','BI와 BX 구축'],['무신사','정식 입점'],['독일','K‑fashion 전시회 (신세계 주관)']],
   r:`<div class="fill">${src('image/vlackveast.jpg','블랙비스트 룩북')}${img('image/vlackveast.jpg','블랙비스트 룩북')}</div>`, cover:'image/vlackveast.jpg'},
- {id:'williwo',n:'윌리워스튜디오',short:'윌리워',what:'애슬레저 패션 브랜드',m:'그래픽 디자이너, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
+ {id:'williwo',n:'윌리워스튜디오',short:'윌리워',what:'애슬레저 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
   x:'스트릿 브랜드를 애슬레저 브랜드로.',st:[['리브랜딩','포지션 재정의'],['1인 다역','디자인, 촬영, 웹, CS'],['완판','룩북과 영상 직접 제작']],
   r:`<div class="duo">${src('image/ww1.jpg, image/ww2.jpg','윌리워 룩북 2장')}${img('image/ww1.jpg','윌리워 룩북 1')}${img('image/ww2.jpg','윌리워 룩북 2')}</div>`, cover:'image/ww1.jpg'},
 ];
@@ -839,9 +855,9 @@ const MANUALS=[
  ['현장 롱폼 제작 매뉴얼','유튜브 현장편','12쪽',['편집 기준점이 되는 필수 촬영 멘트','자료 캡처 번호 규칙, 개인정보 블러','메인과 소스, 2개 폴더로 분류 전달']],
 ];
 const IND=[
- ['패션','윌리워스튜디오<br>블랙비스트',picFit('logo/vlackveast.png','블랙비스트'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
+ ['패션','윌리워스튜디오<br>블랙비스트',picFit('logo/vlackveast.png','블랙비스트'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K‑fashion 전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',picFit('logo/arc.jpg','에이런컴퍼니'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
- ['체대입시 교육','체대친구들',picFit('logo/cdf.jpg','체대친구들'),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
+ ['체대입시 교육','체대친구들',picFit('logo/cdf.jpg','체대친구들'),'유튜브 17,000 → 33,000<br>센터 오픈, 특강 20회 매진','cdf'],
  ['체대입시 교육','배턴터치',ytPic('WUALzMa3ZZ8'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',picFit('logo/kmong.jpg','크몽 SKWS'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
  ['부동산 경매','마이옥션',picFit('logo/myauction.jpg','마이옥션 로고'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
@@ -986,7 +1002,7 @@ page('touch',`
 // 7. 이런 팀이라면
 page('fit',`
  <div class="fi-t"><p class="k">이런 고민이 있는 팀이라면</p><h2>지금,<br>제가 필요한<br>팀입니다.</h2></div>
- <ol class="fits">${FIT.map((f,i)=>`<li><p class="fh"><i>${i+1}</i>${f[0]}</p><p class="fl">${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></li>`).join('')}</ol>
+ <ol class="fits">${FIT.map((f,i)=>`<li><p class="fh"><i>${i+1}</i>${f[0].replace('흔들리는 제작팀을','흔들리는<br>제작팀을')}</p><p class="fl">${f[1]}</p><ul>${f[2].map(x=>`<li>${x}</li>`).join('')}</ul></li>`).join('')}</ol>
  <div class="band"><p>기획, 촬영, 편집, 디자인까지<br>직접 할 줄 압니다.</p><strong>그래서 기준을 세우고, 가르치고, 맡길 수 있습니다.</strong></div>`+F());
 
 // 8. 숫자 증거
@@ -1001,10 +1017,10 @@ page('o proof',`
 // 9~20. 브랜드별 작업
 const pCover=b=>b.id==='myauction'?`<div class="fitimg">${pic('logo/myauction.jpg','채널 아이덴티티')}</div>`:brandCover(b);
 const ROLE={
- myauction:['출연진 20여 명의 IP 기획과 관리, 출연자별 콘텐츠 IP 15개+','인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅, 역할 분담(R&R)과 품질 점검 기준(QC) 표준화','홈페이지, 상세페이지, 사내 문서 리뉴얼과 인스타그램 신규 운영'],
+ myauction:['출연진 20여 명의 IP 기획과 관리, 출연자별 콘텐츠 IP 15개+','인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 품질 점검(QC) 기준 표준화','홈페이지, 상세페이지, 사내 문서 리뉴얼과 인스타그램 신규 운영'],
  cdf:['실제 체대생 인터뷰(체터뷰), 공무원 체력시험까지 콘텐츠 포맷 7종으로 확장','유튜브 채널을 키워 대치동 오프라인 센터 오픈까지 이어감','소방공무원 제자리멀리뛰기 특강 기획과 홍보, 20회 전석 매진'],
  arun:['WBC 국가대표 선발전 3년 연속 콘텐츠 총괄','행사 기획 참여, 홍보 릴스와 쇼츠 기획과 제작','홍보부터 현장까지 이어 객석 매진'],
- blackbeast:['신규 데님 브랜드의 BI와 BX 구축','원단과 핏을 고려한 의류 디자인 방향, 액세서리 기획 참여','룩북, 상세페이지, Night Riding 영상 제작, 무신사 입점과 독일 K-전시회 선정까지'],
+ blackbeast:['신규 데님 브랜드의 BI와 BX 구축','원단과 핏을 고려한 의류 디자인 방향, 액세서리 기획 참여','룩북, 상세페이지, Night Riding 영상 제작','무신사 입점, 독일 K‑fashion 전시회 (신세계 주관) 선정'],
  williwo:['스트릿에서 애슬레저로 브랜드 포지션 재정의','디자인, 촬영, 웹, CS까지 1인 다역','룩북과 영상을 직접 기획하고 촬영해 완판까지'],
 };
 const PICK={myauction:[0,2],cdf:[0],arun:[0],blackbeast:[0,1],williwo:[0]};
@@ -1031,7 +1047,7 @@ page('etc',`
  <div class="etc-g">
   <article><p class="ek">${baton.what}</p><h3>배턴터치 <small>${baton.m}</small></h3>
    <ul><li>전국 5개 도시 실기평가 현장 촬영</li><li>브랜드 다큐 6편 기획, 촬영, 편집, 음악까지 1인 제작</li></ul>
-   <div class="eth">${BATON.slice(0,4).map(v=>ytA(v.v,v.t)).join('')}</div></article>
+   <div class="eth">${['울산','대구','순천','논산'].map(t=>BATON.find(v=>v.t===t)).map(v=>ytA(v.v,v.t)).join('')}</div></article>
   <article><p class="ek">${kmong.what}</p><h3>크몽 <small>${kmong.m}</small></h3>
    <ul><li>앨범 커버 50+ 작품, 컨셉 기획부터 완성까지</li><li>트로트부터 힙합까지 전 장르, 평균 별점 4.9</li></ul>
    <div class="eal">${[3,1,2,4,5,6,7,8].map(n=>pic(`image/album${n}.jpg`)).join('')}</div></article>

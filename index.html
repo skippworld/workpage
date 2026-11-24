@@ -729,6 +729,16 @@ html.lock .totop{display:none}
 .pv.in .s20 i{animation:s20clr .32s var(--E) forwards;animation-delay:calc(350ms + var(--i) * 130ms)}
 @keyframes s20clr{to{background:transparent;border-color:transparent}}
 
+h1,h2,h3,.fh,.fc h3{text-wrap:balance}
+p,li,dd{text-wrap:pretty}
+.card .cr{text-wrap:balance}
+.me-hi{font-size:clamp(20px,1.7vw,28px);font-weight:700;letter-spacing:-.02em;color:var(--mute);margin-top:10px}
+.me-hi+h2{margin-top:4px}
+
+/* 훅 유튜브 파트: 두 줄 등장 뒤 같은 자리에서 26,000명+ → 14배 성장. */
+.hk-y .hk-big>.slot{display:grid}
+.hk-y .slot>*{grid-area:1/1}
+
 #lb{position:fixed;inset:0;z-index:90;background:rgba(8,7,6,.96);display:none;overflow:auto}
 #lb.open{display:block}
 #lb.open.fit{display:flex;align-items:center;justify-content:center;padding:5vw}
@@ -954,9 +964,9 @@ const BR=[
   x:'들리는 음악을 보이는 커버로.',st:[['4.9<u>★</u>','평균 별점, 5점 만점'],['모든 장르','트로트부터 힙합까지'],['50+ 작품','컨셉 기획부터 완성까지']],
   r:`<div class="mos">${src('image/album1.jpg ~ album9.jpg','앨범 커버 9장')}${Array.from({length:9},(_,i)=>img(`image/album${i+1}.jpg`)).join('')}</div>`, cover:'image/album1.jpg'},
  {id:'blackbeast',n:'블랙비스트',what:'데님 전문 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-black',rt:'t-black',
-  x:'신규 데님 브랜드를 갖고 싶은 브랜드로.',st:[['런칭','BI와 BX 구축'],['무신사','정식 입점'],['독일','K-전시회 선정']],
+  x:'신규 데님 브랜드를 갖고 싶은 브랜드로.',st:[['런칭','BI와 BX 구축'],['무신사','정식 입점'],['독일','K‑fashion 전시회 (신세계 주관)']],
   r:`<div class="fill">${src('image/vlackveast.jpg','블랙비스트 룩북')}${img('image/vlackveast.jpg','블랙비스트 룩북')}</div>`, cover:'image/vlackveast.jpg'},
- {id:'williwo',n:'윌리워스튜디오',short:'윌리워',what:'애슬레저 패션 브랜드',m:'그래픽 디자이너, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
+ {id:'williwo',n:'윌리워스튜디오',short:'윌리워',what:'애슬레저 패션 브랜드',m:'비주얼 디렉터, 2022.08 – 2023.05',th:'t-amber',rt:'t-black',
   x:'스트릿 브랜드를 애슬레저 브랜드로.',st:[['리브랜딩','포지션 재정의'],['1인 다역','디자인, 촬영, 웹, CS'],['완판','룩북과 영상 직접 제작']],
   r:`<div class="duo">${src('image/ww1.jpg, image/ww2.jpg','윌리워 룩북 2장')}${img('image/ww1.jpg','윌리워 룩북 1')}${img('image/ww2.jpg','윌리워 룩북 2')}</div>`, cover:'image/ww1.jpg'},
 ];
@@ -1126,9 +1136,9 @@ const MANUALS=[
  ['현장 롱폼 제작 매뉴얼','유튜브 현장편','12쪽',['편집 기준점이 되는 필수 촬영 멘트','자료 캡처 번호 규칙, 개인정보 블러','메인과 소스, 2개 폴더로 분류 전달']],
 ];
 const IND=[
- ['패션','윌리워스튜디오<br>블랙비스트',picFit('logo/vlackveast.png','블랙비스트'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
+ ['패션','윌리워스튜디오<br>블랙비스트',picFit('logo/vlackveast.png','블랙비스트'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K‑fashion 전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',picFit('logo/arc.jpg','에이런컴퍼니'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
- ['체대입시 교육','체대친구들',picFit('logo/cdf.jpg','체대친구들'),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
+ ['체대입시 교육','체대친구들',picFit('logo/cdf.jpg','체대친구들'),'유튜브 17,000 → 33,000<br>센터 오픈, 특강 20회 매진','cdf'],
  ['체대입시 교육','배턴터치',ytPic('WUALzMa3ZZ8'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',picFit('logo/kmong.jpg','크몽 SKWS'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
  ['부동산 경매','마이옥션',picFit('logo/myauction.jpg','마이옥션 로고'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
@@ -1152,7 +1162,7 @@ const brandCover=b=>b.id==='myauction'?pic('logo/myauction.jpg','마이옥션'):
 const FIT=[
  ['낯선 분야라 아무도 보지 않던 채널을, 보게 만들어야 할 때','부동산 경매, 체대입시처럼 대중적이지 않은 분야에서도 기획으로 채널을 키웠습니다.',['부동산 경매 유튜브 <em>1,800 → 26,000+</em> (약 14배)','체대입시 유튜브 <em>17,000 → 33,000</em>']],
  ['새 채널을 처음부터 시작해야 할 때','처음 맡은 인스타그램도 제작 규칙부터 세워 3주 만에 키웠습니다.',['팔로워 <em>80 → 6,300+</em>, 릴스 조회수 <em>280만+</em>','잘된 편의 공통점은 제작 규격서로 정리했습니다']],
- ['사람에 따라 품질이 흔들리는 제작팀을, 시스템으로 바꿔야 할 때','담당자 개인 역량에 기대지 않는 제작 파이프라인을 만들었습니다.',['인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 작업 흐름 총괄, 제작 가이드라인과 품질 점검 기준(QC) 표준화','편당 제작 기간 단축, 팀 체제 롱폼 <em>400편+</em>']],
+ ['사람에 따라 품질이 흔들리는 제작팀을, 시스템으로 바꿔야 할 때','담당자 개인 역량에 기대지 않는 제작 파이프라인을 만들었습니다.',['인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 작업 흐름 총괄','제작 가이드라인과 품질 점검(QC) 기준 표준화','편당 제작 기간 단축, 팀 체제 롱폼 <em>400편+</em>']],
  ['출연자가 많아 콘텐츠가 흩어질 때','출연자마다 다른 캐릭터를, 각자의 콘텐츠 IP로 기획했습니다.',['출연진 <em>20여 명</em>의 IP 기획과 관리','출연자별 콘텐츠 IP <em>15개+</em>']],
  ['채널이 회사의 얼굴이 되어야 할 때','영상 한 편을 넘어, 회사가 고객에게 말하는 방식을 만들었습니다.',['부동산 경매 회사: 업계 최대 규모 <em>회원 50만+</em> 달성에 기여','체대입시 채널: 대치동 센터 오픈, 소방공무원 제자리멀리뛰기 특강 <em>20회 전석 매진</em>']],
 ];
@@ -1166,7 +1176,7 @@ scene('hook',7,700,`
  <div class="hk">
   ${R_(0,5,'마이옥션 인스타그램과 유튜브의 성장','p','hk-l')}
   <h1 class="hk-big hk-a">${R_(0,2,`${S_(0,'광고 없이,','span')}${SD(0,.7,'콘텐츠만으로.','span')}<span class="slot">${R_(1,1,'3주, <span class="pt"><b class="cnt" data-cnt="0,280" data-at="1">0</b>만</span> 뷰<em class="plus">+</em><small class="fn">광고비 0원. 직접 기획한 릴스 상위 10편, 3주 누적</small>','span')}${R_(2,2,'팔로워 80명<i>→</i><span class="pt"><b class="cnt" data-cnt="80,6300" data-at="2">80</b>명</span><em class="plus">+</em>','span','fol')}</span>`,'span','hk-ain')}</h1>
-  ${R_(3,5,`<p class="hk-yl">마이옥션 유튜브 채널 성장</p><div class="hk-big">${S_(3,'시작은 1,800명','span')}${S_(4,'<b class="x14">14배</b> 성장.','span')}${S_(5,'<b class="cnt" data-cnt="1800,26000" data-at="5">1,800</b>명<em class="plus">+</em>','span')}</div>`,'div','hk-y')}
+  ${R_(3,5,`<p class="hk-yl">마이옥션 유튜브 채널 성장</p><div class="hk-big">${S_(3,'1,800명으로 시작한','span')}${SD(3,.7,'기업 채널은','span')}<span class="slot">${R_(4,4,'<b class="cnt" data-cnt="1800,26000" data-at="4">1,800</b>명<em class="plus">+</em>','span')}${R_(5,5,'<b class="x14">14배</b> 성장.','span')}</span></div>`,'div','hk-y')}
   ${S_(6,'운이 아니라,<br><span class="w">설계</span>였습니다.','p','hk-end')}
   ${SD(6,.4,'콘텐츠 PD 김영훈의 포트폴리오','p','hk-me')}
  </div>
@@ -1289,8 +1299,9 @@ const HTML3=`
  <div class="me-p">${pic('image/profile.jpg','김영훈 프로필 사진')}</div>
  <div class="me-t">
   <p class="sh-k">프로필</p>
+  <p class="me-hi">다시 한번 인사드립니다.</p>
   <h2>김영훈 <small>SKIPP</small></h2>
-  <p class="me-r">콘텐츠 총괄 PD · 브랜드 디자이너</p>
+  <p class="me-r">콘텐츠 PD · 브랜드 디자이너</p>
   <dl>
    <div><dt>학력</dt><dd>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</dd></div>
    <div><dt>자격</dt><dd>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</dd></div>
@@ -1493,5 +1504,6 @@ addEventListener('scroll',()=>TT.classList.toggle('show',scrollY>innerHeight*.8)
 
 })();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
