@@ -879,6 +879,11 @@ p,li,dd{text-wrap:pretty}
 .gp .plb3 .pf img{position:static;display:block;height:100%;width:auto;max-width:none;object-fit:contain}
 .gp .plb3 .pf .src{display:none}
 @media (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
+/* 룩북: % 높이 대신 고정 높이 (브라우저마다 % 계산이 달라 이미지가 원본 크기로 커지는 문제 방지) */
+.gp .plb3{height:auto;align-items:flex-start}
+.gp .plb3 .pi,.gp .plb3 .pf{height:auto}
+.gp .plb3 .pf img{height:min(860px,72vh);width:auto;max-height:none}
+@media (max-width:860px){.gp .plb3 .pf img{height:auto;width:100%}}
 
 </style>
 </head>

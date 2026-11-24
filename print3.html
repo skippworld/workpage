@@ -165,6 +165,11 @@
 .gp .plb3 .pf img{position:static;display:block;height:100%;width:auto;max-width:none;object-fit:contain}
 .gp .plb3 .pf .src{display:none}
 @media (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
+/* 룩북: % 높이 대신 고정 높이 (브라우저마다 % 계산이 달라 이미지가 원본 크기로 커지는 문제 방지) */
+.gp .plb3{height:auto;align-items:flex-start}
+.gp .plb3 .pi,.gp .plb3 .pf{height:auto}
+.gp .plb3 .pf img{height:min(860px,72vh);width:auto;max-height:none}
+@media (max-width:860px){.gp .plb3 .pf img{height:auto;width:100%}}
 
 @page{size:1920px 1080px;margin:0}
 :root{--o:#ff6a13;--o2:#ff9a52;--ink:#141210;--mute:#6b645c;--line:#e3ded7;--wash:#f6f3ef;--amber:#f06a1c;--ac:#f06a1c;--ko:"Paperlogy","Pretendard",-apple-system,"Apple SD Gothic Neo",sans-serif;--num:var(--ko)}
@@ -659,6 +664,13 @@ p,li,dd,span{text-wrap:pretty}
 .s20bg .m{position:relative}
 .s20bg .m::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:1}
 .gp .plb3{height:640px;margin-top:20px}
+/* 브랜드 소개 쪽: 16:9 로고 이미지를 세로 칸에서 크게 (위아래 빈 공간 줄이기) */
+.bi-m .mfit img,.bi-m .fitimg .m img{position:absolute;left:0;top:50%;width:100%;height:auto;aspect-ratio:16/13.5;transform:translateY(-50%);object-fit:cover}
+.bi-m .m{overflow:hidden}
+/* 인사 쪽 무대 사진: 정사각형 사진의 윗부분(얼굴, 비니)이 보이게 */
+.h-rows figure img{object-position:50% 30%}
+.gp .plb3{height:auto}
+.gp .plb3 .pf img{height:640px!important;width:auto!important;max-width:520px;object-fit:contain}
 
 </style>
 </head>
