@@ -1106,7 +1106,7 @@ const MANUALS=[
  ['현장 롱폼 제작 매뉴얼','유튜브 현장편','12쪽',['편집 기준점이 되는 필수 촬영 멘트','자료 캡처 번호 규칙, 개인정보 블러','메인과 소스, 2개 폴더로 분류 전달']],
 ];
 const IND=[
- ['패션','윌리워스튜디오<br>블랙비스트',pic('spot/ww1.jpg'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
+ ['패션','윌리워스튜디오<br>블랙비스트',pic('image/ww1.jpg'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
  ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):still('video/cdf.mp4',1.5),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
  ['체대입시 교육','배턴터치',ytPic('Afy54zR10uY'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
@@ -1126,7 +1126,7 @@ const DAYS=[['30일','진단','채널의 데이터와 제작 흐름, 팀의 역�
 
 const YTG={myauction:['MiJYm5g2HaY','POEzKz_Dp6Y','n7oe8HwXLpA','RuoOPgJsgjI','6O_sobj1HNc','ZNoeu5VYxa8'],cdf:['9m2aFWBfEMw','tvw-8xtJ1ME','tcVeKEPXrtk','oBKIJuey7ck']};
 const ytGrid=(ids,c,cls='')=>media('유튜브 썸네일',`<span class="ytg ${cls}" style="--c:${c}">${ids.map(id=>`<span>${ytImg(id)}</span>`).join('')}</span>`);
-const brandCover=b=>b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='williwo'?pic('spot/ww1.jpg','윌리워스튜디오 현장'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?pic('image/album3.jpg'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
+const brandCover=b=>b.id==='williwo'?pic('image/ww2.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
 
 const FIT=[
