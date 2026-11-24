@@ -572,6 +572,62 @@ h2{font-weight:800;letter-spacing:-.04em;line-height:1.08}
 .cv3-me{position:absolute;right:110px;bottom:140px;font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
 .cv3-me b{font-weight:800;font-size:1.45em;margin-left:.25em}
 
+/* 줄바꿈: 제목은 줄 길이를 고르게, 본문은 마지막 줄에 한 단어만 남지 않게 */
+h1,h2,h3,.fh,.h-rows b,.bi-x{text-wrap:balance}
+p,li,dd,span{text-wrap:pretty}
+/* 인사 쪽 학력 */
+.h-edu{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;margin-top:22px;padding-top:16px;border-top:1px solid rgba(20,18,16,.15);font-size:17px}
+.h-edu dt{font-weight:800;color:var(--o);margin-right:4px}
+.h-edu dd{margin:0;font-weight:600;color:rgba(20,18,16,.75)}
+
+/* 프로필: 반명함 사진을 작게, 이력서처럼 한 단 구성 */
+.pp.me{display:block;padding:96px 110px 0}
+.me-hd{display:flex;align-items:flex-end;gap:44px}
+.me-hd .me-p{width:216px;height:288px;flex:none}
+.me-hd h2{font-size:84px;margin-top:8px}
+.me-t dl{grid-template-columns:repeat(4,1fr);gap:24px 40px;margin-top:44px}
+.me-br ul{grid-template-columns:1fr 1fr 1fr;gap:4px 40px}
+.pp.me{padding-top:110px}
+.me-t dl{margin-top:60px}
+.me-t dt{font-size:20px}
+.me-t dd{font-size:22px}
+.me-br{margin-top:60px}
+.me-br li{font-size:19px;padding:11px 0}
+
+/* 프로필 한 장 (인사 다음) */
+.pone{display:grid;grid-template-columns:400px 560px 1fr;gap:70px;padding:96px 110px 0}
+.pf-p{width:180px;height:240px;margin-bottom:26px}
+.pf-a h2{font-size:72px;margin-top:8px}
+.pf-a h2 small{font-size:.3em;color:var(--mute);letter-spacing:.06em;font-weight:600}
+.pf-r{font-size:22px;font-weight:800;margin-top:6px}
+.pf-c{margin-top:34px;display:flex;flex-direction:column;gap:8px}
+.pf-c>div{display:grid;grid-template-columns:96px 1fr;align-items:baseline}
+.pf-c dt{font-size:16px;font-weight:700;color:var(--mute)}
+.pf-c dd{font-size:20px;font-weight:800}
+.pf-n{display:grid;grid-template-columns:1fr 1fr;gap:26px 32px}
+.pf-n>div{border-top:3px solid var(--ink);padding-top:12px}
+.pf-n b{display:block;font-size:58px;font-weight:800;letter-spacing:-.045em;line-height:1;color:var(--o)}
+.pf-n span{display:block;font-size:17px;color:var(--mute);margin-top:8px;line-height:1.45}
+.pf-d{display:grid;grid-template-columns:1fr 1fr;gap:22px 32px;margin-top:44px}
+.pf-d>div{border-top:2px solid var(--line);padding-top:12px}
+.pf-d dt{font-size:17px;font-weight:800;color:var(--o)}
+.pf-d dd{font-size:17px;line-height:1.6;margin-top:6px}
+.pf-e .car li{grid-template-columns:200px 1fr;padding:16px 0}
+.pf-e .car b{font-size:25px}
+.pf-e .car .cr{font-size:17px}
+.pf-e .car .cp{font-size:17px}
+.pf-e .car .ci{top:18px;font-size:14px}
+.pone{padding-top:120px}
+.pf-p{width:200px;height:266px}
+.pf-n b{font-size:66px}
+.pf-n span{font-size:18px}
+.pf-d{margin-top:52px}
+.pf-d dd{font-size:18px}
+.pf-e .car li{padding:21px 0}
+.pf-e .car b{font-size:28px}
+.pf-e .car .ci{top:24px}
+.hello .h-rows figure{height:132px}.hello .h-rows{margin-top:24px}
+
 </style>
 </head>
 <body>
@@ -809,7 +865,7 @@ const brandCover=b=>b.id==='myauction'?pic('logo/myauction.jpg','마이옥션'):
 const FIT=[
  ['낯선 분야라 아무도 보지 않던 채널을, 보게 만들어야 할 때','부동산 경매, 체대입시처럼 대중적이지 않은 분야에서도 기획으로 채널을 키웠습니다.',['부동산 경매 유튜브 <em>1,800 → 26,000+</em> (약 14배)','체대입시 유튜브 <em>17,000 → 33,000</em>']],
  ['새 채널을 처음부터 시작해야 할 때','처음 맡은 인스타그램도 제작 규칙부터 세워 3주 만에 키웠습니다.',['팔로워 <em>80 → 6,300+</em>, 릴스 조회수 <em>280만+</em>','잘된 편의 공통점은 제작 규격서로 정리했습니다']],
- ['사람에 따라 품질이 흔들리는 제작팀을, 시스템으로 바꿔야 할 때','담당자 개인 역량에 기대지 않는 제작 파이프라인을 만들었습니다.',['인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 작업 흐름 총괄, 제작 가이드라인과 품질 점검 기준(QC) 표준화','편당 제작 기간 단축, 팀 체제 롱폼 <em>400편+</em>']],
+ ['사람에 따라 품질이 흔들리는 제작팀을, 시스템으로 바꿔야 할 때','담당자 개인 역량에 기대지 않는 제작 파이프라인을 만들었습니다.',['인하우스 PD 1명, 프리랜서 촬영 PD 3명 디렉팅','역할 분담(R&R)과 작업 흐름 총괄','제작 가이드라인과 품질 점검(QC) 기준 표준화','편당 제작 기간 단축, 팀 체제 롱폼 <em>400편+</em>']],
  ['출연자가 많아 콘텐츠가 흩어질 때','출연자마다 다른 캐릭터를, 각자의 콘텐츠 IP로 기획했습니다.',['출연진 <em>20여 명</em>의 IP 기획과 관리','출연자별 콘텐츠 IP <em>15개+</em>']],
  ['채널이 회사의 얼굴이 되어야 할 때','영상 한 편을 넘어, 회사가 고객에게 말하는 방식을 만들었습니다.',['부동산 경매 회사: 업계 최대 규모 <em>회원 50만+</em> 달성에 기여','체대입시 채널: 대치동 센터 오픈, 소방공무원 제자리멀리뛰기 특강 <em>20회 전석 매진</em>']],
 ];
@@ -830,13 +886,13 @@ page('o cover cv3',`
 
 // 2. 인사
 page('hello',`
- <div class="h-photo">${pic('image/profile.jpg','김영훈 프로필 사진')}</div>
+ <div class="h-photo">${pic('spot/stage.jpg','비보이 무대 사진')}</div>
  <div class="h-t">
   <p class="k">인사</p>
   <h2>숫자로 증명하는<br>콘텐츠 PD,<br>김영훈입니다.</h2>
-  <p class="lead">지금은 마이옥션에서 콘텐츠기획 팀장으로 일합니다. 출연자 20여 명의 캐릭터로 시리즈 15개 이상을 기획했고, 롱폼은 팀과 함께 400편 넘게 만들었습니다.</p>
+  <p class="lead">지금은 마이옥션에서 콘텐츠기획 팀장으로 일합니다.<br>출연자 20여 명의 캐릭터로 시리즈 15개 이상을 기획했고,<br>롱폼은 팀과 함께 400편 넘게 만들었습니다.</p>
   <div class="h-rows">
-   <div><figure>${pic('spot/stage.jpg')}</figure><div><b>무대에서만 18년, 관객의 시선을 붙잡았습니다.</b><span>비보이팀 맨오브펑키즈 창단과 리더. 6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</span></div></div>
+   <div><figure>${pic('image/performer.jpg')}</figure><div><b>무대에서만 18년, 관객의 시선을 붙잡았습니다.</b><span>비보이팀 맨오브펑키즈 창단과 리더. 6개국 무대, 배틀 우승 10회+, tvN·KBS 출연.</span></div></div>
    <div><figure>${pic('number/image2.jpg')}</figure><div><b>그 감각으로 8년, 7개 브랜드의 채널 성장과 비주얼을 만들었습니다.</b><span class="chips">${BR.map(b=>`<span>${b.short||b.n}</span>`).join('')}</span></div></div>
   </div>
   <p class="h-end">이 문서의 모든 작업은 제가 기획하고 만든 것입니다.<br><small>기획, 촬영, 편집, 디자인, 그리고 팀 운영까지.</small></p>
@@ -851,22 +907,31 @@ const CAREER=[
  ['2019.09 – 2022.01','체대친구들','콘텐츠 총괄 PD','체대입시 교육'],
  ['2019.06 – 2019.09','배턴터치','영상 PD','체대입시 교육'],
 ];
-page('glance',`
- <div class="gl-t">
-  <p class="k">한눈에 보기</p>
-  <h2>콘텐츠 PD<br>김영훈</h2>
-  <div class="gl-n">
+page('pone',`
+ <div class="pf-a">
+  <div class="pf-p">${pic('image/profile.jpg','김영훈 프로필 사진')}</div>
+  <p class="k">프로필</p>
+  <h2>김영훈 <small>SKIPP</small></h2>
+  <p class="pf-r">콘텐츠 PD, 브랜드 디자이너</p>
+  <dl class="pf-c"><div><dt>이메일</dt><dd>skippkim@naver.com</dd></div><div><dt>연락처</dt><dd>010-3929-7375</dd></div><div><dt>웹</dt><dd>skippworks.vercel.app</dd></div><div><dt>입사 가능</dt><dd>협의 가능</dd></div></dl>
+ </div>
+ <div class="pf-b">
+  <div class="pf-n">
    <div><b>14배</b><span>기업 유튜브 구독자<br>1,800 → 26,000+</span></div>
    <div><b>280만+</b><span>릴스 3주 조회수</span></div>
    <div><b>50만+</b><span>업계 최대 규모 회원 수<br>달성에 기여</span></div>
    <div><b>700편+</b><span>지금까지 만든<br>롱폼 영상</span></div>
   </div>
-  <dl class="gl-c"><div><dt>입사 가능</dt><dd>협의 가능</dd></div><div><dt>이메일</dt><dd>skippkim@naver.com</dd></div><div><dt>연락처</dt><dd>010-3929-7375</dd></div><div><dt>웹</dt><dd>skippworks.vercel.app</dd></div></dl>
+  <dl class="pf-d">
+   <div><dt>학력</dt><dd>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</dd></div>
+   <div><dt>자격</dt><dd>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</dd></div>
+   <div><dt>병역</dt><dd>공군 병 749기 병장 만기전역<br>(공군사관학교 정훈공보실)</dd></div>
+   <div><dt>도구</dt><dd>Premiere Pro, Photoshop, Illustrator<br>Claude, ChatGPT, Gemini, SUNO AI</dd></div>
+  </dl>
  </div>
- <div class="gl-r">
+ <div class="pf-e">
   <p class="gl-h">경력</p>
   <ol class="car">${CAREER.map((c,i)=>`<li${i===0?' class="now"':''}><span class="cp">${c[0]}</span><b>${c[1]}</b><span class="cr">${c[2]}</span><span class="ci">${c[3]}</span></li>`).join('')}</ol>
-  <p class="gl-note">프리랜서 경력은 재직과 병행했습니다.</p>
  </div>`+F());
 
 // 3. 재현성 + 공식
@@ -985,22 +1050,6 @@ page('stage',`
 
 // 22. 이력
 page('gp',`<header class="ghd"><span>무대</span><h3>무대 경력 및 이력</h3><p>비보이 18년</p></header><div class="gbody"><div class="hist htop">${['해외','수상','방송','공연'].map(c=>`<section><h4>${{해외:'해외 활동',수상:'수상',방송:'방송',공연:'주요 공연'}[c]}</h4><ul>${EVENTS.filter(e=>e[0]===c).map(e=>`<li><b>${e[1]}</b><span>${e[2]}</span></li>`).join('')}</ul></section>`).join('')}</div></div>`+F());
-
-// 23. 프로필
-page('me',`
- <div class="me-p">${pic('image/profile.jpg','김영훈 프로필 사진')}</div>
- <div class="me-t">
-  <p class="k">프로필</p>
-  <h2>김영훈 <small>SKIPP</small></h2>
-  <p class="me-r">콘텐츠 총괄 PD, 브랜드 디자이너</p>
-  <dl>
-   <div><dt>학력</dt><dd>동아방송예술대학교 방송연예과<br>서울경신고등학교 졸업<br>서울아현산업정보학교 실용음악과 수료</dd></div>
-   <div><dt>자격</dt><dd>영상제작전문가 1급<br>드론조종 4종<br>운전면허 1종</dd></div>
-   <div><dt>병역</dt><dd>대한민국 공군 병 749기 병장 만기전역<br>(공군사관학교 정훈공보실 복무, 총무특기)</dd></div>
-   <div><dt>도구</dt><dd>Premiere Pro, Photoshop, Illustrator<span class="chips"><span>GPT</span><span>Gemini</span><span>Claude</span></span></dd></div>
-  </dl>
-  <div class="me-br"><p class="k">경력</p><ul>${BR.map(b=>`<li><b>${b.n}</b><span>${b.m}</span></li>`).join('')}</ul></div>
- </div>`+F());
 
 // 24. 연락
 page('o end',`
