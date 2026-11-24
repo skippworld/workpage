@@ -566,6 +566,12 @@ h2{font-weight:800;letter-spacing:-.04em;line-height:1.08}
 .s20 i{background:rgba(255,255,255,.62);position:relative}
 .s20bg{gap:7px}
 
+/* 표지: 문장 크기 줄이고 우측 하단에 이름 */
+.cv3-big{font-size:168px;margin-top:80px}
+.pp.cv3{position:relative}
+.cv3-me{position:absolute;right:110px;bottom:140px;font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.cv3-me b{font-weight:800;font-size:1.45em;margin-left:.25em}
+
 </style>
 </head>
 <body>
@@ -777,11 +783,11 @@ const MANUALS=[
  ['현장 롱폼 제작 매뉴얼','유튜브 현장편','12쪽',['편집 기준점이 되는 필수 촬영 멘트','자료 캡처 번호 규칙, 개인정보 블러','메인과 소스, 2개 폴더로 분류 전달']],
 ];
 const IND=[
- ['패션','윌리워스튜디오<br>블랙비스트',pic('image/ww1.jpg'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
- ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
- ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):still('video/cdf.mp4',1.5),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
+ ['패션','윌리워스튜디오<br>블랙비스트',picFit('logo/vlackveast.png','블랙비스트'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
+ ['문화예술','에이런컴퍼니',picFit('logo/arc.jpg','에이런컴퍼니'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
+ ['체대입시 교육','체대친구들',picFit('logo/cdf.jpg','체대친구들'),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
  ['체대입시 교육','배턴터치',ytPic('WUALzMa3ZZ8'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
- ['음악','크몽 (SKWS)',pic('image/album3.jpg'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
+ ['음악','크몽 (SKWS)',picFit('logo/kmong.jpg','크몽 SKWS'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
  ['부동산 경매','마이옥션',picFit('logo/myauction.jpg','마이옥션 로고'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
 ];
 
@@ -817,7 +823,8 @@ let pn=0; const F=()=>foot(++pn);
 
 // 1. 표지: 메시지 하나만
 page('o cover cv3',`
- <p class="k">콘텐츠 PD 김영훈 포트폴리오</p>
+ <p class="k">포트폴리오 2026</p>
+ <p class="cv3-me">콘텐츠 PD <b>김영훈</b></p>
  <h1 class="cv3-big">광고 없이,<br>콘텐츠만으로.<br><i>3주, 280만 뷰.</i></h1>
  <p class="cv-src">광고비 0원. 직접 기획한 마이옥션 인스타그램 릴스 상위 10편, 3주 누적 (2026.08.21 – 09.13)</p>`+F());
 
