@@ -870,6 +870,12 @@ p,li,dd{text-wrap:pretty}
 /* 블랙비스트 상세페이지: 긴 이미지를 위에서부터 크게 */
 .gp .pdet .pf{aspect-ratio:auto;height:min(680px,62vh)}
 .gp .pdet .pf img{object-position:top}
+/* 룩북 아트워크: 원본 비율 그대로 (잘리지 않게) */
+.gp .plb3 .pi{height:100%;width:auto;flex:none}
+.gp .plb3 .pf{aspect-ratio:auto;width:auto;height:100%;background:transparent}
+.gp .plb3 .pf img{position:static;display:block;height:100%;width:auto;max-width:none;object-fit:contain}
+.gp .plb3 .pf .src{display:none}
+@media (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
 
 </style>
 </head>

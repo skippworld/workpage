@@ -159,6 +159,12 @@
 /* 블랙비스트 상세페이지: 긴 이미지를 위에서부터 크게 */
 .gp .pdet .pf{aspect-ratio:auto;height:min(680px,62vh)}
 .gp .pdet .pf img{object-position:top}
+/* 룩북 아트워크: 원본 비율 그대로 (잘리지 않게) */
+.gp .plb3 .pi{height:100%;width:auto;flex:none}
+.gp .plb3 .pf{aspect-ratio:auto;width:auto;height:100%;background:transparent}
+.gp .plb3 .pf img{position:static;display:block;height:100%;width:auto;max-width:none;object-fit:contain}
+.gp .plb3 .pf .src{display:none}
+@media (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
 
 @page{size:1920px 1080px;margin:0}
 :root{--o:#ff6a13;--o2:#ff9a52;--ink:#141210;--mute:#6b645c;--line:#e3ded7;--wash:#f6f3ef;--amber:#f06a1c;--ac:#f06a1c;--ko:"Paperlogy","Pretendard",-apple-system,"Apple SD Gothic Neo",sans-serif;--num:var(--ko)}
@@ -652,6 +658,7 @@ p,li,dd,span{text-wrap:pretty}
 .s20bg img{filter:none!important}
 .s20bg .m{position:relative}
 .s20bg .m::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:1}
+.gp .plb3{height:640px;margin-top:20px}
 
 </style>
 </head>
