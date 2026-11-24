@@ -723,6 +723,12 @@ html.lock .totop{display:none}
 @media (max-width:1100px){.card .m.mfit img{transform:none}}
 @media screen and (max-width:860px),screen and (orientation:portrait){.card .m.mfit img{transform:scale(1.4) translateX(-1.6%)}}
 
+.s20 i{background:rgba(255,255,255,.84)}
+.s20 i b{background:color-mix(in srgb,var(--o) 74%,transparent)}
+.s20 i b{background:color-mix(in srgb,var(--o) 64%,transparent)}
+.pv.in .s20 i{animation:s20clr .32s var(--E) forwards;animation-delay:calc(350ms + var(--i) * 130ms)}
+@keyframes s20clr{to{background:transparent;border-color:transparent}}
+
 #lb{position:fixed;inset:0;z-index:90;background:rgba(8,7,6,.96);display:none;overflow:auto}
 #lb.open{display:block}
 #lb.open.fit{display:flex;align-items:center;justify-content:center;padding:5vw}
@@ -841,6 +847,13 @@ html.lock .totop{display:none}
 .gp .plb3 .pi,.gp .plb3 .pf{height:100%}
 .gp .plb3 .pf{aspect-ratio:2/3;width:auto}
 @media (max-width:860px){.gp .plb3{flex-direction:column;height:auto;align-items:center}.gp .plb3 .pi{height:auto;width:100%}.gp .plb3 .pf{width:100%;height:auto}}
+
+/* 20/20 매진 칸 뒤에 현장 사진 (위 2줄: 센터, 아래 2줄: 원데이클래스) */
+.s20{position:relative}
+.s20>i{z-index:1}
+.s20bg{position:absolute;inset:0;display:grid;grid-template-rows:1fr 1fr;gap:6px;z-index:0}
+.s20bg .m{height:100%;background:#d9d4ce}
+.s20bg .src{display:none}
 
 </style>
 </head>
@@ -1113,7 +1126,7 @@ const IND=[
  ['패션','윌리워스튜디오<br>블랙비스트',pic('image/ww1.jpg'),'룩북과 영상을 직접 만들어 완판까지<br>신규 브랜드는 독일 K-전시회까지','williwo'],
  ['문화예술','에이런컴퍼니',ytPic('8fNJkbhj0B0'),'WBC 국가대표 선발전<br>3년 연속 총괄과 객석 매진','arun'],
  ['체대입시 교육','체대친구들',window.PRINT_MODE?ytPic('9m2aFWBfEMw'):still('video/cdf.mp4',1.5),'유튜브 17,000 → 33,000<br>대치동 센터 오픈과 특강 20회 매진','cdf'],
- ['체대입시 교육','배턴터치',ytPic('Afy54zR10uY'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
+ ['체대입시 교육','배턴터치',ytPic('WUALzMa3ZZ8'),'전국 5개 도시 브랜드 다큐 6편<br>기획부터 편집까지 1인 제작','batontouch'],
  ['음악','크몽 (SKWS)',pic('image/album3.jpg'),'앨범 커버 50+ 작품<br>평균 별점 4.9','kmong'],
  ['부동산 경매','마이옥션',picFit('logo/myauction.jpg','마이옥션 로고'),'유튜브 1,800 → 26,000+<br>인스타 팔로워 6,300+','myauction'],
 ];
@@ -1130,7 +1143,7 @@ const DAYS=[['30일','진단','채널의 데이터와 제작 흐름, 팀의 역�
 
 const YTG={myauction:['MiJYm5g2HaY','POEzKz_Dp6Y','n7oe8HwXLpA','RuoOPgJsgjI','6O_sobj1HNc','ZNoeu5VYxa8'],cdf:['9m2aFWBfEMw','tvw-8xtJ1ME','tcVeKEPXrtk','oBKIJuey7ck']};
 const ytGrid=(ids,c,cls='')=>media('유튜브 썸네일',`<span class="ytg ${cls}" style="--c:${c}">${ids.map(id=>`<span>${ytImg(id)}</span>`).join('')}</span>`);
-const brandCover=b=>b.id==='williwo'?pic('image/ww2.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('Afy54zR10uY'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
+const brandCover=b=>b.id==='williwo'?pic('image/ww2.jpg','윌리워스튜디오'):b.id==='blackbeast'?picFit('logo/vlackveast.png','블랙비스트 나이트 라이딩'):b.id==='myauction'?ytGrid(YTG.myauction,3):b.id==='cdf'?ytGrid(YTG.cdf,2):b.id==='kmong'?picFit('logo/kmong.jpg','크몽 SKWS'):b.id==='myauction'?ytPic('lHm_fDfUPi8'):b.id==='cdf'?still('video/cdf.mp4',1.5):b.id==='batontouch'?ytPic('WUALzMa3ZZ8'):b.id==='arun'?ytPic('8fNJkbhj0B0'):pic(b.cover);
 
 
 const FIT=[
@@ -1231,7 +1244,7 @@ scene('touch',6,600,`
  </div>`),
 
 // ⑦ 이런 팀이라면 (6동작: 카드 5장 + 마무리)
-scene('fit',7,700,`
+scene('fit',8,800,`
  <div class="fi-t">
   <p class="sh-k">이런 고민이 있는 팀이라면</p>
   <h2>지금,<br>제가 필요한<br>팀입니다.</h2>
@@ -1247,7 +1260,7 @@ const HTML3=`
  <header class="ph"><p class="sh-k">숫자로 남은 기록</p><h2>말보다 먼저,<br>숫자로 남긴 기록들.</h2></header>
  <div class="pw">
   <article class="pv"><div class="pv-n"><b data-count="700" data-suf="편+">700편+</b><span>지금까지 만든 롱폼 영상<small>숏폼은 세지 않았습니다</small></span></div><div class="d700">${Array.from({length:700},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div></article>
-  <article class="pv"><div class="pv-n"><b class="c20">20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20">${Array.from({length:20},(_,i)=>`<i style="--i:${i}">${i+1}<b>매진</b></i>`).join('')}</div><div class="pv-ph">${pic('spot/offline.jpg','대치동 오프라인 센터')}${pic('spot/oneday.png','원데이클래스 현장')}</div></article>
+  <article class="pv"><div class="pv-n"><b class="c20">20<small>/20</small></b><span>체대친구들 소방공무원 제자리멀리뛰기 특강<small>오프라인 특강 20회차 모두 매진, 약 150명 참가</small></span></div><div class="s20"><span class="s20bg">${pic('spot/offline.jpg','대치동 오프라인 센터')}${pic('spot/oneday.png','원데이클래스 현장')}</span>${Array.from({length:20},(_,i)=>`<i style="--i:${i}">${i+1}<b>매진</b></i>`).join('')}</div></article>
   <article class="pv"><div class="pv-n"><b data-count="280" data-suf="만+">280만+</b><span>마이옥션 릴스 3주 누적 조회수<small>상위 10편, 광고비 0원</small></span><span class="fol">팔로워 80명 → <b data-count="6300" data-suf="명+">6,300명+</b></span></div><div class="b10">${INSTA.map((r,i)=>`<div><i style="--h:${(r[1]/INSTA_MAX*100).toFixed(1)}%;--i:${i}"></i><b>${r[2]}</b></div>`).join('')}</div></article>
  </div>
 </section>
@@ -1452,7 +1465,7 @@ addEventListener('keydown',e=>{ if(['ArrowDown','ArrowUp','PageDown','PageUp',' 
 
 /* ── 자동 재생 ── */
 const AB=$('#auto'); let autoOn=false, aT=0, aI=0, aStart=0, aDur=0, aRaf=0;
-const DWELL={hook:[2600,2600,2600,2200,1800,2600,3000],hello:[3400,3600,4200],ind:[2600,2600,2600,2600,2600,2600,4800],sys:[3800,3800],team:[3400,3600],touch:[3000,2600,2600,2600,2600,3400],fit:[3200,3200,3600,3000,3400,2600,3600]};
+const DWELL={hook:[2600,2600,2600,2200,1800,2600,3000],hello:[3400,3600,4200],ind:[2600,2600,2600,2600,2600,2600,4800],sys:[3800,3800],team:[3400,3600],touch:[3000,2600,2600,2600,2600,3400],fit:[3200,3200,3600,3000,3400,2600,2400,1600]};
 const SPEED=.5;   // 자동 재생 속도 (1 = 기존, .5 = 2배 빠르게)
 const dwell=t=>Math.round((t.s?(DWELL[t.s.className.split(' ')[1]]||[])[t.k]||3200:(t.sec.id==='work'?3200:3800))*SPEED);
 function ring(){ if(!autoOn) return; AB.style.setProperty('--ap',Math.min(1,(performance.now()-aStart)/aDur)); aRaf=requestAnimationFrame(ring); }
