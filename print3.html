@@ -145,7 +145,7 @@
 .gp .plb3{display:flex;justify-content:center;gap:14px;height:min(860px,72vh)}
 .gp .plb3 .pi,.gp .plb3 .pf{height:100%}
 .gp .plb3 .pf{aspect-ratio:2/3;width:auto}
-@media (max-width:860px){.gp .plb3{flex-direction:column;height:auto;align-items:center}.gp .plb3 .pi{height:auto;width:100%}.gp .plb3 .pf{width:100%;height:auto}}
+@media screen and (max-width:860px){.gp .plb3{flex-direction:column;height:auto;align-items:center}.gp .plb3 .pi{height:auto;width:100%}.gp .plb3 .pf{width:100%;height:auto}}
 
 /* 20/20 매진 칸 뒤에 현장 사진 (위 2줄: 센터, 아래 2줄: 원데이클래스) */
 .s20{position:relative}
@@ -164,12 +164,12 @@
 .gp .plb3 .pf{aspect-ratio:auto;width:auto;height:100%;background:transparent}
 .gp .plb3 .pf img{position:static;display:block;height:100%;width:auto;max-width:none;object-fit:contain}
 .gp .plb3 .pf .src{display:none}
-@media (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
+@media screen and (max-width:860px){.gp .plb3 .pi,.gp .plb3 .pf{height:auto;width:100%}.gp .plb3 .pf img{width:100%;height:auto}}
 /* 룩북: % 높이 대신 고정 높이 (브라우저마다 % 계산이 달라 이미지가 원본 크기로 커지는 문제 방지) */
 .gp .plb3{height:auto;align-items:flex-start}
 .gp .plb3 .pi,.gp .plb3 .pf{height:auto}
 .gp .plb3 .pf img{height:min(860px,72vh);width:auto;max-height:none}
-@media (max-width:860px){.gp .plb3 .pf img{height:auto;width:100%}}
+@media screen and (max-width:860px){.gp .plb3 .pf img{height:auto;width:100%}}
 
 @page{size:1920px 1080px;margin:0}
 :root{--o:#ff6a13;--o2:#ff9a52;--ink:#141210;--mute:#6b645c;--line:#e3ded7;--wash:#f6f3ef;--amber:#f06a1c;--ac:#f06a1c;--ko:"Paperlogy","Pretendard",-apple-system,"Apple SD Gothic Neo",sans-serif;--num:var(--ko)}
